@@ -1,12 +1,16 @@
-import { useState } from 'react'
-import './App.css'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
+import Progress from './components/ProgressBar'
 import { routes } from './routes'
+import { useSelector } from 'react-redux'
 
 function App() {
+  const loading = useSelector( state => state.appReducer.loading );
+  
   return (
     <BrowserRouter>
       <div className="App">
+        {/* Thanh loading trên đầu trang  */}
+        <Progress isAnimating={loading} />
         <Routes>
           {
             routes.map((item,index) => {

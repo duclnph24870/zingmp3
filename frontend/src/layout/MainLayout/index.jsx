@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function MainLayout ( { children } ) {
     return (  
         <>
@@ -6,5 +8,9 @@ function MainLayout ( { children } ) {
         </>
     );
 }
+
+MainLayout.propTypes = {
+    children: PropTypes.element
+} 
 
 export default MainLayout;

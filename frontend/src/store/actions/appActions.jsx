@@ -4,6 +4,14 @@ const changeLanguage = (language) => {
     return { type: appActionTypes.CHANGE_LANGUAGE,payload: language }
 }
 
+const changeLoading = loading => {
+    return {
+        type: appActionTypes.CHANGE_LOADING,
+        payload: loading,
+    }
+}
+
 export {
     changeLanguage,
+    changeLoading
 }
