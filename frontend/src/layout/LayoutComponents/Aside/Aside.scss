@@ -1,0 +1,100 @@
+.aside {
+    min-width: 240px;
+    max-width: 240px;
+    position: relative;
+    background-color: var(--sidebar-bg);
+    margin-bottom: var(--height-playController);
+
+    .aside__logo {
+        width: 100%;
+        height: 70px;
+        padding: 0 25px 0 28px;
+        display: flex;
+        align-items: center;
+
+         img {
+            width: 120px;
+            height: 40px;
+         }
+    }
+
+    .seperateBar {
+        width: 85%;
+        height: 0.5px;
+        background-color: var(--border-primary);
+        margin: 5px auto;
+        margin-bottom: 4px;
+    }
+
+    // menu item
+    .aside__menu-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 5px 25px;
+
+        // menu item active
+        &.active {
+            --border-width: 3px;
+            border-left: var(--border-width) solid var(--link-text-hover);
+            padding-left: calc(25px - var(--border-width));
+            background-color: var(--alpha-bg);
+        }
+
+        // custom button
+        .aside__menu-button {
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 0;
+
+            .button__iconLeft {
+                font-size: 2.4rem;
+            }
+        }
+
+        .iconHover {
+            margin-left: auto;
+            opacity: 0;
+            font-size: 2rem;
+            transition: opacity linear 0.2s;
+        }
+
+        &:not(.active):hover .iconHover {
+            opacity: 1;
+        }
+    }
+
+    // section 2
+    .aside__section2-title {
+        padding: 5px 25px;
+        width: 100%;
+        font-size: 1.2rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+
+        i {
+            margin-left: auto;
+            font-size: 1.6rem;
+        }
+    }
+
+    // add new playlist btn
+    .addNewPlaylistBtn {
+        height: 56px;
+        width: 100%;
+        border-top: 1px solid var(--border-primary);
+        padding: 0 25px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        transition: color linear 0.3s;
+
+        &:hover {
+            color: var(--text-item-hover);
+        }
+
+        .button__iconLeft {
+            font-size: 1.8rem;
+        }
+    }
+}

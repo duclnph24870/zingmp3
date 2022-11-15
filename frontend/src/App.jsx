@@ -3,6 +3,9 @@ import Progress from './components/ProgressBar'
 import { routes } from './routes'
 import { useSelector } from 'react-redux'
 
+import './assets/main.min.css'
+import './assets/public.scss'
+
 function App() {
   const loading = useSelector( state => state.appReducer.loading );
   

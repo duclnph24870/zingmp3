@@ -1,0 +1,10 @@
+.playController {
+    background-color: bisque;
+    position: absolute;
+    bottom: 0vh;
+    left: 0vw;
+    width: 100vw;
+    height: var(--height-playController);
+    padding: 0 20px;
+    z-index: 20;
+}

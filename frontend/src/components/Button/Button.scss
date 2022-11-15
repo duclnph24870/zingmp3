@@ -1,0 +1,19 @@
+.button {
+    display: flex;
+    align-items: center;
+    min-width: 100px;
+    padding: 8px;
+    font-size: 1.3rem;
+    cursor: pointer;
+
+    .pill {
+        border-radius: 20px;
+    }
+
+    .button__iconLeft {
+        margin-right: 10px;
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+    }
+}

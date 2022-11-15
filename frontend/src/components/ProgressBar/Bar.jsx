@@ -4,8 +4,9 @@ function Bar({ animationDuration, progress }) {
     return (  
         <div
             style={{
-            background: '#29d',
-            height: 2,
+            background: '#a132d9',
+            height: 3,
+            borderRadius: 2,
             left: 0,
             marginLeft: `${(-1 + progress) * 100}%`,
             position: 'fixed',
@@ -17,7 +18,7 @@ function Bar({ animationDuration, progress }) {
         >
             <div
             style={{
-                boxShadow: '0 0 10px #29d, 0 0 5px #29d',
+                boxShadow: '0 0 10px #a132d9, 0 0 5px #a132d9',
                 display: 'block',
                 height: '100%',
                 opacity: 1,
