@@ -1,0 +1,17 @@
+{
+    "home-header": {
+        "specialty": "Specialty",
+        "searchDoctor": "Find a specialist",
+        "healthFacility": "Health Facility",
+        "healthFacilityLabel": "Choose hospital clinic",
+        "doctor": "Doctor",
+        "doctorLabel": "Choose a good doctor",
+        "medicalPackage": "Medical package",
+        "medicalPackageLabel":"General health check",
+        "support":"Support"
+    },
+    "banner": {
+        "searchTitle": "MEDICAL BACKGROUND",
+        "searchTitle2": "COMPREHENSIVE HEALTH CARE"
+    }
+}

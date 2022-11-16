@@ -1,0 +1,17 @@
+{
+    "home-header": {
+        "specialty": "Chuyên Khoa",
+        "searchDoctor": "Tìm bác sĩ chuyên khoa",
+        "healthFacility": "Cơ sở y tế",
+        "healthFacilityLabel": "Chọn bệnh viện phòng khám",
+        "doctor": "Bác sĩ",
+        "doctorLabel": "Chọn bác sĩ giỏi",
+        "medicalPackage": "Gói Khám",
+        "medicalPackageLabel":"Khám sức khỏe tổng quát",
+        "support":"Hỗ trợ"
+    },
+    "banner": {
+        "searchTitle": "NỀN TẢNG Y TẾ",
+        "searchTitle2": "CHĂM SÓC SỨC KHỎE TOÀN DIỆN"
+    }
+}
