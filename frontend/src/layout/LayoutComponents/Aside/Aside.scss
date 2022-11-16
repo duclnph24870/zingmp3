@@ -27,12 +27,7 @@
     }
 
     // menu item
-    .aside__menu-item {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding: 5px 25px;
-
+    .aside__menu .section-item {
         // menu item active
         &.active {
             --border-width: 3px;

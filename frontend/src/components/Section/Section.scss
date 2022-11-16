@@ -1,0 +1,28 @@
+.section-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 5px 25px;
+
+    // custom button
+    .section-button {
+        font-size: 1.3rem;
+        font-weight: 700;
+        padding: 0;
+
+        .button__iconLeft {
+            font-size: 2.4rem;
+        }
+    }
+
+    .iconHover {
+        margin-left: auto;
+        opacity: 0;
+        font-size: 2rem;
+        transition: opacity linear 0.2s;
+    }
+
+    &:not(.active):hover .iconHover {
+        opacity: 1;
+    }
+}
