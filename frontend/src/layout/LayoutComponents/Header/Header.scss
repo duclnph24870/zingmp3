@@ -1,5 +1,30 @@
 .header {
-    width: 100%;
+    width: calc(100% - var(--aside-width));
     height: var(--height-header);
-    background-color: aqua;
+    padding: 0 var(--padding-mainContent);
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0vh;
+    right: 0vw;
+
+    &.scroll {
+        box-shadow: 0 3px 5px var(--sticky-header-box-shadow);
+    }
+
+    .header__buttonNavigate {
+        display: flex;
+        align-items: center;
+
+        .buttonIcon {
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 2.4rem;
+            }
+        }
+    }
 }

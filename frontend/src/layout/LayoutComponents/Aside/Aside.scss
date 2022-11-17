@@ -1,6 +1,6 @@
 .aside {
-    min-width: 240px;
-    max-width: 240px;
+    min-width: var(--aside-width);
+    max-width: var(--aside-width);
     position: relative;
     background-color: var(--sidebar-bg);
     margin-bottom: var(--height-playController);

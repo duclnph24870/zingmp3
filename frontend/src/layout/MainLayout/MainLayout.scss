@@ -5,7 +5,8 @@
     
     .mainLayout__content {
         width: 100%;
-        background-color: black;
         margin-bottom: var(--height-playController);
+        margin-top: var(--height-header);
+        overflow-y: scroll;
     }
 }

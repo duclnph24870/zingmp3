@@ -15,5 +15,8 @@
     "mongoose-slug-generator": "^1.0.4"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
 }

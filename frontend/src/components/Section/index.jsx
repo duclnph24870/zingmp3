@@ -7,6 +7,7 @@ import './Section.scss';
 function Section ({ 
     className = '',
     data,
+    ComponentItem,
     ...props
  }) {
     return (  
@@ -16,11 +17,17 @@ function Section ({
                     data.map((item,index) => {
                         return (
                             <NavLink title={item.title} to={item.path} exact="true" className='section-item' key={index}>
-                                <Button 
-                                    className='section-button' 
-                                    children={item.title} 
-                                    iconLeft={item.icon}
-                                />
+                                { 
+                                    ComponentItem 
+                                        ?
+                                    <ComponentItem data={item}/>
+                                        : 
+                                    <Button 
+                                        className='section-button' 
+                                        children={item.title} 
+                                        iconLeft={item.icon}
+                                    />
+                                }
                                 {item.iconHover && <span className='iconHover'>{item.iconHover}</span>}
                             </NavLink>
                         );

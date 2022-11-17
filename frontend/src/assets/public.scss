@@ -1,6 +1,8 @@
 :root {
     --height-playController: 89px;
     --height-header: 70px;
+    --aside-width: 240px;
+    --padding-mainContent: 59px;
 }
 
 html {
@@ -16,4 +18,13 @@ button,input {
     background: none;
     border: none;
     text-decoration: none;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -4,20 +4,21 @@ const slug = require('mongoose-slug-generator');
 const Schema = mongoose.Schema;
 mongoose.plugin(slug);
 
-const UserModule = new Schema({
-    userName: { type: String },
-    role: { type: Number },
-    email: { type: String },
-    password: { type: String },
-    description: { type: String },
+const UserSchema = new Schema({
+    userName: { type: String, require },
+    keyword: { type: Array ,require},
+    role: { type: Number ,require},
+    email: { type: String ,require},
+    password: { type: String ,require},
+    description: { type: String ,default: ''},
     slug: { type: String, slug: 'userName',unique: true },
-    follow: { type: Number },
+    follow: { type: Number ,default: 0},
     avatar: { type: String },
-    birthday: { type: Date },
-    sex: { type: String },
+    birthday: { type: Date ,require},
+    sex: { type: String ,require},
 }, {
     collection: 'users',
     timestamps: true
 });
 
-module.exports = mongoose.model('user',UserModule);
+module.exports = mongoose.model('user',UserSchema);
