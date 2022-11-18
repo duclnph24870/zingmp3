@@ -46,7 +46,6 @@ const appReducer = (state = initStateApp, action) => {
                 }
             }
         case appActionTypes.CHANGE_THEME:
-            console.log(action.payload);
             return {
                 ... state,
                 theme: {

@@ -27,6 +27,7 @@ function ModalWrapper ({
 ModalWrapper.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
+    isActive: PropTypes.bool
 }
 
 export default ModalWrapper;

@@ -19,7 +19,6 @@ const changeModal = option => {
 }
 
 const changeTheme = option => {
-    console.log(option);
     return {
         type: appActionTypes.CHANGE_THEME,
         payload: option,
