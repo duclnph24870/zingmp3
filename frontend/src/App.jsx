@@ -6,10 +6,19 @@ import { useSelector } from 'react-redux'
 
 import './assets/main.min.css'
 import './assets/public.scss'
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
+import 'tippy.js/dist/tippy.css'; 
+import ModalWrapper from './components/ModalWrapper';
 
 function App() {
-  const loading = useSelector( state => state.appReducer.loading );
+  const { loading,modal,theme } = useSelector( state => state.appReducer );
+  const ModalComponent = modal.Component;
+  // lấy ra giao diện hiện có
+  const rootStyle = document.documentElement.style;
+  const variableName = Object.keys(theme.styles);
+  variableName.forEach(item => {
+    rootStyle.setProperty(item,theme.styles[item]);
+  })
   
   return (
     <BrowserRouter>
@@ -40,6 +49,9 @@ function App() {
         pauseOnHover={false}
         theme="light"
         />
+        <ModalWrapper isActive={modal.isActive} className='modal'>
+          {ModalComponent}
+        </ModalWrapper>
     </BrowserRouter>
   )
 }

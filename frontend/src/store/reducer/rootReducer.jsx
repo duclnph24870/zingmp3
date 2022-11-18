@@ -13,7 +13,7 @@ const configPersist = {
 const appPersistConfig = {
     ... configPersist,
     key: 'app',
-    whitelist: ['language']
+    whitelist: ['language','theme']
 }
 
 const rootReducer = combineReducers({

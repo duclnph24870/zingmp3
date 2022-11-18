@@ -11,7 +11,24 @@ const changeLoading = loading => {
     }
 }
 
+const changeModal = option => {
+    return {
+        type: appActionTypes.CHANGE_MODAL,
+        payload: option,
+    }
+}
+
+const changeTheme = option => {
+    console.log(option);
+    return {
+        type: appActionTypes.CHANGE_THEME,
+        payload: option,
+    }
+}
+
 export {
     changeLanguage,
-    changeLoading
+    changeLoading,
+    changeModal,
+    changeTheme,
 }

@@ -27,4 +27,25 @@
             }
         }
     }
+
+    .headerRight {
+        display: flex;
+        align-items: center;
+
+        .headerRight__button {
+            margin-right: 12px;
+
+            i {
+                font-size: 2rem;
+            }
+
+            &.avatar {
+                padding: 0;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
 }

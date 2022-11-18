@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { searchKeywordRealtime } from '../../../service/search';
 import Search from '../Search';
 import './Header.scss';
+import HeaderRight from './HeaderRight';
 
 function Header ({
     className = '',
@@ -16,6 +17,7 @@ function Header ({
         history.go(number);
     }
 
+    // handle logic search 
     const handleSearch = async value => {
         if (value.length === 0) {
             return;
@@ -70,6 +72,7 @@ function Header ({
             </div>
 
             <Search isLoading={isLoadingSearch} handleSearch={handleSearch} data={searchResult} className='header__search'/>
+            <HeaderRight />
         </div>
     );
 }

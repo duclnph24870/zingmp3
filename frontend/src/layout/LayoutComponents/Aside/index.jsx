@@ -3,10 +3,12 @@ import './Aside.scss';
 import images from '../../../assets/images';
 import path from '../../../config/path';
 import { Button,MenuWrapper,Section } from '../../../components';
+import { useSelector } from 'react-redux';
 
 function Aside ({
     className = ''
 }) {
+    const theme = useSelector(state => state.appReducer.theme);
     const dataMenu = [
         { path: path.myMusic,title: "Cá Nhân", icon: <i className="icon ic-24-LibraryTab"></i>, iconHover: <i className="icon ic-20-Play-Outline"></i>},
         { path: path.home,title: "Khám Phá", icon: <i className="icon  ic-24-HomeTab"></i>, iconHover: <i className="icon ic-20-Play-Outline"></i>},
@@ -31,7 +33,7 @@ function Aside ({
     return (  
         <div className={`aside ${className}`}>
             <div className='aside__logo'>
-                <img src={images.logoLight} alt=''/>
+                <img src={theme.logo} alt=''/>
             </div>
             
             <Section className='aside__menu' data={dataMenu}/>

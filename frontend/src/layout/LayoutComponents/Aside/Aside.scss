@@ -21,7 +21,7 @@
     .seperateBar {
         width: 85%;
         height: 0.5px;
-        background-color: var(--border-primary);
+        background-color: var(--layout-bg);
         margin: 5px auto;
         margin-bottom: 4px;
     }
@@ -29,11 +29,18 @@
     // menu item
     .aside__menu .section-item {
         // menu item active
+        color: var(--navigation-text);
+
         &.active {
             --border-width: 3px;
-            border-left: var(--border-width) solid var(--link-text-hover);
+            border-left: var(--border-width) solid var(--purple-primary);
             padding-left: calc(25px - var(--border-width));
             background-color: var(--alpha-bg);
+            color: var(--text-item-hover);
+        }
+
+        &:hover {
+            color: var(--text-item-hover);
         }
 
         // custom button
@@ -51,6 +58,7 @@
             margin-left: auto;
             opacity: 0;
             font-size: 2rem;
+            color: var(--text-item-hover);
             transition: opacity linear 0.2s;
         }
 
@@ -67,6 +75,7 @@
         font-weight: 700;
         display: flex;
         align-items: center;
+        color: var(--text-primary);
 
         i {
             margin-left: auto;
@@ -80,6 +89,7 @@
         width: 100%;
         border-top: 1px solid var(--border-primary);
         padding: 0 25px;
+        color: var(--text-primary);
         font-size: 1.4rem;
         font-weight: 700;
         transition: color linear 0.3s;

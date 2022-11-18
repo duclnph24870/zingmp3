@@ -3,6 +3,7 @@
     --height-header: 70px;
     --aside-width: 240px;
     --padding-mainContent: 59px;
+    --colorSearch-default: hsla(0,0%,100%,0.1);
 }
 
 html {
@@ -20,11 +21,26 @@ button,input {
     text-decoration: none;
 }
 
+.App {
+    background-image: var(--bg-link);
+    background-position: 0% 0%;
+    background-size: 1920px auto;
+}
+
 @keyframes loading {
     0% {
         transform: rotate(0);
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

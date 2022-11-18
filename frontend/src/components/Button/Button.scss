@@ -6,8 +6,28 @@
     font-size: 1.3rem;
     cursor: pointer;
 
-    .pill {
+    &.pill {
         border-radius: 20px;
+    }
+
+    &.buttonIcon {
+        justify-content: center;
+        align-items: center;
+        min-width: unset;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--alpha-bg);
+        
+        img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        i {
+            font-size: 1.5rem;
+        }
     }
 
     .button__iconLeft {

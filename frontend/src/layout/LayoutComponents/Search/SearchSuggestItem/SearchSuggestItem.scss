@@ -15,9 +15,14 @@
     }
 
     .searchSuggestItem__name {
-        color: var(--text);
+        color: var(--text-primary);
         font-size: 1.5rem;
         font-weight: 500;
+        transition: 0.2s;
+
+        &:hover {
+            color: var(--link-text-hover);
+        }
     }
 
     .searchSuggestItem__label {

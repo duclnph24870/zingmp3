@@ -6,6 +6,7 @@ function Button ({
     children,
     className = '',
     pill = false,
+    buttonIcon = false,
     disabled = false,
     to,
     href,
@@ -38,7 +39,7 @@ function Button ({
     return (  
         <Component 
             className={
-                `button ${pill ? 'pill' : ''} ${className} ${disabled ? 'disabled' : ''}`
+                `button ${pill ? 'pill' : ''} ${buttonIcon ? 'buttonIcon' : ''} ${className} ${disabled ? 'disabled' : ''}`
             }
             {... propsConfig} 
         >
