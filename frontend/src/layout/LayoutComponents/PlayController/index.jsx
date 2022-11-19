@@ -6,7 +6,7 @@ function PlayController({
 }) {
     return ( 
         <div className={`playController ${className}`}>
-            PlayController
+            
         </div>
     );
 }

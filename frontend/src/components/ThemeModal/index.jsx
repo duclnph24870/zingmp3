@@ -8,17 +8,17 @@ function ThemeModal ({
 }) {
     // dark
     const themeBasic = {
-            "--layout-bg": "#1e1e1e",
-            "--sidebar-bg": "hsla(0,0%,100%,0.05)",
-            "--navigation-text": "#a0a0a0",
-            "--text-item-hover":"#fff",
-            "--text-primary": "#fff",
-            "--primary-bg": "#333",
-            "--text-secondary": "hsla(0,0%,100%,0.5)",
-            "--alpha-bg": "hsla(0,0%,100%,0.1)",    
-            "--colorSearch-default": " hsla(0,0%,100%,0.1)",
-            "--search-text": "#eee",
-            "--bg-link": "",
+        "--layout-bg": "#1e1e1e",
+        "--sidebar-bg": "hsla(0,0%,100%,0.05)",
+        "--navigation-text": "#a0a0a0",
+        "--text-item-hover":"#fff",
+        "--text-primary": "#fff",
+        "--primary-bg": "#333",
+        "--text-secondary": "hsla(0,0%,100%,0.5)",
+        "--alpha-bg": "hsla(0,0%,100%,0.1)",    
+        "--colorSearch-default": " hsla(0,0%,100%,0.1)",
+        "--search-text": "#eee",
+        "--bg-link": "",
     }
 
     const lightBasic = {
@@ -32,6 +32,8 @@ function ThemeModal ({
         "--alpha-bg": "rgba(0,0,0,0.05)", 
         "--colorSearch-default": " rgba(0,0,0,0.05)",
         "--search-text": "#282828",
+        "--purple-primary": "#8d22c3",
+        "--link-text-hover": "#8d22c3",
         "--bg-link":"",
     }
 
@@ -91,6 +93,7 @@ function ThemeModal ({
                 name: 'light',
                 logo: images.logoLight,
                 styles: { 
+                    ... lightBasic,
                     "--layout-bg": "#fff",
                     "--sidebar-bg": "rgba(0,0,0,0.05)",
                     "--navigation-text": "#32323d",

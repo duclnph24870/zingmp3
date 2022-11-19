@@ -4,3 +4,7 @@ export const appActionTypes = {
     CHANGE_MODAL: 'CHANGE_MODAL',
     CHANGE_THEME: "CHANGE_THEME",
 }
+
+export const userActionTypes = {
+    CHANGE_LOGIN: 'CHANGE_LOGIN', 
+}

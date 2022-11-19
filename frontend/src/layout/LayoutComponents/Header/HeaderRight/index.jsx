@@ -2,13 +2,17 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import images from '../../../../assets/images';
 import { changeModal } from '../../../../store/actions/appActions'
-import { Button } from '../../../../components';
+import { Button, Section } from '../../../../components';
+import Tippy from '@tippyjs/react/headless';
 import '../Header.scss';
 import { ThemeModal } from '../../../../components';
+import { useState } from 'react';
 
 function HeaderRight ({
     className = '',
 }) {
+    const [ isSettingActive, setIsSettingActive ]= useState(false);
+    const [ isAvatarActive, setIsAvatarActive ]= useState(false);
     const dispatch = useDispatch();
     const handleThemeClick = () => {
         dispatch(changeModal({
@@ -17,28 +21,88 @@ function HeaderRight ({
         }))
     }
 
+    const dataSettingMenu = [
+        { title: "Danh sách chặn", icon: <i className='icon ic-20-Block'></i> },
+        { 
+            title: "Giao diện", 
+            icon: <i className='icon ic-20-Play-Outline'></i>,
+            events: {
+                onClick: () => {
+                    setIsSettingActive(false)
+                    dispatch(changeModal({
+                        isActive: true,
+                        Component: <ThemeModal/>
+                    }))
+                }
+            } 
+        },
+        { 
+            title: "Ngôn ngữ", 
+            icon: <i className='icon ic-global'></i>,
+            iconHover: <i className='icon ic-go-right'></i>,
+            children: [
+                { title: "Tiếng Việt", icon: <i className='icon ic-20-Block'></i> },
+                { title: "Tiếng Anh", icon: <i className='icon ic-20-Block'></i> },
+            ]
+        }
+    ];
+
+    const dataUser = [
+        { title: "Mua code VIP", icon: <i className='icon ic-20-VIP'></i> },
+        { title: "Nâng cấp VIP", icon: <i className='icon ic-20-VIP-2'></i> },
+        { title: "Đăng xuất", icon: <i className='icon ic-log-out'></i> },
+    ];
+
 
     return (  
         <div className={`headerRight ${className}`}>
-            <Button className="headerRight__button" onClick={handleThemeClick} buttonIcon>
+            <Button title="Chủ đề" className="headerRight__button" onClick={handleThemeClick} buttonIcon>
                 <img src={images.themeIcon} alt=""/>
             </Button>
 
-            <Button className='headerRight__button' buttonIcon>
+            <Button title={'Nâng cấp vip'} className='headerRight__button' buttonIcon>
                 <i className='icon ic-20-VIP-2'></i>
             </Button>
 
-            <Button className='headerRight__button' buttonIcon>
+            <Button title="Upload" className='headerRight__button' buttonIcon>
                 <i className='icon ic-upload'></i>
             </Button>
 
-            <Button className='headerRight__button' buttonIcon>
-                <i className='icon ic-settings'></i>
-            </Button>
+            {/* setting  */}
+            <Tippy 
+                visible={isSettingActive}
+                interactive
+                onClickOutside={() => setIsSettingActive(false)}
+                render={() => (
+                    <div>
+                        <Section sectionModal className='header__setting-menu barNone' data={dataSettingMenu}/>
+                    </div>
+                )}
+            >
+                <div>
+                    <Button onClick={() => setIsSettingActive(!isSettingActive)} title="Cài Đặt" className='headerRight__button' buttonIcon>
+                        <i className='icon ic-settings'></i>
+                    </Button>
+                </div>
+            </Tippy>
             
-            <Button className='headerRight__button avatar' buttonIcon>
-                <img src='https://s120-ava-talk-zmp3.zmdcdn.me/a/a/9/6/7/120/7b99d0c26a89db3ba884b4e427962a17.jpg' alt=""/>
-            </Button>
+            {/* User  */}
+            <Tippy
+                visible={isAvatarActive}
+                interactive
+                onClickOutside={() => setIsAvatarActive(false)}
+                render={() => (
+                    <div>
+                        <Section sectionModal className='header__setting-menu barNone' data={dataUser}/>
+                    </div>
+                )}
+            >
+                <div>
+                    <Button onClick={() => setIsAvatarActive(true)} className='headerRight__button avatar' buttonIcon>
+                        <img src='https://s120-ava-talk-zmp3.zmdcdn.me/a/a/9/6/7/120/7b99d0c26a89db3ba884b4e427962a17.jpg' alt=""/>
+                    </Button>
+                </div>
+            </Tippy>
         </div>
     );
 }

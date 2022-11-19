@@ -3,20 +3,60 @@ import Menu from '../MenuWrapper';
 import { NavLink } from 'react-router-dom';
 import { Button } from '..';
 import './Section.scss';
+import { useState } from 'react';
 
 function Section ({ 
     className = '',
     data,
+    sectionModal = false,
     ComponentItem,
     ...props
  }) {
+    const [ dataRender,setDataRender ] = useState(data);
+    const [ isChildren, setIsChildren ] = useState(false);
+
     return (  
-            <Menu className={`section ${className}`} {... props}>
+            <Menu className={`section ${sectionModal ? 'sectionMenu' : ''} ${className}`} {... props}>
+                {
+                    isChildren 
+                        &&
+                    <div className='section-item section-backBtn'>
+                        <Button 
+                            className='section-button' 
+                            iconLeft={<i className="icon ic-go-left"></i>}
+                            onClick={() => {
+                                setDataRender(data)
+                                setIsChildren(false)
+                            }}
+                        >
+                            Quay Lại
+                        </Button>
+                    </div>
+                }
                 { 
-                    data && 
-                    data.map((item,index) => {
+                    dataRender && 
+                    dataRender.map((item,index) => {
+                        let Component =  'div';
+                        let option = null;
+                        let childrenEvents = null;
+
+                        if (item.path) {
+                            Component = NavLink
+                            option = {
+                                to: item.path,
+                            }
+                        }
+
+                        if (item.children) {
+                            childrenEvents = {
+                                onClick: () => {
+                                    setDataRender(item.children)
+                                    setIsChildren(true)
+                                }
+                            }
+                        }
                         return (
-                            <NavLink title={item.title} to={item.path} exact="true" className='section-item' key={index}>
+                            <Component title={item.title} { ... item.events } { ... option } { ... childrenEvents } exact="true" className='section-item' key={index}>
                                 { 
                                     ComponentItem 
                                         ?
@@ -29,7 +69,7 @@ function Section ({
                                     />
                                 }
                                 {item.iconHover && <span className='iconHover'>{item.iconHover}</span>}
-                            </NavLink>
+                            </Component>
                         );
                     })
                 }
@@ -40,6 +80,7 @@ function Section ({
 Section.propTypes = {
     className: PropTypes.string,
     data: PropTypes.array,
+    sectionModal: PropTypes.bool
 }
 
 export default Section;

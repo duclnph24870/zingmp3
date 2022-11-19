@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import './assets/main.min.css'
 import './assets/public.scss'
 import 'react-toastify/dist/ReactToastify.css'
+import 'tippy.js/dist/tippy.css'
 import ModalWrapper from './components/ModalWrapper';
 
 function App() {

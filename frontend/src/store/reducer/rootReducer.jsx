@@ -4,10 +4,17 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 
 import appReducer from './appReducer';
+import userReducer from './userReducer';
 
 const configPersist = {
     storage: storage,
     stateReconciler: autoMergeLevel2,
+}
+
+const userPersistConfig = {
+    ... configPersist,
+    key: 'user',
+    whitelist: ['user'],
 }
 
 const appPersistConfig = {
@@ -18,6 +25,7 @@ const appPersistConfig = {
 
 const rootReducer = combineReducers({
     appReducer: persistReducer(appPersistConfig,appReducer),
+    userReducer: persistReducer(userPersistConfig,userReducer),
 });
 
 export default rootReducer;
