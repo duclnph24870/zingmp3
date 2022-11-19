@@ -20,7 +20,7 @@ const userPersistConfig = {
 const appPersistConfig = {
     ... configPersist,
     key: 'app',
-    whitelist: ['language','theme']
+    whitelist: ['language','theme','songPlaying']
 }
 
 const rootReducer = combineReducers({

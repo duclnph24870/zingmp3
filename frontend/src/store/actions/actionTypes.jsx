@@ -3,6 +3,7 @@ export const appActionTypes = {
     CHANGE_LOADING: 'CHANGE_LOADING',
     CHANGE_MODAL: 'CHANGE_MODAL',
     CHANGE_THEME: "CHANGE_THEME",
+    CHANGE_SONG: 'CHANGE_SONG',
 }
 
 export const userActionTypes = {

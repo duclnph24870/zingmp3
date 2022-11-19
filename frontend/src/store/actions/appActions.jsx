@@ -25,9 +25,17 @@ const changeTheme = option => {
     }
 }
 
+const changeSongPlaying = (songId,isPlaying) => {
+    return {
+        type: appActionTypes.CHANGE_SONG,
+        payload: { songId, isPlaying },
+    }
+}
+
 export {
     changeLanguage,
     changeLoading,
     changeModal,
     changeTheme,
+    changeSongPlaying,
 }

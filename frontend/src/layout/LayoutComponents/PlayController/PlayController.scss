@@ -1,5 +1,4 @@
 .playController {
-    background-color: bisque;
     position: absolute;
     bottom: 0vh;
     left: 0vw;
@@ -7,4 +6,37 @@
     height: var(--height-playController);
     padding: 0 20px;
     z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--layout-bg);
+    border-top: 1px solid var(--border-player);
+
+    .playController-left {
+        width: 30%;
+        max-width: 30%;
+
+        .songItem-controller {
+            
+            .songItem-img {
+                width: 64px;
+                height: 64px;
+            }
+        }
+    }
+
+    .playController-center {
+        flex: 1;
+    }
+
+    .playController-right {
+        width: 30%;
+        max-width: 30%;
+    }
+}
+
+.section-controller {
+    .section-button {
+        font-size: 1.3rem;
+    }
 }

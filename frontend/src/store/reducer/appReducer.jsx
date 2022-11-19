@@ -23,6 +23,10 @@ const initStateApp = {
             "--alpha-bg": "rgba(0,0,0,0.05)", 
             "--colorSearch-default": " rgba(0,0,0,0.05)",
         },
+    },
+    songPlaying: {
+        songId: null,
+        isPlaying: false,
     }
 }
 
@@ -49,6 +53,13 @@ const appReducer = (state = initStateApp, action) => {
             return {
                 ... state,
                 theme: {
+                    ... action.payload
+                }
+            }
+        case appActionTypes.CHANGE_SONG:
+            return {
+                ... state,
+                songPlaying: {
                     ... action.payload
                 }
             }

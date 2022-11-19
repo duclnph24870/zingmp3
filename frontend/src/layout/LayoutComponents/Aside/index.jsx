@@ -36,7 +36,7 @@ function Aside ({
                 <img src={theme.logo} alt=''/>
             </div>
             
-            <Section className='aside__menu' data={dataMenu}/>
+            <Section className='aside__menu barNone' data={dataMenu}/>
 
             <div className='seperateBar'></div>
 
