@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState,memo } from 'react';
 import { toast } from 'react-toastify';
 import { searchKeywordRealtime } from '../../../service/search';
 import Search from '../Search';
@@ -82,4 +82,4 @@ Header.propTypes = {
     scroll: PropTypes.bool,
 }
 
-export default Header;
+export default memo(Header);

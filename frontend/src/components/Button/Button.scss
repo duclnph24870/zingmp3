@@ -18,6 +18,10 @@
         height: 40px;
         border-radius: 50%;
         background-color: var(--alpha-bg);
+
+        .button__iconLeft {
+            margin: 0;
+        }
         
         img {
             width: 20px;

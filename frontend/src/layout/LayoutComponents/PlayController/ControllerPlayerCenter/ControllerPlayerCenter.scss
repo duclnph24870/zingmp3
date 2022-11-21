@@ -1,0 +1,112 @@
+.controllerPayerCenter {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .controllerPayerCenter-btnBlock {
+        margin-bottom: 5px;
+    }
+
+    .controllerPayerCenter-item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .controllerPlayerCenter-button {
+            color: var(--player-text);
+            background-color: transparent;
+            padding: 3px;
+            transition: 0.3s;
+            margin: 0 7px;
+
+            &.active {
+                i {
+                    color: var(--link-text-hover);
+                }
+            }
+
+            i {
+                font-size: 1.6rem;
+            }
+
+            &:hover {
+                background-color: hsla(0,0%,100%,.1);
+            }
+        }
+
+        .controllerPlayerCenter-button.playerBtn {
+
+            i {
+                font-size: 4rem;
+            }
+            &:hover {
+                background-color: transparent;
+
+                i {
+                    color: var(--link-text-hover);
+                }
+            }
+        }
+
+        .controllerPayerCenter-time {
+            min-width: 45px;
+            font-size: 1.2rem;
+            color: var(--player-text);
+        }
+
+        .controllerPayerCenter-timeCurr {
+            margin-right: 10px;
+            text-align: right;
+        }
+        
+        .controllerPayerCenter-thumb {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            height: 3px;
+            border-radius: 5px;
+            background-color: var(--progressbar-player-bg);
+
+            &:hover {
+                height: 5px;
+                input {
+                    &::-webkit-slider-thumb {
+                        opacity: 1;
+                        pointer-events: unset;
+                    }
+                }       
+            }
+
+            input {
+                width: 100%;
+                appearance: none;
+                height: 100%;
+                background-image: linear-gradient(var(--progressbar-active-bg),var(--progressbar-active-bg));
+                background-size: 0% 100%;
+                border-radius: 5px;
+                margin: 0;
+                background-repeat: no-repeat;
+                
+                &::-webkit-slider-thumb {
+                    appearance: none;
+                    opacity: 0;
+                    pointer-events: none;
+                    height: 13px;
+                    width: 13px;
+                    transition: 0.3s;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    background-color: var(--progressbar-active-bg);
+                }
+            }
+        }
+        
+        .controllerPayerCenter-timeLength {
+            margin-left: 10px;
+            text-align: left;
+        }
+    }
+}
+
+

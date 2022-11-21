@@ -25,8 +25,10 @@ const initStateApp = {
         },
     },
     songPlaying: {
-        songId: null,
-        isPlaying: false,
+        songId: '637a1b14a7eedd9c28fa70f9',
+        volume: 50,
+        replay: false,
+        randomPlay: false,
     }
 }
 

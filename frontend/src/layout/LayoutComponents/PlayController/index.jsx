@@ -1,31 +1,45 @@
 import PropTypes from 'prop-types';
+import { useEffect,memo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import SongItem from '../../../components/SongItem';
+import { getSongById } from '../../../service/songService';
+import ControllerPlayerCenter from './ControllerPlayerCenter';
 import './PlayController.scss';
 
 function PlayController({
     className = '',
 }) {
 
-    // fake data songPlaying
-    const songPlayingData = {
-
-    }
+    const [songData,setSongData] = useState({});
+    console.log(songData);
+    const songCurrData = useSelector(state => state.appReducer.songPlaying);
+    useEffect(() => {
+        getSongById(songCurrData.songId)
+            .then(res => {
+                setSongData(res.song);
+            })
+            .catch(err => {
+                toast.error('Lỗi server');
+            })
+    },[songCurrData.songId]);
 
     return ( 
         <div className={`playController ${className}`}>
             <div className='playController-left'>
                 <SongItem 
                     className='songItem-controller'
-                    title={'Tháng 5 không trở lại'}
-                    id="1"
+                    title={songData.name}
+                    id={songData._id}
                     author={'Ngọc Đức'}
                     userUpload="Ngọc Đức"
-                    image={'https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/3/2/a/3/32a35f4d26ee56366397c09953f6c269.jpg'}
-                    timeLength="4:25"
+                    image={songData.image}
                     controller
                 />
             </div>
-            <div className='playController-center'>center</div>
+            <div className='playController-center'>
+                <ControllerPlayerCenter songData={songData} songCurrData={songCurrData}/>
+            </div>
             <div className='playController-right'>right</div>
         </div>
     );
@@ -35,4 +49,4 @@ PlayController.propTypes = {
     className: PropTypes.string,
 }
 
-export default PlayController;
+export default memo(PlayController);

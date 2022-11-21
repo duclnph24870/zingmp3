@@ -4,6 +4,7 @@ import images from '../../../assets/images';
 import path from '../../../config/path';
 import { Button,MenuWrapper,Section } from '../../../components';
 import { useSelector } from 'react-redux';
+import { memo } from 'react';
 
 function Aside ({
     className = ''
@@ -58,4 +59,4 @@ Aside.propTypes = {
     className: PropTypes.string,
 }
 
-export default Aside;
+export default memo(Aside);

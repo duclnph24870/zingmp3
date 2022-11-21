@@ -22,14 +22,14 @@ function ListComment ({
                 <CommentItem />
                 <CommentItem />
             </div>
-            <from className='listComment-footer'>
+            <form className='listComment-footer'>
                 <div className='listComment-footerAvt'>
                     <img src='https://s120-ava-talk-zmp3.zmdcdn.me/a/a/9/6/7/120/7b99d0c26a89db3ba884b4e427962a17.jpg' alt=''/>
                 </div>
                 <div className='listComment-footer-input'>
                     <input type={'text'} placeholder="Enter you comment"/>
                 </div>
-            </from>
+            </form>
         </div>
     );
 }

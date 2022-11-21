@@ -1,10 +1,6 @@
 const UserModule = require('../modules/UserModule');
 
 const UserController = {
-    search (req,res) {
-        return resizeBy.json('hello')
-    },
-
     // [GET] /api/users 
     async getUsers (req,res) {
         try {

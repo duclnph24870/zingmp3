@@ -25,10 +25,10 @@ const changeTheme = option => {
     }
 }
 
-const changeSongPlaying = (songId,isPlaying) => {
+const changeSongPlaying = (data) => {
     return {
         type: appActionTypes.CHANGE_SONG,
-        payload: { songId, isPlaying },
+        payload: { ... data },
     }
 }
 
