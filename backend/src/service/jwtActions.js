@@ -23,7 +23,7 @@ const verifyJwt = async token => {
             return {
                 errCode: 1,
                 message: "Token đã hết hạn",
-                error,
+                name: error.name,
             }
         }
         return {
