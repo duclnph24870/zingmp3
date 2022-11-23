@@ -2,7 +2,6 @@ const express = require('express');
 const routes = express.Router();
 const UserController = require('../app/controllers/UserController');
 
-// /api
-routes.get('/users', UserController.getUsers);
+routes.post('/signUp', UserController.signUp);
 
 module.exports = routes;
