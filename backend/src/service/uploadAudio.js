@@ -99,11 +99,11 @@ const editAudio = async  (_req,res,next) => {
 }
 
 // [POST] delete
-const deleteAudio = async (req,res) => {
+const deleteAudio = async (req,res,next) => {
     const audioName = req.body.audioName;
     const pathAudio = appRoot + '/src/asset/audio/' + audioName;
     await fs.remove(pathAudio);
-    return res.json('Xóa thành công');
+    next();
 }
 
 module.exports = {

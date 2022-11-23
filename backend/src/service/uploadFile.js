@@ -78,6 +78,7 @@ const uploadImage = (_req,res,next) => {
 
 // [POST] /edit
 const editImage = async  (_req,res,next) => {
+    const noChangeImage = _req.body.noChangeImage;
     // xóa bỏ image cũ
     const imageName = _req.body.imageName;
     const pathImage = appRoot + '/src/asset/image/' + imageName;
@@ -88,6 +89,12 @@ const editImage = async  (_req,res,next) => {
         ... _req.body
     }
     upload (req,res, function (err) {
+        // không thay đổi ảnh
+        console.log(noChangeImage);
+        if (noChangeImage) {
+            _req.body = body;
+            return next();
+        }
         if (req.fileValidationError) {
             // lỗi validate file
             return res.json(req.fileValidationError);
@@ -114,11 +121,11 @@ const editImage = async  (_req,res,next) => {
 }
 
 // [POST] delete
-const deleteImage = async (req,res) => {
+const deleteImage = async (req,res,next) => {
     const imageName = req.body.imageName;
     const pathImage = appRoot + '/src/asset/image/' + imageName;
     await fs.remove(pathImage);
-    return res.json('Xóa thành công');
+    next();
 }
 
 module.exports = {
