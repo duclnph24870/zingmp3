@@ -1,4 +1,5 @@
 const AlbumModule = require('../modules/AlbumModule');
+const uploadDriver = require('../../service/uploadDriver');
 
 class AlbumController {
     // [GET] /album/:slug (json)
@@ -38,7 +39,7 @@ class AlbumController {
 
     // [POST] /album/create (formData)
     async createAlbum (req,res) {
-        const image = req.image.imageLink;
+        const image = req.fileUpload.id;
         const { idUser,name } = req.body;
         if (!idUser || !name) {
             return res.status(500).json({
@@ -69,7 +70,7 @@ class AlbumController {
 
     // [POST] /album/edit (formData)
     async editAlbum (req,res) {
-        const { imageLink } = req.image;
+        const image = req.fileUpdate;
         const dataEdit = { ... req.body };
         if (!dataEdit.idEdit) {
             return res.status(500).json({
@@ -78,8 +79,8 @@ class AlbumController {
             });
         }
 
-        if (imageLink) {
-            dataEdit.image = imageLink;
+        if (image) {
+            dataEdit.image = image.id;
         }else {
             if (Object.keys(req.body).length === 0) {
                 return res.status(204).json({
@@ -104,6 +105,34 @@ class AlbumController {
             return res.status(500).json({
                 errCode: 1,
                 message: 'Lỗi server, Sửa album không thành công',
+                error,
+            });
+        }
+    }
+
+    // [POST] /album/delete
+    async deleteAlbum (req,res) {
+        const { albumId } = req.body;
+        if (!albumId) {
+            return res.status(500).json({
+                errCode: 1,
+                message: 'Xóa không thành công, album không tồn tại'
+            });
+        }
+        try {
+            const albumDelete = await AlbumModule.findByIdAndDelete({
+                _id: albumId,
+            });
+            console.log(albumDelete);
+            await uploadDriver.deleteFile(albumDelete.image);
+            return res.status(200).json({
+                errCode: 0,
+                message: 'Xóa album thành công',
+            });
+        } catch (error) {   
+            return res.status(500).json({
+                errCode: 1,
+                message: 'Lỗi server, Thao tác xóa không thành công',
                 error,
             });
         }

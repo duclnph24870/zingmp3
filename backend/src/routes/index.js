@@ -3,7 +3,6 @@ const searchRouter = require('./search');
 const songRouter = require('./song');
 const playlistRouter = require('./playlist');
 const countryRouter = require('./country');
-const uploadRouter = require('./upload');
 const alBumRouter = require('./album');
 
 function routes (app) {
@@ -12,7 +11,6 @@ function routes (app) {
     app.use('/song',songRouter);
     app.use('/playlist',playlistRouter);
     app.use('/country',countryRouter);
-    app.use('/upload',uploadRouter);
     app.use('/album',alBumRouter);
 }
 
