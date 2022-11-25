@@ -28,7 +28,6 @@ const imageFilter = function(req, file, cb) {
     cb(null, true);
 };
 
-
 // [POST] /create
 const uploadImage = (_req,res,next) => {
     let req = _req;

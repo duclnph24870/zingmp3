@@ -1,9 +1,10 @@
 const CountryModule = require('../modules/CountryModule');
+const uploadDriver = require('../../service/uploadDriver');
 
 class CountryController {
     // [POST] /country/create (formData)
     async createCountry (req,res) {
-        const image = req.image.imageLink;
+        const image = req.fileUpload.id;
         const { name } = req.body;
         if (!name || !image) {
             return res.status(500).json({
@@ -52,7 +53,6 @@ class CountryController {
     // [POST] /country/delete (json)
     async deleteCountry (req,res) {
         const { countryId } = req.body;
-        console.log(req.body);
         if (!countryId) {
             return res.status(500).json({
                 errCode: 1,
@@ -60,9 +60,11 @@ class CountryController {
             });
         }
         try {
-            await CountryModule.deleteOne({
+            const countryDelete = await CountryModule.findByIdAndDelete({
                 _id: countryId,
             });
+            console.log(countryDelete);
+            await uploadDriver.deleteFile(countryDelete.image);
             return res.status(200).json({
                 errCode: 0,
                 message: 'Xóa quốc gia thành công',
@@ -78,11 +80,10 @@ class CountryController {
 
     // [POST] /country/edit (formData)
     async editCountry (req,res) {
-        console.log(req.body);
-        const { imageLink } = req.image;
+        const image = req.fileUpdate;
         const dataEdit = { ...req.body };
-        if (imageLink) {
-            dataEdit.image = imageLink;
+        if (image) {
+            dataEdit.image = image.id;
         }
         if (!dataEdit.idEdit) {
             return res.status(500).json({
