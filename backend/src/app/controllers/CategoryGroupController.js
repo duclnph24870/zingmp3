@@ -1,84 +1,73 @@
-const AlbumModule = require('../modules/AlbumModule');
 const uploadDriver = require('../../service/uploadDriver');
+const CategoryGroupModule = require('../modules/CategoryGroupModule');
 
-class AlbumController {
-    // [GET] /album/:slug (json)
-    async selectAlbum (req,res) {
+class CategoryGroupController {
+    // [GET] categoryGroup/:slug
+    async select (req,res) {
         const slug = req.params.slug;
-        let option = { slug };
-        if (!slug) {
-            return res.status(500).json({
-                errCode: 1,
-                message: 'Không tìm thấy Album',
-            });
-        }
-        if (slug === 'all') {
-            option = {}
-        }
+        let optionFind = { slug };
+        if (slug === 'all') { optionFind = {} }
         try {
-            const album = await AlbumModule.find(option).populate({
-                path: 'idUser',
-                select: '_id userName email role image'
-            });
-            if (album.length === 0) {
+            const result = await CategoryGroupModule.find(optionFind);
+            if (result.length === 0) {
                 return res.status(500).json({
                     errCode: 1,
-                    message: 'Không tìm thấy Album',
+                    message: 'Không tìm thấy category group'
                 });
             }
-
             return res.status(200).json({
                 errCode: 0,
-                album,
+                categoryGroup: result,
             });
         } catch (error) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Lỗi server, vui lòng thử lại',
                 error
-            });
+            })
         }
     }
 
-    // [POST] /album/create (formData)
-    async createAlbum (req,res) {
+    // [POST] categoryGroup/create (form data)
+    async createCategoryGroup (req,res) {
         const image = req.fileUpload.id;
         const { idUser,name } = req.body;
+
         if (!idUser || !name) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Bạn chưa nhập đầy đủ thông tin',
+                message: 'Bạn chưa nhập đầy đủ thông tin'
             });
         }
-        try {
-            const newAlbum = new AlbumModule({
-                idUser,
-                name,
-                image,
-            });
 
-            await newAlbum.save();
+        try {
+            const newCateGroup = new CategoryGroupModule({
+                idUser,
+                image,
+                name
+            });
+            const result = await newCateGroup.save();
+
             return res.status(200).json({
                 errCode: 0,
-                message: 'Thêm album thành công!',
+                message: 'Thêm nhóm thể loại thành công',
+                result
             });
         } catch (error) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Lỗi server, thêm album thất bại',
                 error
             });
         }
     }
 
-    // [POST] /album/edit (formData)
-    async editAlbum (req,res) {
+    // [POST] categoryGroup/edit (form data)
+    async editCateGroup (req,res) {
         const image = req.fileUpdate;
         const dataEdit = { ... req.body };
         if (!dataEdit.idEdit) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Không xác định được album'
+                message: 'Không xác định được nhóm thể loại'
             });
         }
 
@@ -88,13 +77,13 @@ class AlbumController {
             if (Object.keys(req.body).length === 0) {
                 return res.status(204).json({
                     errCode: 0,
-                    message: 'Không có sự thay đổi cho album'
+                    message: 'Không có sự thay đổi cho nhóm thể loại'
                 });
             }
         }
 
         try {
-            await AlbumModule.updateOne({
+            await CategoryGroupModule.updateOne({
                 _id: dataEdit.idEdit,
             }, {
                 ... dataEdit
@@ -102,35 +91,35 @@ class AlbumController {
 
             return res.status(200).json({
                 errCode: 0,
-                message: 'Cập nhập thông tin album thành công',
+                message: 'Cập nhập thông tin nhóm thể loại thành công',
             });
         } catch (error) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Lỗi server, Sửa album không thành công',
+                message: 'Lỗi server, Sửa nhóm thể loại không thành công',
                 error,
             });
         }
     }
 
-    // [POST] /album/delete
-    async deleteAlbum (req,res) {
-        const { albumId } = req.body;
-        if (!albumId) {
+    // [POST] categoryGroup/delete (json)
+    async deleteCateGroup (req,res) {
+        const { cateGroupId } = req.body;
+        if (!cateGroupId) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Xóa không thành công, album không tồn tại'
+                message: 'Xóa không thành công, mục cần xóa không tồn tại'
             });
         }
         try {
-            const albumDelete = await AlbumModule.findByIdAndDelete({
-                _id: albumId,
+            const cateGroupDelete = await CategoryGroupModule.findByIdAndDelete({
+                _id: cateGroupId,
             });
-            console.log(albumDelete);
-            await uploadDriver.deleteFile(albumDelete.image);
+            console.log(cateGroupDelete);
+            await uploadDriver.deleteFile(cateGroupDelete.image);
             return res.status(200).json({
                 errCode: 0,
-                message: 'Xóa album thành công',
+                message: 'Xóa thành công',
             });
         } catch (error) {   
             return res.status(500).json({
@@ -140,6 +129,7 @@ class AlbumController {
             });
         }
     }
+
 }
 
-module.exports = new AlbumController;
+module.exports = new CategoryGroupController;
