@@ -110,7 +110,7 @@ const deleteFile = async (fileId) => {
 	}
 };
 
-// update file
+// update file (khi fileId không tồn tại thì sẽ tạo mới ở update)
 const updateFile = async (req,res,next) => {
     const file = req.file;
     const fileId = req.header.fileId || req.params.fileId || req.query.fileId;
@@ -151,6 +151,11 @@ const updateFile = async (req,res,next) => {
 		req.fileUpdate = updateFile.data;
         return next();
     } catch (error) {
+        if (error.code === 404) {
+            const fileId = await uploadFile(file); 
+            req.fileUpdate = { id: fileId };
+            return next();
+        }
         return res.status(500).json({
             errCode: 1,
             message: 'Update file không thành công',
