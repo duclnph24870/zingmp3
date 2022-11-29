@@ -64,14 +64,7 @@ const setFilePublic = async (fileId) => {
 }
 
 // upload file
-const uploadFile = async (req,res,next) => {
-    const file = req.file;
-    if (!file) {
-        return res.status(500).json({
-            errCode: 1,
-            message: 'Bạn vui lòng chọn file cần upload',
-        })
-    }
+const uploadFile = async (file) => {
     try {
         const bufferStream = new Stream.PassThrough();
 		bufferStream.end(file.buffer);
@@ -88,8 +81,7 @@ const uploadFile = async (req,res,next) => {
 			fields: "id",
 		});
 		await setFilePublic(createdFile.data.id);
-		req.fileUpload = createdFile.data;
-        return next();
+		return createdFile.data.id;
     } catch (error) {
         return res.status(500).json({
             errCode: 1,

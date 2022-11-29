@@ -4,9 +4,9 @@ const uploadDriver = require('../../service/uploadDriver');
 class CountryController {
     // [POST] /country/create (formData)
     async createCountry (req,res) {
-        const image = req.fileUpload.id;
+        const file = req.file;
         const { name } = req.body;
-        if (!name || !image) {
+        if (!name) {
             return res.status(500).json({
                 errCode: 1,
                 message: "Bạn chưa nhập đầy đủ thông tin"
@@ -14,6 +14,7 @@ class CountryController {
         }
 
         try {
+            const image = await uploadDriver.uploadFile(file);
             const newCountry = new CountryModule({
                 name,
                 image

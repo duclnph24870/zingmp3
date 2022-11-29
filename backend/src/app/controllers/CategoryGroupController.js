@@ -29,7 +29,7 @@ class CategoryGroupController {
 
     // [POST] categoryGroup/create (form data)
     async createCategoryGroup (req,res) {
-        const image = req.fileUpload.id;
+        const file = req.file;
         const { idUser,name } = req.body;
 
         if (!idUser || !name) {
@@ -40,6 +40,7 @@ class CategoryGroupController {
         }
 
         try {
+            const image = await uploadDriver.uploadFile(file);
             const newCateGroup = new CategoryGroupModule({
                 idUser,
                 image,

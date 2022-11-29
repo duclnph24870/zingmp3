@@ -42,7 +42,7 @@ class AlbumController {
 
     // [POST] /album/create (formData)
     async createAlbum (req,res) {
-        const image = req.fileUpload.id;
+        const file = req.file;
         const { idUser,name } = req.body;
         if (!idUser || !name) {
             return res.status(500).json({
@@ -51,6 +51,7 @@ class AlbumController {
             });
         }
         try {
+            const image = await uploadDriver.uploadFile(file);
             const newAlbum = new AlbumModule({
                 idUser,
                 name,
