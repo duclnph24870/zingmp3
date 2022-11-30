@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     status: { type: Number, default: 1 },
     slug: { type: String, slug: 'userName',unique: true },
     follow: { type: Number ,default: 0},
-    birthday: { type: Date ,require},
+    birthday: { type: Date },
     keyword: { type: Array},
 }, {
     collection: 'users',

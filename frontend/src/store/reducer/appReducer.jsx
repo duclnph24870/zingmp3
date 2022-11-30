@@ -4,6 +4,7 @@ import { appActionTypes } from '../actions/actionTypes';
 
 const initStateApp = {
     language: LANGUAGES.VI,
+    isLogin: false,
     loading: false,
     modal: {
         isActive: false,
@@ -25,7 +26,7 @@ const initStateApp = {
         },
     },
     songPlaying: {
-        songId: '637a1b14a7eedd9c28fa70f9',
+        idSong: null,
         volume: 50,
         replay: false,
         randomPlay: false,
@@ -64,6 +65,11 @@ const appReducer = (state = initStateApp, action) => {
                 songPlaying: {
                     ... action.payload
                 }
+            }
+        case appActionTypes.CHANGE_LOGIN:
+            return {
+                ... state,
+                isLogin: { ... action.payload }
             }
         default: 
             return state;

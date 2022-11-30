@@ -1,5 +1,9 @@
 import { appActionTypes } from "./actionTypes"
 
+const changeLogin = (data) => {
+    return { type: appActionTypes.CHANGE_LOGIN,payload: data }
+}
+
 const changeLanguage = (language) => {
     return { type: appActionTypes.CHANGE_LANGUAGE,payload: language }
 }
@@ -33,6 +37,7 @@ const changeSongPlaying = (data) => {
 }
 
 export {
+    changeLogin,
     changeLanguage,
     changeLoading,
     changeModal,

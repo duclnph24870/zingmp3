@@ -5,7 +5,7 @@ const jwtAction = require('../../service/jwtActions');
 const UserController = {
     // [POST] /user/signUp 
     async signUp (req,res) {
-        const { userName,email, password, gender, description, birthday, country } = req.body;
+        const { userName,email, password, gender, country } = req.body;
 
         try {
             const checkEmail = await UserModule.findOne({
@@ -20,7 +20,7 @@ const UserController = {
             }
 
             const users = new UserModule({
-                userName,email,password,gender,description,birthday,idCountry: country
+                userName,email,password,gender,idCountry: country
             });
             const newUser = await users.save();
 

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import images from '../../../../assets/images';
 import { changeModal } from '../../../../store/actions/appActions'
 import { Button, Section } from '../../../../components';
 import Tippy from '@tippyjs/react/headless';
 import '../Header.scss';
-import { ThemeModal } from '../../../../components';
+import { ThemeModal,AuthForm } from '../../../../components';
 import { useState } from 'react';
 
 function HeaderRight ({
@@ -14,11 +14,23 @@ function HeaderRight ({
     const [ isSettingActive, setIsSettingActive ]= useState(false);
     const [ isAvatarActive, setIsAvatarActive ]= useState(false);
     const dispatch = useDispatch();
+    const isLogin = useSelector(state => state.appReducer.isLogin);
     const handleThemeClick = () => {
         dispatch(changeModal({
             isActive: true,
             Component: <ThemeModal/>
         }))
+    }
+
+    const handleAvatarClick = () => {
+        if (isLogin) {
+            setIsAvatarActive(true);
+        }else {
+            dispatch(changeModal({
+                isActive: true,
+                Component: <AuthForm/>
+            }))
+        }
     }
 
     const dataSettingMenu = [
@@ -98,8 +110,8 @@ function HeaderRight ({
                 )}
             >
                 <div>
-                    <Button onClick={() => setIsAvatarActive(true)} className='headerRight__button avatar' buttonIcon>
-                        <img src='https://s120-ava-talk-zmp3.zmdcdn.me/a/a/9/6/7/120/7b99d0c26a89db3ba884b4e427962a17.jpg' alt=""/>
+                    <Button onClick={handleAvatarClick} className='headerRight__button avatar' buttonIcon>
+                        <img src={isLogin ? 'https://s120-ava-talk-zmp3.zmdcdn.me/a/a/9/6/7/120/7b99d0c26a89db3ba884b4e427962a17.jpg' : 'https://avatar.talk.zdn.vn/default.jpg'} alt=""/>
                     </Button>
                 </div>
             </Tippy>

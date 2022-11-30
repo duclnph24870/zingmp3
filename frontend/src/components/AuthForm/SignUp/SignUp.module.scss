@@ -1,0 +1,133 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-size: 2rem;
+        padding-bottom: 24px;
+        color: #8d22c3;
+
+        .signIn-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #8d22c3;
+            margin-bottom: 10px;
+             
+            i {
+                font-size: 3rem;
+                color: #fff;
+            }
+        }
+    }
+
+    .form {
+        .errMessage {
+            color: #bf1650;
+            margin: 5px 0;
+        }
+        .inputBlock {
+            position: relative;
+            width: 450px;
+
+            & + .inputBlock {
+                margin-top: 16px;
+            }
+
+            &.radio {
+                display: flex;
+                flex-wrap: wrap;
+                color: #333;
+
+                label {
+                    width: 100%;
+                    font-size: 1.5rem;
+                    color: #333;
+                    margin-bottom: 5px;
+                }
+                
+                input {
+                    width: 15px;
+                    height: 15px;
+                    margin-right: 8px;
+                }
+            }
+
+            &.select {
+                display: flex;
+                flex-wrap: wrap;
+                color: #333;
+
+                label {
+                    width: 100%;
+                    font-size: 1.5rem;
+                    color: #333;
+                    margin-bottom: 5px;
+                }
+                
+                select {
+                    border: 1px solid #999;
+                    padding: 5px;
+                }
+            }
+
+            input {
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.05);
+                border-radius: 3px;
+                color: #666;
+                padding: 16px 10px;
+            }
+
+            .hiddenPass {
+                position: absolute;
+                right: 10px;
+                font-size: 1.2rem;
+                top: 50%;
+                cursor: pointer;
+                font-weight: 600;
+                color: #666;
+                transform: translateY(-50%);
+            }
+        }
+
+        .footer {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .footerItem {
+                font-size: 1.6rem;
+                cursor: pointer;
+                color: #333;
+                transition: color ease-in 0.3s;
+
+                &:hover {
+                    color: #8d22c3;
+                }
+            }
+        }
+
+        .submitBtn {
+            margin-top: 20px;
+            width: 100%;
+            font-size: 1.5rem;
+            padding: 15px 0;
+            color: #fff;
+            border-radius: 3px;
+            transition: opacity ease-in-out 0.3s;
+            background-color: #8d22c3;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+}

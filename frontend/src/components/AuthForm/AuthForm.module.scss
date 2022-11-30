@@ -1,0 +1,16 @@
+.wrapper {
+    background-color: #fff;
+    max-height: 100%;
+    border-radius: 8px;
+    overflow-y: scroll;
+    padding: 30px;
+
+    &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 30px;
+    }
+
+    &:first-child {
+        padding-top: 30px;
+    }
+}
