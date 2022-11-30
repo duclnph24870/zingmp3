@@ -43,6 +43,7 @@ class CategoryController {
             const image = await uploadDriver.uploadFile(file);
             const newCate = new CategoryModule({
                 idUser,
+                idCateGroup,
                 image,
                 name
             });

@@ -6,6 +6,7 @@ const countryRouter = require('./country');
 const alBumRouter = require('./album');
 const categoryGroupRouter = require('./categoryGroup');
 const categoryRouter = require('./category');
+const commentRouter = require('./comment');
 
 function routes (app) {
     app.use('/user',userRoutes);
@@ -16,6 +17,7 @@ function routes (app) {
     app.use('/album',alBumRouter);
     app.use('/category',categoryRouter);
     app.use('/categoryGroup',categoryGroupRouter);
+    app.use('/comment',commentRouter);
 }
 
 module.exports = routes;

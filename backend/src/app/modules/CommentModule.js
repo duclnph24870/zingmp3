@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
     idUser: { type: String, require, ref: 'user' },
     idSong: { type: String, ref: 'song' },
-    content: { type: String, require },
+    content: { type: String, require, minLength: 1 },
     like: { type: Number, default: 0 },
     disLike: { type: Number, default: 0 },
 }, {
