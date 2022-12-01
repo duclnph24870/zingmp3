@@ -12,7 +12,6 @@ function PlayController({
 }) {
 
     const [songData,setSongData] = useState({});
-    console.log(songData);
     const songCurrData = useSelector(state => state.appReducer.songPlaying);
     useEffect(() => {
         getSongById(songCurrData.songId)

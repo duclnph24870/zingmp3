@@ -23,15 +23,10 @@ const UserController = {
                 userName,email,password,gender,idCountry: country
             });
             const newUser = await users.save();
-
-            const token = await jwtAction.createJwt({
-                id: newUser._id,
-            });
             
             return res.status(200).json({
                 errCode: 0,
                 message: 'Đăng ký tài khoản thành công!',
-                token
             });
         } catch (error) {
             return res.status(400).json({
@@ -73,6 +68,23 @@ const UserController = {
         }
     },
 
+    //[GET] /user (Lấy user bằng token)
+    async getUser (req,res) {
+        const idUser = req.user.id;
+        try {
+            const user = await UserModule.findById(idUser).select(['-password']);
+            return res.status(200).json({
+                errCode: 0,
+                user
+            });
+        } catch (error) {
+            return res.status(500).json({
+                errCode: 1,
+                message: 'User không tồn tại hoặc đã bị xóa',
+            })
+        }
+    },
+
     // [POST] /user/signIn
     async signIn (req,res) {
         const { email,password } = req.body;
@@ -108,6 +120,7 @@ const UserController = {
             return res.status(200).json({
                 errCode: 0,
                 message: 'Đăng nhập thành công',
+                idUser: user._id,
                 token,
             });
 
@@ -120,9 +133,9 @@ const UserController = {
         }
     },
 
-    // [POST] /user/refreshToken/:id
+    // [POST] /user/refreshToken
     async createRefreshToken (req,res) {
-        const id = req.params.id;   
+        const id = req.body.id; 
         try {
             const newToken = await jwtAction.createJwt({id});
             if (newToken && newToken.errCode === 1) {

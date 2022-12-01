@@ -7,5 +7,5 @@ export const searchKeywordRealtime = async (value) => {
         }
     })
 
-    return result.data;
+    return result;
 }

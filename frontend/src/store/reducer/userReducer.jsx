@@ -3,9 +3,10 @@ import { userActionTypes } from "../actions/actionTypes";
 const initStateUser = {
     user: {
         isLogin: false,
-        avatar: 'https://avatar.talk.zdn.vn/default.jpg',
+        image: 'https://avatar.talk.zdn.vn/default.jpg',
         userName: undefined,
-        role: undefined
+        role: undefined,
+        token: null
     }
 }
 
@@ -17,6 +18,11 @@ const userReducer = (state = initStateUser, action) => {
                 user: {
                     ... action.payload,
                 }
+            }
+        case userActionTypes.LOGOUT:
+            return {
+                ... state,
+                user: {}
             }
         default: 
             return state;

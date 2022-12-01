@@ -1,5 +1,4 @@
 export const appActionTypes = {
-    CHANGE_LOGIN: 'CHANGE_LOGIN',
     CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
     CHANGE_LOADING: 'CHANGE_LOADING',
     CHANGE_MODAL: 'CHANGE_MODAL',
@@ -9,4 +8,5 @@ export const appActionTypes = {
 
 export const userActionTypes = {
     CHANGE_LOGIN: 'CHANGE_LOGIN', 
+    LOGOUT: 'LOGOUT'
 }

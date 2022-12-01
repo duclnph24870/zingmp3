@@ -7,14 +7,18 @@ import Tippy from '@tippyjs/react/headless';
 import '../Header.scss';
 import { ThemeModal,AuthForm } from '../../../../components';
 import { useState } from 'react';
+import { changeLogin, logout } from '../../../../store/actions/userActions';
+import { toast } from 'react-toastify';
+import { convertImage } from '../../../../service/app';
 
 function HeaderRight ({
     className = '',
 }) {
+    // lấy ra token
     const [ isSettingActive, setIsSettingActive ]= useState(false);
     const [ isAvatarActive, setIsAvatarActive ]= useState(false);
     const dispatch = useDispatch();
-    const isLogin = useSelector(state => state.appReducer.isLogin);
+    const userLogin = useSelector(state => state.userReducer.user);
     const handleThemeClick = () => {
         dispatch(changeModal({
             isActive: true,
@@ -23,7 +27,7 @@ function HeaderRight ({
     }
 
     const handleAvatarClick = () => {
-        if (isLogin) {
+        if (userLogin._id) {
             setIsAvatarActive(true);
         }else {
             dispatch(changeModal({
@@ -62,7 +66,15 @@ function HeaderRight ({
     const dataUser = [
         { title: "Mua code VIP", icon: <i className='icon ic-20-VIP'></i> },
         { title: "Nâng cấp VIP", icon: <i className='icon ic-20-VIP-2'></i> },
-        { title: "Đăng xuất", icon: <i className='icon ic-log-out'></i> },
+        { title: "Đăng xuất", icon: <i className='icon ic-log-out'></i>,events: {
+            onClick: () => {
+                localStorage.removeItem('idUser');
+                localStorage.removeItem('token');
+                dispatch(logout());
+                setIsAvatarActive(false);
+                toast.success('Đăng xuất tài khoản thành công');
+            }
+        } },
     ];
 
 
@@ -110,8 +122,8 @@ function HeaderRight ({
                 )}
             >
                 <div>
-                    <Button onClick={handleAvatarClick} className='headerRight__button avatar' buttonIcon>
-                        <img src={isLogin ? 'https://s120-ava-talk-zmp3.zmdcdn.me/a/a/9/6/7/120/7b99d0c26a89db3ba884b4e427962a17.jpg' : 'https://avatar.talk.zdn.vn/default.jpg'} alt=""/>
+                    <Button title={userLogin.userName} onClick={handleAvatarClick} className='headerRight__button avatar' buttonIcon>
+                        <img src={userLogin._id ? convertImage(userLogin.image) : images.defaultAvt} alt=""/>
                     </Button>
                 </div>
             </Tippy>

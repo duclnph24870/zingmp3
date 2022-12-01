@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import styles from './SignUp.module.scss';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { countryService } from '../../../service';
+import { toast } from 'react-toastify';
+import request from '../../../utils/axios';
 
 const cx = classnames.bind(styles);
 
@@ -11,9 +14,30 @@ function SignUp ({
     setShowAuth
 }) {
     const [isShowPass,setIsShowPass] = useState(false); 
+    const [country,setCountry] = useState([]);
+    const formEl = useRef();
     const { register, handleSubmit,formState: {errors} } = useForm();
+    useEffect(() => {
+        countryService.getCountry()
+            .then(res => {
+                setCountry(res.country);
+            })
+            .catch(err => {
+                toast.error('Lỗi server');
+            })
+    },[]);
+    
     const onSubmit = data => {
-        console.log(data);
+        request.post('user/signUp',{
+            ... data
+        })
+            .then(res => {
+                formEl.current.reset();
+                toast.success(res.data.message);
+            })
+            .catch(err => {
+                toast.error(err.response.data.message)
+            })
     };
     return (  
         <div className={cx('wrapper',{
@@ -22,7 +46,7 @@ function SignUp ({
             <div className={cx('header')}>
                 Đăng Ký Tài Khoản
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className={cx('form')} action="">
+            <form ref={formEl} onSubmit={handleSubmit(onSubmit)} className={cx('form')} action="">
                 <div className={cx('inputBlock')}>
                     <input 
                         {...register('email',{required:true, minLength: 5, maxLength: 100})}
@@ -61,8 +85,9 @@ function SignUp ({
                     <label>Quốc gia:</label>
                     <select {...register('country',{required: true})}>
                         <option value="">--- Chọn quốc gia ---</option>
-                        <option value="1">Việt Nam</option>
-                        <option value="0">Trung Quốc</option>
+                        {country && country.map(item => (
+                            <option key={item._id} value={item._id}>{item.name}</option>
+                        ))}
                     </select>
                 </div>
                 {errors.country && <p className={cx('errMessage')}>Trường này là trường bắt buộc</p>}

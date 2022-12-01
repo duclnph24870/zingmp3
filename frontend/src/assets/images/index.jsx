@@ -5,6 +5,7 @@ import songIcon from './asideBaiHatIcon.svg'
 import playListIcon from './asidePlaylistIcon.svg'
 import spinner from './spinner-solid.svg';
 import themeIcon from './themeIcon.svg';
+import defaultAvt from './default.jpg';
 
 const images = {
     logoLight,
@@ -13,7 +14,8 @@ const images = {
     songIcon,
     playListIcon,
     spinner,
-    themeIcon
+    themeIcon,
+    defaultAvt
 }
 
 export default images;

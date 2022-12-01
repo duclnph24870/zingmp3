@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import styles from './SignIn.module.scss';
-import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { changeLogin } from '../../../store/actions/userActions';
+import { changeModal } from '../../../store/actions/appActions';
+import { signIn } from '../../../service/auth';
 
 const cx = classnames.bind(styles);
 
@@ -12,8 +17,23 @@ function SignIn ({
 }) {
     const [isShowPass,setIsShowPass] = useState(false); 
     const { register, handleSubmit,formState: {errors} } = useForm();
+    const dispatch = useDispatch();
     const onSubmit = data => {
-        console.log(data);
+        (async () => {
+            const result = await signIn(data);
+            if (result.errCode === 0) {
+                localStorage.setItem('idUser',result.idUser);
+                localStorage.setItem('token',result.token);
+                dispatch(changeModal({
+                    isActive: false,
+                    Component: null,
+                }))
+                toast.success(result.message);
+            }else {
+                toast.error(result.message);
+            }
+        })();
+        
     };
     return (  
         <div className={cx('wrapper',{

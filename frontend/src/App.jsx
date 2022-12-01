@@ -2,23 +2,32 @@ import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import Progress from './components/ProgressBar'
 import { routes } from './routes'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './assets/main.min.css'
 import './assets/public.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import 'tippy.js/dist/tippy.css'
 import ModalWrapper from './components/ModalWrapper';
+import { useEffect } from 'react';
+import { changeLogin } from './store/actions/userActions';
 
 function App() {
   const { loading,modal,theme } = useSelector( state => state.appReducer );
   const ModalComponent = modal.Component;
+  const dispatch = useDispatch();
   // lấy ra giao diện hiện có
   const rootStyle = document.documentElement.style;
   const variableName = Object.keys(theme.styles);
   variableName.forEach(item => {
     rootStyle.setProperty(item,theme.styles[item]);
-  })
+  });
+  // lấy ra token local
+  const user = useSelector(state => state.userReducer.user);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    dispatch(changeLogin(token));
+  },[token]);
   
   return (
     <BrowserRouter>

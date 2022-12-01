@@ -4,7 +4,6 @@ import { appActionTypes } from '../actions/actionTypes';
 
 const initStateApp = {
     language: LANGUAGES.VI,
-    isLogin: false,
     loading: false,
     modal: {
         isActive: false,
@@ -65,11 +64,6 @@ const appReducer = (state = initStateApp, action) => {
                 songPlaying: {
                     ... action.payload
                 }
-            }
-        case appActionTypes.CHANGE_LOGIN:
-            return {
-                ... state,
-                isLogin: { ... action.payload }
             }
         default: 
             return state;

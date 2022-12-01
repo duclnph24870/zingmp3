@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const createJwt = async (data) => {
     try {
         let token = await jwt.sign({ ... data }, process.env.JWT_PASSWORD, {
-            expiresIn: '5m'
+            expiresIn: '3m'
         })
         return token
     } catch (error) {

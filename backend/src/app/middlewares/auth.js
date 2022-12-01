@@ -14,15 +14,15 @@ class AuthMiddleware {
             const data = await jwtActions.verifyJwt(token);
             // token sai hoặc hết hạn
             if (data && data.errCode === 1) {
-                return res.status(500).json({
-                    ... data
+                return res.status(200).json({
+                    ... data,
+                    status: 401
                 });
             }
             const user = await UserModule.findOne({ _id: data.id });
             // check user tồn tại
             if (!user) {
-                return res.status(500).json({
-                    errCode: 1,
+                return res.status(404).json({
                     message: 'User không tồn tại hoặc đã bị xóa',
                 })
             }
