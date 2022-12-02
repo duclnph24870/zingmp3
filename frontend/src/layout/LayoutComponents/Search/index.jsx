@@ -21,7 +21,7 @@ function Search ({
         handleSearch(debounce.trim());
     },[debounce]);
 
-    let checkData = data.songData && data.userData && (data.songData.length > 0 || data.userData.length > 0 ) && value.length > 0;
+    let checkData = data.songData && data.authorData && (data.songData.length > 0 || data.authorData.length > 0 ) && value.length > 0;
     const handleClearClick = () => {
         setValue('');
         inputEl.current.focus();
@@ -57,11 +57,11 @@ function Search ({
                     }
 
                     {
-                        data.userData && data.userData.length > 0 
+                        data.authorData && data.authorData.length > 0 
                     &&
                     <>
                         <h1 className='search__suggest-title'>Nghệ sĩ</h1>
-                        <Section data={data.userData} ComponentItem={SearchSuggestItem} className={'search__suggest-section1'}/>
+                        <Section data={data.authorData} ComponentItem={SearchSuggestItem} className={'search__suggest-section1'}/>
                     </>
                     }
                 </MenuWrapper>

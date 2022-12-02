@@ -8,7 +8,6 @@ import './ControllerPlayerCenter.scss';
 
 function ControllerPlayerCenter ({
     className = '',
-    songData,
     songCurrData
 
 }) {
@@ -108,7 +107,6 @@ function ControllerPlayerCenter ({
     // xử lý sự kiện next song
     const handleNextSong = (e) => {
         let random = Math.floor(Math.random() * 10)
-        console.log(random);
     }
 
     return (  
@@ -119,7 +117,7 @@ function ControllerPlayerCenter ({
                 onTimeUpdate={handleTimeUpdate} 
                 onEnded={handleEndedAudio}
                 ref={audioRef} 
-                src={songData.audio}
+                src={songCurrData.audio}
             ></audio>
             <div className='controllerPayerCenter-item controllerPayerCenter-btnBlock'>
                 <Button 
@@ -176,7 +174,6 @@ function ControllerPlayerCenter ({
 
 ControllerPlayerCenter.propTypes = {
     className: PropTypes.string,
-    songData: PropTypes.object,
 }
 
 export default ControllerPlayerCenter;

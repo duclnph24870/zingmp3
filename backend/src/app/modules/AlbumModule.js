@@ -16,9 +16,4 @@ const AlbumSchema = new Schema({
     timestamps: true,
 });
 
-AlbumSchema.pre('save', function (next) {
-    this.keyword[0] = removeVietnameseTones(this.name);
-    next();
-});
-
 module.exports = mongoose.model('album',AlbumSchema);

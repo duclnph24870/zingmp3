@@ -7,6 +7,7 @@ const alBumRouter = require('./album');
 const categoryGroupRouter = require('./categoryGroup');
 const categoryRouter = require('./category');
 const commentRouter = require('./comment');
+const authorRouter = require('./author');
 
 function routes (app) {
     app.use('/user',userRoutes);
@@ -18,6 +19,7 @@ function routes (app) {
     app.use('/category',categoryRouter);
     app.use('/categoryGroup',categoryGroupRouter);
     app.use('/comment',commentRouter);
+    app.use('/author',authorRouter);
 }
 
 module.exports = routes;

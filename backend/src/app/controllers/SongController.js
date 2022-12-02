@@ -2,17 +2,17 @@ const SongModule = require('../modules/SongModule');
 const uploadDriver = require('../../service/uploadDriver');
 
 class SongController {
-    // [GET] /song/:slug ( Lấy bài hát theo id chưa đăng nhập )
+    // [GET] /song/:id ( Lấy bài hát theo id chưa đăng nhập )
     async selectSong (req,res) {
-        const slug = req.params.slug;
-        let option = { slug };
-        if (!slug) {
+        const id = req.params.id;
+        let option = { _id: id };
+        if (!id) {
             return res.status(500).json({
                 errCode: 1,
                 message: 'Không tìm thấy bài hát',
             });
         }
-        if (slug === 'all') {
+        if (id === 'all') {
             option = {}
         }
         try {
@@ -110,6 +110,7 @@ class SongController {
                 message: 'Cập nhập thông tin bài hát thành công',
             });
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 errCode: 1,
                 message: 'Lỗi server, Sửa bài hát không thành công',

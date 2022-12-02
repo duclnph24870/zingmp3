@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { useEffect,memo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import SongItem from '../../../components/SongItem';
-import { getSongById } from '../../../service/songService';
+import { changeSongPlaying } from '../../../store/actions/appActions';
 import ControllerPlayerCenter from './ControllerPlayerCenter';
 import './PlayController.scss';
 
@@ -13,15 +13,12 @@ function PlayController({
 
     const [songData,setSongData] = useState({});
     const songCurrData = useSelector(state => state.appReducer.songPlaying);
+    const dispatch = useDispatch();
     useEffect(() => {
-        getSongById(songCurrData.songId)
-            .then(res => {
-                setSongData(res.song);
-            })
-            .catch(err => {
-                toast.error('Lỗi server');
-            })
-    },[songCurrData.songId]);
+        dispatch(changeSongPlaying({
+            ... songCurrData
+        }));
+    },[songCurrData.idSong]);
 
     return ( 
         <div className={`playController ${className}`}>

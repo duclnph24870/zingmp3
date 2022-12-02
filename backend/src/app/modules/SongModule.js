@@ -22,9 +22,4 @@ const SongSchema = new Schema({
     timestamps: true
 });
 
-SongSchema.pre('save', function (next) {
-    this.keyword[0] = removeVietnameseTones(this.name);
-    next();
-});
-
 module.exports = mongoose.model('song',SongSchema);

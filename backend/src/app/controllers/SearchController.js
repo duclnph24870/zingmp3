@@ -1,5 +1,5 @@
 const SongModule = require('../modules/SongModule');
-const UserModule = require('../modules/UserModule');
+const AuthorModule = require('../modules/AuthorModule');
 const AlbumModule = require('../modules/AlbumModule');
 const removeVietnameseTones = require('../../service/removeVietnames');
 
@@ -7,7 +7,7 @@ const SearchController = {
     // [GET] /search
     async get (req, res) {
 
-        const pattern = removeVietnameseTones(req.query.q); //g
+        const pattern = removeVietnameseTones(req.query.q);
         const regex = new RegExp(
             `${pattern}`,'gi'
         )
@@ -18,24 +18,23 @@ const SearchController = {
         try {
             switch (type) {
                 case 'all':
-                    // user query
-                    let userQuery = UserModule.find({
-                        keyword: { $regex: regex },
+                    // author query
+                    let authorQuery = AuthorModule.find({
+                        $or: [{ keyword: regex }, { slug: regex }]
                     })
-                        .select(['-password'])
                         .limit(amount);
 
 
                     // song query
                     let songQuery = SongModule.find({
-                        keyword: { $regex: regex },
+                        $or: [{ keyword: regex }, { slug: regex }]
                     })
                         .limit(amount);
 
-                    [userResult,songResult] = await Promise.all([userQuery, songQuery]);
+                    [authorResult,songResult] = await Promise.all([authorQuery, songQuery]);
                     result = {
                         errCode: 0,
-                        userResult,
+                        authorResult,
                         songResult
                     }
                     break;

@@ -20,7 +20,6 @@ const UserSchema = new Schema({
     slug: { type: String, slug: 'userName',unique: true },
     follow: { type: Number ,default: 0},
     birthday: { type: Date },
-    keyword: { type: Array},
 }, {
     collection: 'users',
     timestamps: true
@@ -41,8 +40,15 @@ UserSchema.methods = {
 
 UserSchema.pre('save', function (next) {
     this.password = this.decodedPassword(this.password);
-    this.keyword[0] = removeVietnameseTones(this.userName);
     next();
-})
+});
+
+UserSchema.pre('updateOne', function (next) {
+    const update = this.getUpdate();
+    if (update.password) {
+        this.password = this.decodedPassword(this.password);
+    }
+    next();
+});
 
 module.exports = mongoose.model('user',UserSchema);

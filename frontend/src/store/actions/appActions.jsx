@@ -1,3 +1,4 @@
+import { getSongById } from "../../service/songService"
 import { appActionTypes } from "./actionTypes"
 
 const changeLanguage = (language) => {
@@ -25,11 +26,17 @@ const changeTheme = option => {
     }
 }
 
-const changeSongPlaying = (data) => {
-    return {
-        type: appActionTypes.CHANGE_SONG,
-        payload: { ... data },
+const changeSongPlaying = (data) => async (dispatch) => {
+    const idSong = data.idSong;
+    if (idSong) {
+        console.log(idSong);
+        const result = await getSongById(idSong);
+        console.log(result);
     }
+    // return {
+    //     type: appActionTypes.CHANGE_SONG,
+    //     payload: { ... data },
+    // }
 }
 
 export {

@@ -83,11 +83,11 @@ const uploadFile = async (file) => {
 		await setFilePublic(createdFile.data.id);
 		return createdFile.data.id;
     } catch (error) {
-        return res.status(500).json({
+        return {
             errCode: 1,
             message: 'Lỗi server',
             error
-        });
+        };
     }
 } 
 

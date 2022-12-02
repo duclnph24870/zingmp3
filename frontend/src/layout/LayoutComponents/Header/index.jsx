@@ -24,21 +24,22 @@ function Header ({
         }
         try {
             setLoadingSearch(true);
-            let { userResult,songResult } = await searchKeywordRealtime({
+            let { authorResult,songResult } = await searchKeywordRealtime({
                 q: value,
                 amount: 5,
                 type: 'all',
             });
+            console.log(authorResult,songResult);
             
-            let userData = [];
+            let authorData = [];
             let songData = [];
             // xử lý dữ liệu trả về
-            if (userResult.length > 0) {
-                userData = userResult.map(item => {
+            if (authorResult.length > 0) {
+                authorData = authorResult.map(item => {
                     return {
-                        name: item.userName,
+                        name: item.name,
                         type: "Nghệ sĩ",
-                        avatar: item.avatar
+                        avatar: item.image
                     }
                 })
             }else if (songResult.length > 0) {
@@ -50,7 +51,7 @@ function Header ({
                 })
             }
             setSearchResult({
-                userData,
+                authorData,
                 songData
             });
             setLoadingSearch(false);
