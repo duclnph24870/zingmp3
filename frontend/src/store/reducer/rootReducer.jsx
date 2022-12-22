@@ -14,13 +14,13 @@ const configPersist = {
 const userPersistConfig = {
     ... configPersist,
     key: 'user',
-    whitelist: ['user'],
+    whitelist: [],
 }
 
 const appPersistConfig = {
     ... configPersist,
     key: 'app',
-    whitelist: ['language','theme','songPlaying']
+    whitelist: ['language','theme','songSetting']
 }
 
 const rootReducer = combineReducers({

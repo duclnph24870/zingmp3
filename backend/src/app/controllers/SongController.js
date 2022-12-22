@@ -16,10 +16,15 @@ class SongController {
             option = {}
         }
         try {
-            const song = await SongModule.find(option).populate({
-                path: 'idUser',
-                select: "_id userName role image"
-            })
+            const song = await SongModule.find(option)
+                .populate({
+                    path: 'idUser',
+                    select: "_id userName role image"
+                })
+                .populate({
+                    path: 'idAuthor',
+                    select: "_id name image"
+                })
             if (song.length === 0) {
                 return res.status(500).json({
                     errCode: 1,
@@ -32,6 +37,7 @@ class SongController {
                 song,
             });
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 errCode: 1,
                 message: 'Lỗi server, vui lòng thử lại',
@@ -44,8 +50,8 @@ class SongController {
     async createSong (req,res) {
         try {
             const file = req.file;
-            const { idUser,idCountry,idCateGroup,idAlbum,name } = req.body;
-            if (!idUser || !idCountry || !idCateGroup || !idAlbum || !name) {
+            const { idUser,idCountry,idCateGroup,idAlbum,idAuthor,name } = req.body;
+            if (!idUser || !idCountry || !idCateGroup || !idAlbum || !name || !idAuthor) {
                 return res.status(500).json({
                     errCode: 1,
                     message: 'Bạn chưa nhập đầy đủ thông tin'
@@ -54,7 +60,8 @@ class SongController {
 
             const audio = await uploadDriver.uploadFile(file);
             const newSong = new SongModule({
-                idUser: [idUser],
+                idUser,
+                idAuthor,
                 idCountry,
                 idCateGroup: [idCateGroup],
                 idAlbum: [idAlbum],
@@ -62,7 +69,6 @@ class SongController {
                 audio,
             });
             await newSong.save();
-            console.log('save complete');
             return res.status(200).json({
                 errCode: 0,
                 message: 'Thêm bài hát thành công',

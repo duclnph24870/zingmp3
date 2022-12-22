@@ -24,12 +24,13 @@ const initStateApp = {
             "--colorSearch-default": " rgba(0,0,0,0.05)",
         },
     },
-    songPlaying: {
+    songSetting: {
         idSong: null,
         volume: 50,
         replay: false,
         randomPlay: false,
-    }
+    },
+    songPlaying: {}
 }
 
 const appReducer = (state = initStateApp, action) => {
@@ -58,7 +59,14 @@ const appReducer = (state = initStateApp, action) => {
                     ... action.payload
                 }
             }
-        case appActionTypes.CHANGE_SONG:
+        case appActionTypes.CHANGE_SONG_SETTING:
+            return {
+                ... state,
+                songSetting: {
+                    ... action.payload
+                }
+            }
+        case appActionTypes.CHANGE_SONG_PLAYING:
             return {
                 ... state,
                 songPlaying: {

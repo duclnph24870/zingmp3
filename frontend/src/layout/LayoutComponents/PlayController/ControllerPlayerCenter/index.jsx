@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeSongPlaying } from '../../../../store/actions/appActions';
 import { Button } from '../../../../components';
+import { convertImage } from '../../../../service/app';
 import { convertTime } from '../../../../service/timeService';
+import { changeSongSetting } from '../../../../store/actions/appActions';
 import './ControllerPlayerCenter.scss';
 
 function ControllerPlayerCenter ({
     className = '',
+    songSetting,
     songCurrData
 
 }) {
@@ -21,16 +23,16 @@ function ControllerPlayerCenter ({
         timeDuration: null,
         timeCurr: null,
         rangeValue: 0,
-        rePlay: songCurrData.replay,
-        randomPlay: songCurrData.randomPlay,
+        rePlay: songSetting.replay,
+        randomPlay: songSetting.randomPlay,
     });
 
     const dispatch = useDispatch();
 
     // cập nhập tình trạng phát nhạc vào local
     useEffect(() => {
-        dispatch(changeSongPlaying({
-            ... songCurrData,
+        dispatch(changeSongSetting({
+            ... songSetting,
             replay: audioInformation.rePlay,
             randomPlay: audioInformation.randomPlay,
         }))
@@ -117,7 +119,7 @@ function ControllerPlayerCenter ({
                 onTimeUpdate={handleTimeUpdate} 
                 onEnded={handleEndedAudio}
                 ref={audioRef} 
-                src={songCurrData.audio}
+                src={songCurrData.audio && convertImage(songCurrData.audio)}
             ></audio>
             <div className='controllerPayerCenter-item controllerPayerCenter-btnBlock'>
                 <Button 

@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import styles from './SignIn.module.scss';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { changeLogin } from '../../../store/actions/userActions';
 import { changeModal } from '../../../store/actions/appActions';
 import { signIn } from '../../../service/auth';
 
