@@ -7,12 +7,12 @@ const routes = require('./routes');
 const db = require('./config/db');
 const path  = require('path');
 
+db.connect();
 app.use(express.static(path.join(__dirname,'/asset')));
 
 app.use(cors({ origin: true }),express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
-db.connect();
 
 routes(app);
 

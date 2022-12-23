@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 require('dotenv').config();
-const removeVietnameseTones = require('../../service/removeVietnames');
 const slug = require('mongoose-slug-generator');
 
 const Schema = mongoose.Schema;

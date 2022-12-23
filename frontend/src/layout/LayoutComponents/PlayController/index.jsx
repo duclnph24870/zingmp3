@@ -23,6 +23,7 @@ function PlayController({
             }
         })();
     },[idSong]);
+    console.log(idSong);
 
     return ( 
         <div className={`playController ${className}`}>
@@ -38,7 +39,7 @@ function PlayController({
                 />
             </div>
             <div className='playController-center'>
-                <ControllerPlayerCenter songCurrData={songPlaying} songSetting={songSetting}/>
+                <ControllerPlayerCenter songCurrData={songPlaying} idSong={idSong} songSetting={songSetting}/>
             </div>
             <div className='playController-right'>right</div>
         </div>

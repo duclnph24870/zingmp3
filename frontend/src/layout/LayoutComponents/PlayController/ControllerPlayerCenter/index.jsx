@@ -10,7 +10,8 @@ import './ControllerPlayerCenter.scss';
 function ControllerPlayerCenter ({
     className = '',
     songSetting,
-    songCurrData
+    songCurrData,
+    idSong
 
 }) {
     // các el cần sử dụng
@@ -20,7 +21,7 @@ function ControllerPlayerCenter ({
     // tạo 1 state để lưu dữ liệu render
     const [audioInformation, setAudioInformation] = useState({
         isPlaying: false,
-        timeDuration: null,
+        timeDuration: '--',
         timeCurr: null,
         rangeValue: 0,
         rePlay: songSetting.replay,
@@ -110,6 +111,7 @@ function ControllerPlayerCenter ({
     const handleNextSong = (e) => {
         let random = Math.floor(Math.random() * 10)
     }
+    console.log(songCurrData);
 
     return (  
         <div className='controllerPayerCenter'>
@@ -135,9 +137,10 @@ function ControllerPlayerCenter ({
                     }}
                 ></Button>
 
-                <Button className='controllerPlayerCenter-button' buttonIcon iconLeft={<i className='icon ic-pre'></i>}></Button>
+                <Button disabled={idSong ? false : true} className='controllerPlayerCenter-button' buttonIcon iconLeft={<i className='icon ic-pre'></i>}></Button>
 
                 <Button 
+                    disabled={idSong ? false : true}
                     className='controllerPlayerCenter-button playerBtn' 
                     buttonIcon 
                     iconLeft={
@@ -147,6 +150,7 @@ function ControllerPlayerCenter ({
                 ></Button>
 
                 <Button 
+                    disabled={idSong ? false : true}
                     className='controllerPlayerCenter-button' 
                     buttonIcon 
                     iconLeft={<i className='icon ic-next'></i>}

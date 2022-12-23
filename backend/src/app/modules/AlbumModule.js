@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
-const removeVietnameseTones = require('../../service/removeVietnames');
 
 const Schema = mongoose.Schema;
 mongoose.plugin(slug);
