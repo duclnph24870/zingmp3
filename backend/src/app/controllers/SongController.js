@@ -1,4 +1,6 @@
 const SongModule = require('../modules/SongModule');
+const PlayListModule = require('../modules/PlayListModule');
+
 const uploadDriver = require('../../service/uploadDriver');
 
 class SongController {
@@ -152,30 +154,34 @@ class SongController {
         }
     }
 
-    // [GET] /song/nextSong/:skipId ( next btn ocClick, next random )
-    async nextSong (req,res) {
-        const skipId = req.params.skipId;
-        try {
-            // đếm số bản ghi hiện có trong db
-            const count = await SongModule.count();
-            let startIndexSelect = Math.floor(Math.random() * (count - 1)); 
+    // [GET] /song/songPlayList/:idPlaylist (json)
+    async getSongPlayList (req,res) {
+        try { 
+            const idPlaylist = req.query.idPlayList;
+            let result = null;
+            if (!idPlaylist) {
+                // phát không trong playList
+                // Lấy ra 30 bài hát có nhiều lượt nghe nhất
+                result = await SongModule.find({}).sort({
+                    view: 'desc'
+                }).limit(30);
+            }else {
+                // phát trong playList
+                result = await PlayListModule.findOne({
+                    _id: idPlaylist,
+                }).populate({
+                    path: 'idSong',
+                    select: '_id name image view like idAuthor',
+                });
+            }
 
-            const song = await SongModule.find({
-                _id: { $ne: skipId }
-            })
-            .skip(startIndexSelect)
-            .limit(1)
-
-            return res.status(200).json({
-                errCode: 0,
-                song,
-            })
+            return res.json(result);
+        }catch (error) {
+            return res.status(500).json({
+                message: "Lỗi server",
+                error
+            });
             
-        } catch (error) {
-            return res.status(400).json({
-                errCode: 1,
-                error,
-            })
         }
     }
 

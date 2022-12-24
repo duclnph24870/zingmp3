@@ -7,6 +7,7 @@ import { getSongById } from '../../../service/songService';
 import { changeSongPlaying } from '../../../store/actions/appActions';
 import ControllerPlayerCenter from './ControllerPlayerCenter';
 import './PlayController.scss';
+import PlayControllerRight from './PlayControllerRight';
 
 function PlayController({
     className = '',
@@ -23,7 +24,6 @@ function PlayController({
             }
         })();
     },[idSong]);
-    console.log(idSong);
 
     return ( 
         <div className={`playController ${className}`}>
@@ -41,7 +41,9 @@ function PlayController({
             <div className='playController-center'>
                 <ControllerPlayerCenter songCurrData={songPlaying} idSong={idSong} songSetting={songSetting}/>
             </div>
-            <div className='playController-right'>right</div>
+            <div className='playController-right'>
+                <PlayControllerRight />
+            </div>
         </div>
     );
 }

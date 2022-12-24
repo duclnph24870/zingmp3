@@ -6,7 +6,9 @@ const uploadDriver = require('../service/uploadDriver');
 let uploadAudio = multer({ fileFilter: uploadDriver.audioFilter });
 let uploadImage = multer({ fileFilter: uploadDriver.imageFilter });
 
-routes.get('/nextSong/:skipId',SongController.nextSong);
+// Lấy ra danh sách phát
+routes.get('/songPlayList',SongController.getSongPlayList);
+
 routes.get('/:id',SongController.selectSong);
 routes.post('/create',uploadAudio.single('audio'),SongController.createSong);
 // chỉ cho sửa hình ảnh không cho sửa audio

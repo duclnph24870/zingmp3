@@ -3,9 +3,10 @@ const slug = require('mongoose-slug-generator');
 
 const Schema = mongoose.Schema;
 mongoose.plugin(slug);
+mongoose.plugin(require('mongoose-autopopulate'));
 
 const SongSchema = new Schema({
-    idAuthor: { type: Array, ref: "author", require },
+    idAuthor: { type: Array, ref: "author", require, autopopulate: {select: 'name'} },
     idCountry: { type: String, require, ref: 'country' },
     idCateGroup: { type: Array, require, ref: 'categoryGroup' },
     idAlbum: { type: Array, require, ref: 'album' },
