@@ -7,10 +7,36 @@
     border-bottom: 1px solid var(--border-secondary);
     cursor: pointer;
 
+    &.playing {
+        .songItem-img {
+            .songItem-img-overlay {
+                position: absolute;
+                border-radius: 4px;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background-color: var(--dark-alpha-50);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .icon {
+                    border-radius: 0;
+                    font-size: 1.8rem;
+                    width: 18px;
+                    height: 18px;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
     .songItem-img {
         width: 40px;
         height: 40px;
         margin-right: 10px;
+        position: relative;
 
         img {
             width: 100%;
@@ -118,7 +144,6 @@
         .songItem-defaultOp {
             display: none;
         }
-
     }
 
     &.controller {

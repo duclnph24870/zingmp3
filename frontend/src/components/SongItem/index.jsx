@@ -7,16 +7,20 @@ import { Section } from '..';
 import { useDispatch } from 'react-redux';
 import { changeModal } from '../../store/actions/appActions';
 import ListComment from '../ListComment';
+import images from '../../assets/images';
 
 function SongItem ({
     className = '',
     title,
     id,
+    playing,
+    pause,
     controller,
     author,
     userUpload,
     image,
     timeLength,
+    name,
 }) {
     let Component = NavLink;
     if (controller) {
@@ -49,9 +53,22 @@ function SongItem ({
     }
 
     return (  
-        <Component className={`songItem ${className} ${controller ? 'controller' : ''}`}>
+        <Component name={name} className={`songItem ${className} ${playing ? 'playing' : ''} ${pause ? 'pause' : ''} ${controller ? 'controller' : ''}`}>
             <div className='songItem-img'>
                 <img src={image} alt=""/>
+                {
+                    playing
+                    &&
+                    <div className='songItem-img-overlay'>
+                        {
+                            pause
+                                ?
+                            <i className="icon action-play ic-play"></i>
+                                :
+                            <img src={images.playingIcon} className="icon" alt="payingIcon" />
+                        }
+                    </div>
+                }
             </div>
 
             <div className='songItem-content'>
@@ -100,6 +117,8 @@ SongItem.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
     id: PropTypes.string,
+    playing: PropTypes.bool,
+    paused: PropTypes.bool,
     author: PropTypes.string,
     userUpload: PropTypes.string,
     image: PropTypes.string,

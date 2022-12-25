@@ -36,8 +36,14 @@ function ControllerPlayerCenter ({
             ... songSetting,
             replay: audioInformation.rePlay,
             randomPlay: audioInformation.randomPlay,
+            isPlaying: audioInformation.isPlaying,
         }))
-    }, [audioInformation.rePlay,audioInformation.randomPlay]);
+    }, [audioInformation.rePlay,audioInformation.randomPlay,audioInformation.isPlaying]);
+
+    // Điều chỉnh âm lượng
+    useEffect(() => {
+        audioRef.current.volume = songSetting.volume;
+    },[songSetting.volume])
 
     // xử lý giao diện input
     const renderRange = (value) => {
@@ -111,7 +117,6 @@ function ControllerPlayerCenter ({
     const handleNextSong = (e) => {
         let random = Math.floor(Math.random() * 10)
     }
-    console.log(songCurrData);
 
     return (  
         <div className='controllerPayerCenter'>
@@ -122,6 +127,9 @@ function ControllerPlayerCenter ({
                 onEnded={handleEndedAudio}
                 ref={audioRef} 
                 src={songCurrData.audio && convertImage(songCurrData.audio)}
+                onLoadedData={e => {
+                    console.log('loading ...');
+                }}
             ></audio>
             <div className='controllerPayerCenter-item controllerPayerCenter-btnBlock'>
                 <Button 

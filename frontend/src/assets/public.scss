@@ -44,3 +44,13 @@ button,input {
         opacity: 1;
     }
 }
+
+// custom ant
+.ant-drawer-content-wrapper {
+    box-shadow: none !important;
+    border-left: 1px solid var(--border-primary);
+
+    .ant-drawer-body {
+        padding: 0 8px 15px 8px;
+    }
+}

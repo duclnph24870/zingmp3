@@ -5,6 +5,7 @@ import path from '../../../config/path';
 import { Button,MenuWrapper,Section } from '../../../components';
 import { useSelector } from 'react-redux';
 import { memo } from 'react';
+import ADScontainer from '../../../components/ADScontainer';
 
 function Aside ({
     className = ''
@@ -41,8 +42,23 @@ function Aside ({
 
             <div className='seperateBar'></div>
 
-            <MenuWrapper height='200px'>
+            <MenuWrapper className='asideMenuSection2'>
                 <Section className='aside__menu' data={dataMenu2}/>
+                <ADScontainer 
+                    title={'Nghe nhạc không quảng cáo cùng kho nhạc vip'}
+                    textBtn={'NÂNG CẤP VIP'}
+                    background="linear-gradient(117deg,#5a4be7,#c86dd7 102%)"
+                    backgroundBtn={"#ffdb00"}
+                    colorBtn={"#000"}
+                />
+
+                <ADScontainer 
+                    title={'BEST OF TOP 2022'}
+                    textBtn={'THỊNH HÀNH'}
+                    background="linear-gradient(117deg,#5a4be7,#c86dd7 102%)"
+                    backgroundBtn={"#6c1aec"}
+                    colorBtn={"#fff"}
+                />
                 <h1 className='aside__section2-title'>
                     <span>THƯ VIỆN</span>
                     <i className='icon ic-edit'></i>

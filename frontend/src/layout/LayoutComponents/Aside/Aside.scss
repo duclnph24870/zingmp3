@@ -4,6 +4,13 @@
     position: relative;
     background-color: var(--sidebar-bg);
     margin-bottom: var(--height-playController);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .asideMenuSection2 {
+        height: 100% !important;
+    }
 
     .aside__logo {
         width: 100%;

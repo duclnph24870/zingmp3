@@ -29,6 +29,7 @@ const initStateApp = {
         volume: 50,
         replay: false,
         randomPlay: false,
+        isPLaying: false,
     },
     songPlaying: {}
 }
