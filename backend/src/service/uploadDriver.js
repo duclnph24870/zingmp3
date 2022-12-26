@@ -20,7 +20,7 @@ const driver = google.drive({
 const imageFilter = function(req, file, cb) {
     // Accept images only
     // cb dùng để truyền vào mess lỗi khi có lỗi xảy ra
-    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|webp)$/)) {
         req.fileValidationError = 'Only image files are allowed!';
         return cb(new Error('Only image files are allowed!'), false);
     }

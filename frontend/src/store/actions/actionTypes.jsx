@@ -9,5 +9,6 @@ export const appActionTypes = {
 
 export const userActionTypes = {
     CHANGE_LOGIN: 'CHANGE_LOGIN', 
-    LOGOUT: 'LOGOUT'
+    LOGOUT: 'LOGOUT',
+    CHANGE_USER_SIGNIN: 'CHANGE_USER_SIGNIN',
 }

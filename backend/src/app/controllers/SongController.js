@@ -2,6 +2,7 @@ const SongModule = require('../modules/SongModule');
 const PlayListModule = require('../modules/PlayListModule');
 
 const uploadDriver = require('../../service/uploadDriver');
+const UserModule = require('../modules/UserModule');
 
 class SongController {
     // [GET] /song/:id ( Lấy bài hát theo id chưa đăng nhập )
@@ -182,6 +183,50 @@ class SongController {
                 error
             });
             
+        }
+    }
+
+    // [POST] /checkSignIn => /song/like/:songId (json)
+    async likeSong (req, res) {
+        const idUser = req.user.id;
+        const idSong = req.params.songId;
+        const type = req.query.type || 'like';
+
+        let data = null;
+        if (type === 'unlike') {
+            data = {
+                $pull: {liked: idSong}
+            }
+        }else {
+            data = {
+                $push: {liked: idSong}
+            }
+        }
+        
+        if (!idSong) {
+            return res.json({
+                errCode: 1,
+                message: "Không xác định được bài hát"
+            });
+        }
+
+        try {
+            const result = await UserModule.updateOne({
+                _id: idUser,
+            },data,{
+                new: true
+            });
+
+            return res.status(200).json({
+                errCode: 0,
+                message: "Đã thích bài hát",
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                errCode: 1,
+                message: "Lỗi server",
+            });
         }
     }
 

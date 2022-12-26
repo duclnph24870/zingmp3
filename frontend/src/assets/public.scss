@@ -50,7 +50,19 @@ button,input {
     box-shadow: none !important;
     border-left: 1px solid var(--border-primary);
 
+    .ant-drawer-header {
+        border-color: var(--border-secondary);
+    }
+
+    .ant-drawer-title {
+        color: var(--player-text);
+    }
+
     .ant-drawer-body {
         padding: 0 8px 15px 8px;
+    }
+
+    .ant-drawer-content {
+        background-color: var(--layout-bg);
     }
 }

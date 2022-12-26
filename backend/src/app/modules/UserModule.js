@@ -19,6 +19,7 @@ const UserSchema = new Schema({
     slug: { type: String, slug: 'userName',unique: true },
     follow: { type: Number ,default: 0},
     birthday: { type: Date },
+    liked: { type: Array, default: [] },
 }, {
     collection: 'users',
     timestamps: true

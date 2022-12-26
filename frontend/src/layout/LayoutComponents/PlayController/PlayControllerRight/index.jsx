@@ -9,13 +9,16 @@ import { Drawer } from 'antd';
 import SongItem from '../../../../components/SongItem';
 import request from '../../../../utils/axios';
 import { toast } from 'react-toastify';
+import { checkLiked } from '../../../../service/songService';
 
 const cx = classNames.bind(styles);
 
 function PlayControllerRight({
     className
 }) {
-    const songSetting = useSelector(state => state.appReducer.songSetting);
+    const {appReducer,userReducer} = useSelector(state => state);
+    const songSetting = appReducer.songSetting;
+    const likedList = userReducer.user.liked;
     const [playListData,setPlayListData] = useState([]);
     const [volume, setVolume] = useState(songSetting.volume);
     const [isOpened, setIsOpened] = useState(false);
@@ -44,7 +47,6 @@ function PlayControllerRight({
             volume: deboundVolume
         }));
     },[deboundVolume]);
-    console.log(songSetting.isPlaying);
     return (  
         <div className={cx('wrapper')}>
             <div className={cx('item')} title='MV'>
@@ -98,6 +100,7 @@ function PlayControllerRight({
                                         author={item?.idAuthor[0]?.name}
                                         userUpload={item.idUser}
                                         image={item.image}
+                                        checkLike={checkLiked(item._id,likedList)}
                                 />
                             )})
                     }

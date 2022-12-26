@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect,memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import SongItem from '../../../components/SongItem';
-import { getSongById } from '../../../service/songService';
+import { checkLiked, getSongById } from '../../../service/songService';
 import { changeSongPlaying } from '../../../store/actions/appActions';
 import ControllerPlayerCenter from './ControllerPlayerCenter';
 import './PlayController.scss';
@@ -12,7 +11,8 @@ import PlayControllerRight from './PlayControllerRight';
 function PlayController({
     className = '',
 }) {
-
+    // lấy ra likedList user
+    const likedList = useSelector((state) => state.userReducer.user).liked;
     const dispatch = useDispatch();
     const { songSetting,songPlaying } = useSelector(state => state.appReducer);
     const idSong = songSetting.idSong;
@@ -36,6 +36,7 @@ function PlayController({
                     userUpload={(songPlaying.idUser && songPlaying.idUser.userName) || '---'}
                     image={(songPlaying.image && songPlaying.image) || "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/3/2/a/3/32a35f4d26ee56366397c09953f6c269.jpg"}
                     controller
+                    checkLike={checkLiked(songPlaying._id,likedList)}
                 />
             </div>
             <div className='playController-center'>

@@ -19,6 +19,10 @@ function ThemeModal ({
         "--colorSearch-default": " hsla(0,0%,100%,0.1)",
         "--search-text": "#eee",
         "--bg-link": "",
+        "--player-text":"#fff",
+        "--progressbar-player-bg": "hsla(0,0%,100%,0.3)",
+        "--progressbar-active-bg": "#fff",
+        "--border-secondary":"hsla(0,0%,100%,0.05)",
     }
 
     const lightBasic = {
@@ -35,6 +39,10 @@ function ThemeModal ({
         "--purple-primary": "#8d22c3",
         "--link-text-hover": "#8d22c3",
         "--bg-link":"",
+        "--player-text":"#32323d",
+        "--progressbar-player-bg": "rgba(0,0,0,0.1)",
+        "--progressbar-active-bg": "var(--purple-primary)",
+        "--border-secondary":"rgba(0,0,0,0.05)",
     }
 
     const dataSection = [

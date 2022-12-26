@@ -8,6 +8,10 @@ import { useDispatch } from 'react-redux';
 import { changeModal } from '../../store/actions/appActions';
 import ListComment from '../ListComment';
 import images from '../../assets/images';
+import { toast } from 'react-toastify';
+import request from '../../utils/axios';
+import { getUser } from '../../service/user';
+import { changeUserSignIn } from '../../store/actions/userActions';
 
 function SongItem ({
     className = '',
@@ -21,6 +25,7 @@ function SongItem ({
     image,
     timeLength,
     name,
+    checkLike = false
 }) {
     let Component = NavLink;
     if (controller) {
@@ -28,6 +33,7 @@ function SongItem ({
     }
     const [isActiveOpt,setActiveOpt] = useState(false);
     const dispatch = useDispatch();
+    const userSignIn = localStorage.getItem('idUser');
 
     const dataOption = [
         { title: "Thêm vào playlist",icon: <i className='icon ic-16-Add'></i> },
@@ -50,6 +56,21 @@ function SongItem ({
 
     const handleOptionClick = () => {
         setActiveOpt(curr => !curr);
+    }
+
+    const handleClickBtnLike = async e => {
+        if (userSignIn && userSignIn.length > 0) {
+            if (checkLike) {
+                const result = await request.post(`/song/like/${id}?type=unlike`);
+            }else {
+                const result = await request.post(`/song/like/${id}?type=like`);
+            }
+
+            const newUser = await getUser();
+            dispatch(changeUserSignIn(newUser.user));
+        }else {
+            toast.warn("Bạn cần đăng nhập để sử dụng chức năng này");
+        }
     }
 
     return (  
@@ -87,8 +108,8 @@ function SongItem ({
                     <span className='songItem-timeLength'>{timeLength}</span>
                 </div>
                 <div className='songItem-hover'>
-                    <span className='songItem-likeBtn'>
-                        <i className='icon ic-like'></i>
+                    <span className={`songItem-likeBtn ${checkLike ? "active" : ''}`} onClick={handleClickBtnLike}>
+                        <i className={`${checkLike ? 'icon ic-like-full' : 'icon ic-like'}`}></i>
                     </span>
                     <Tippy
                         visible={isActiveOpt}
@@ -124,6 +145,7 @@ SongItem.propTypes = {
     image: PropTypes.string,
     controller: PropTypes.bool,
     timeLength: PropTypes.string,
+    checkLike: PropTypes.bool,
 }
 
 export default SongItem;

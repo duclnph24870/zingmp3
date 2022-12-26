@@ -22,7 +22,15 @@ const logout = () => {
     }
 }
 
+const changeUserSignIn = data => {
+    return {
+        type: userActionTypes.CHANGE_USER_SIGNIN,
+        payload: data
+    }
+}
+
 export {
     changeLogin,
-    logout
+    logout,
+    changeUserSignIn
 }

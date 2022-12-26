@@ -2,7 +2,8 @@ import request from "../utils/axios"
 
 export const getUser = async () => {
     try {
-        return await request.get('/user');
+        const result = await request.get('/user');
+        return result;
     } catch (error) {
         console.log(error);
     }

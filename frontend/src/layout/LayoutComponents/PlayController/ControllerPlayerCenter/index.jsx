@@ -3,12 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '../../../../components';
 import { convertImage } from '../../../../service/app';
+import { actionSong } from '../../../../service/songService';
 import { convertTime } from '../../../../service/timeService';
 import { changeSongSetting } from '../../../../store/actions/appActions';
+import request from '../../../../utils/axios';
 import './ControllerPlayerCenter.scss';
 
 function ControllerPlayerCenter ({
-    className = '',
+    className = null,
     songSetting,
     songCurrData,
     idSong
@@ -101,6 +103,7 @@ function ControllerPlayerCenter ({
             ... audioInformation,
             timeCurr,
             rangeValue,
+            timeDuration: convertTime(el.duration),
         })
     }
 
@@ -109,13 +112,30 @@ function ControllerPlayerCenter ({
         if (audioInformation.rePlay) {
             audioRef.current.currentTime = 0;
         }else {
-            alert('hết bài')
+            handleNextSong();
         }
     }
     
     // xử lý sự kiện next song
-    const handleNextSong = (e) => {
-        let random = Math.floor(Math.random() * 10)
+    const handleNextSong = async () => {
+        audioRef.current.pause();
+        const data = await request.get('http://localhost:3131/song/songPlayList');
+        const result = actionSong(songSetting.randomPlay,data,'next',songSetting.idSong);
+        dispatch(changeSongSetting({
+            ... songSetting,
+            idSong: result._id
+        }));
+    }
+
+    // xử lý pre song
+    const handlePreSong = async () => {
+        audioRef.current.pause();
+        const data = await request.get('http://localhost:3131/song/songPlayList');
+        const result = actionSong(songSetting.randomPlay,data,'prev',songSetting.idSong);
+        dispatch(changeSongSetting({
+            ... songSetting,
+            idSong: result._id
+        }));
     }
 
     return (  
@@ -127,8 +147,8 @@ function ControllerPlayerCenter ({
                 onEnded={handleEndedAudio}
                 ref={audioRef} 
                 src={songCurrData.audio && convertImage(songCurrData.audio)}
-                onLoadedData={e => {
-                    console.log('loading ...');
+                onCanPlay={e => {
+                    e.target.play();
                 }}
             ></audio>
             <div className='controllerPayerCenter-item controllerPayerCenter-btnBlock'>
@@ -145,7 +165,15 @@ function ControllerPlayerCenter ({
                     }}
                 ></Button>
 
-                <Button disabled={idSong ? false : true} className='controllerPlayerCenter-button' buttonIcon iconLeft={<i className='icon ic-pre'></i>}></Button>
+                <Button 
+                    disabled={idSong ? false : true} 
+                    className='controllerPlayerCenter-button' 
+                    buttonIcon 
+                    iconLeft={<i className='icon ic-pre'></i>}
+                    onClick={handlePreSong}
+                >
+
+                </Button>
 
                 <Button 
                     disabled={idSong ? false : true}

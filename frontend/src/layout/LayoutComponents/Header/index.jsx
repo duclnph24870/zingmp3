@@ -29,7 +29,6 @@ function Header ({
                 amount: 5,
                 type: 'all',
             });
-            console.log(authorResult,songResult);
             
             let authorData = [];
             let songData = [];

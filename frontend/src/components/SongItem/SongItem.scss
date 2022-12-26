@@ -102,6 +102,10 @@
                 border-radius: 50%;
                 transition: 0.3s;
 
+                &.active {
+                    color: var(--purple-primary);
+                }
+
                 &:hover {
                     background-color: var(--alpha-bg);
                 }
