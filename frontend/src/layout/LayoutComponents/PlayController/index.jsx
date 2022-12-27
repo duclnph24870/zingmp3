@@ -31,12 +31,13 @@ function PlayController({
                 <SongItem 
                     className='songItem-controller'
                     title={(songPlaying.name ?? songPlaying.name) || 'Chọn bài hát'}
-                    id={(songPlaying._id && songPlaying._id)}
+                    id={idSong && idSong}
                     author={(songPlaying.idAuthor && songPlaying.idAuthor[0].name) || '---'}
                     userUpload={(songPlaying.idUser && songPlaying.idUser.userName) || '---'}
                     image={(songPlaying.image && songPlaying.image) || "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/3/2/a/3/32a35f4d26ee56366397c09953f6c269.jpg"}
                     controller
                     checkLike={checkLiked(songPlaying._id,likedList)}
+                    mainController
                 />
             </div>
             <div className='playController-center'>

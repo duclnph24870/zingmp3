@@ -5,7 +5,7 @@ class CommentController {
     async createComment (req,res) {
         const { idSong,idUser,content } = req.body;
         if (!idSong || !idUser || !content) {
-            return res.status(500).json({
+            return res.status(200).json({
                 errCode: 1,
                 message: "Bạn chưa nhập đầy đủ thông tin"
             })
@@ -18,11 +18,12 @@ class CommentController {
                 content
             });
 
-            await newComment.save();
+            const newCommentResult = await newComment.save();
 
             return res.json({
                 errCode: 0,
                 message: "Thêm bình luận thành công",
+                newComment: newCommentResult,
             });
         } catch (error) {
             return res.status(500).json({
@@ -41,11 +42,12 @@ class CommentController {
             if (idSong === 'all') {
                 optionFind = {};
             }
-            console.log(optionFind);
-            const comment = await CommentModule.find(optionFind);
-            console.log(comment);
+
+            const comment = await CommentModule.find(optionFind).sort({
+                createdAt: 'desc'
+            });
             if (comment.length === 0) {
-                return res.status(404).json({
+                return res.status(200).json({
                     errCode: 0,
                     message: 'Bài hát chưa có bình luận'
                 });
@@ -62,11 +64,11 @@ class CommentController {
         }
     }
 
-    // [POST] /comment/delete (json)
+    // [POST] /comment/delete/:commentId (json)
     async deleteComment (req,res) {
-        const { commentId } = req.body;
+        const commentId = req.params.commentId;
         if (!commentId) {
-            return res.status(500).json({
+            return res.status(200).json({
                 errCode: 1,
                 message: 'Xóa không thành công, bình luận không tồn tại'
             });
@@ -115,6 +117,65 @@ class CommentController {
                 message: 'Lỗi server, vui lòng thử lại',
                 error,
             })
+        }
+    }
+
+    //[POST] /comment/like/:commentId (json)
+    async likeComment (req,res) {
+        const commentId = req.params.commentId;
+        const type = req.query.type;
+        const idUser = req.user.id;
+
+        if (!commentId) {
+            return res.status(200).json({
+                errCode: 1,
+                message: "Bình luận không tồn tại"
+            });
+        }
+        let result = null;
+        try {
+            switch (type) {
+                case 'like':
+                    result = await CommentModule.findOneAndUpdate({_id: commentId}, {
+                        $push: {like: idUser},
+                    },{
+                        new: true
+                    });
+                    break;
+
+                case 'unlike':
+                    result = await CommentModule.findOneAndUpdate({_id: commentId}, {
+                        $pull: {like: idUser},
+                    },{
+                        new: true
+                    });
+                    break;
+
+                case 'disLike':
+                    result = await CommentModule.findOneAndUpdate({_id: commentId}, {
+                        $push: {disLike: idUser},
+                    },{
+                        new: true
+                    });
+                    break;
+
+                case 'unDislike':
+                    result = await CommentModule.findOneAndUpdate({_id: commentId}, {
+                        $pull: {disLike: idUser},
+                    },{
+                        new: true
+                    });
+                    break;
+            }
+            return res.status(200).json({
+                errCode: 0,
+                newComment: result
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Lỗi server",
+            });
         }
     }
 }

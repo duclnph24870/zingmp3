@@ -4,7 +4,7 @@
     border-radius: 8px;
     overflow-y: hidden;
     width: 650px;
-    min-height: 500px;
+    min-height: 322px;
     margin-bottom: 14px;
     display: flex;
     flex-direction: column;
@@ -66,6 +66,8 @@
                     font-weight: 500;
                     font-size: 1.4rem;
                     color: var(--text-primary);
+                    display: flex;
+                    align-items: center;
                 }
         
                 .commentItem-timeCreate {
@@ -73,8 +75,14 @@
                     font-weight: 400;
                     margin-left: 10px;
                 }
+
+                .commentItem-delete {
+                    margin-left: auto;
+                    cursor: pointer;
+                }
         
                 .commentItem-message {
+                    width: 100%;
                     font-size: 1.4rem;
                     display: -webkit-box;
                     -webkit-box-orient: vertical;
@@ -96,6 +104,10 @@
                     align-items: center;
                     margin-right: 10px;
 
+                    &.active {
+                        color: var(--purple-primary);
+                    }
+
                     i {
                         font-size: 2rem;
                         margin-right: 5px;
@@ -106,6 +118,22 @@
         }
         
 
+    }
+
+    .emtyComment {
+        width: 100%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-secondary);
+        font-size: 1.4rem;
+        text-align: center;
+
+        i {
+            font-size: 5.4rem;
+            margin-bottom: 15px;
+        }
     }
 
     .listComment-footer {

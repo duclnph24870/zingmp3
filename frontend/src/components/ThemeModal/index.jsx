@@ -8,6 +8,7 @@ function ThemeModal ({
 }) {
     // dark
     const themeBasic = {
+        "--purple-primary": "#9b4de0",
         "--layout-bg": "#1e1e1e",
         "--sidebar-bg": "hsla(0,0%,100%,0.05)",
         "--navigation-text": "#a0a0a0",
@@ -23,6 +24,8 @@ function ThemeModal ({
         "--progressbar-player-bg": "hsla(0,0%,100%,0.3)",
         "--progressbar-active-bg": "#fff",
         "--border-secondary":"hsla(0,0%,100%,0.05)",
+        "--border-primary":"hsla(0,0%,100%,0.1)",
+        "--sticky-header-box-shadow":"rgba(0,0,0,0.2)",
     }
 
     const lightBasic = {
@@ -43,6 +46,8 @@ function ThemeModal ({
         "--progressbar-player-bg": "rgba(0,0,0,0.1)",
         "--progressbar-active-bg": "var(--purple-primary)",
         "--border-secondary":"rgba(0,0,0,0.05)",
+        "--border-primary":"rgba(0,0,0,0.1)",
+        "--sticky-header-box-shadow":"rgba(0,0,0,0.08)",
     }
 
     const dataSection = [

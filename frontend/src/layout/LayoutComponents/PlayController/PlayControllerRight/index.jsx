@@ -47,6 +47,18 @@ function PlayControllerRight({
             volume: deboundVolume
         }));
     },[deboundVolume]);
+    
+    // xử lý click thay đổi bài hát
+    const handleSetSongCurr = id => {
+        if (id === songSetting.idSong) {
+            return undefined;
+        }
+        dispatch(changeSongSetting({
+           ...songSetting,
+            idSong: id
+        }));
+    }
+
     return (  
         <div className={cx('wrapper')}>
             <div className={cx('item')} title='MV'>
@@ -101,6 +113,7 @@ function PlayControllerRight({
                                         userUpload={item.idUser}
                                         image={item.image}
                                         checkLike={checkLiked(item._id,likedList)}
+                                        setSongCurr={handleSetSongCurr}
                                 />
                             )})
                     }

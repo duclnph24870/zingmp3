@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './SongItem.scss';
 import Tippy from '@tippyjs/react/headless';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Section } from '..';
-import { useDispatch } from 'react-redux';
-import { changeModal } from '../../store/actions/appActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeModal, changeSongSetting } from '../../store/actions/appActions';
 import ListComment from '../ListComment';
 import images from '../../assets/images';
 import { toast } from 'react-toastify';
@@ -25,7 +25,9 @@ function SongItem ({
     image,
     timeLength,
     name,
-    checkLike = false
+    checkLike = false,
+    setSongCurr,
+    mainController = false
 }) {
     let Component = NavLink;
     if (controller) {
@@ -35,7 +37,7 @@ function SongItem ({
     const dispatch = useDispatch();
     const userSignIn = localStorage.getItem('idUser');
 
-    const dataOption = [
+    let dataOption = [
         { title: "Thêm vào playlist",icon: <i className='icon ic-16-Add'></i> },
         { 
             title: "Bình luận",
@@ -45,8 +47,8 @@ function SongItem ({
                     setActiveOpt(false);
                     dispatch(changeModal({
                         isActive: true,
-                        Component: <ListComment idSong={id}/>
-                    }))
+                        Component: <ListComment mainController={mainController} idSong={id}/>
+                    }));
                 }
             }
         },
@@ -56,6 +58,10 @@ function SongItem ({
 
     const handleOptionClick = () => {
         setActiveOpt(curr => !curr);
+    }
+
+    const handleClickSong = () => {
+        setSongCurr(id);
     }
 
     const handleClickBtnLike = async e => {
@@ -75,7 +81,7 @@ function SongItem ({
 
     return (  
         <Component name={name} className={`songItem ${className} ${playing ? 'playing' : ''} ${pause ? 'pause' : ''} ${controller ? 'controller' : ''}`}>
-            <div className='songItem-img'>
+            <div onClick={handleClickSong} className='songItem-img'>
                 <img src={image} alt=""/>
                 {
                     playing
@@ -92,7 +98,7 @@ function SongItem ({
                 }
             </div>
 
-            <div className='songItem-content'>
+            <div onClick={handleClickSong} className='songItem-content'>
                 <h1 className='songItem-title'>
                     <span className='songItem-title-text'>
                         {title}
@@ -146,6 +152,8 @@ SongItem.propTypes = {
     controller: PropTypes.bool,
     timeLength: PropTypes.string,
     checkLike: PropTypes.bool,
+    setSongCurr: PropTypes.func,
+    mainController: PropTypes.bool
 }
 
 export default SongItem;
