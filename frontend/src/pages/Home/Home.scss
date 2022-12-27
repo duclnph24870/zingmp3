@@ -1,4 +1,64 @@
-.page__home {
-    padding: 0 var(--padding-mainContent);
+.pageContainer {
     height: 1000px;
+
+    .homePage-slider {
+        margin-top: 30px;
+    }
+}
+
+.slick-slider {
+    &:hover .slick-arrow {
+        display: flex !important;
+    }
+
+    .slick-arrow {
+        width: 55px;
+        height: 55px;
+        color: #fff !important;
+        background-color: hsla(0,0%,100%,.15) !important;
+        box-shadow: 0 2px 4px 0 rgb(226 102 102 / 15%) !important;
+        z-index: 10;
+        display: none !important;
+        animation: show linear 0.3s;
+
+        &.slick-next {
+            right: 25px;
+        }
+
+        &.slick-prev {
+            left: 30px;
+        }
+
+        i {
+            font-size: 2.7rem;
+            text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+        }
+
+        &::before {
+            display: none;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .slick-list {
+        .slick-track {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+    
+        .sliderItem {
+            width: 500px;
+            height: 281px;
+    
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+            }
+        }
+    }
 }

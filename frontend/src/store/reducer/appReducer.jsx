@@ -26,7 +26,7 @@ const initStateApp = {
     },
     songSetting: {
         idSong: null,
-        volume: 50,
+        volume: 1,
         replay: false,
         randomPlay: false,
         isPLaying: false,

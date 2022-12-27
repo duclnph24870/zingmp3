@@ -1,0 +1,4 @@
+// <div className="page__home">
+//     <h1 onClick={() => handleClick(true)}>ON</h1>
+//     <h1 onClick={() => handleClick(false)}>OFF</h1>
+// </div>

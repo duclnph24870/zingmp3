@@ -8,6 +8,8 @@ import './assets/main.min.css'
 import './assets/public.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import 'tippy.js/dist/tippy.css'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import ModalWrapper from './components/ModalWrapper';
 import { useEffect } from 'react';
 import { changeLogin } from './store/actions/userActions';
