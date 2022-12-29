@@ -15,8 +15,7 @@ const SongSchema = new Schema({
     image: { type: String ,default: "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/3/2/a/3/32a35f4d26ee56366397c09953f6c269.jpg"},
     audio: { type: String, require },
     keyword: { type: Array },
-    like: { type: Number , default: 0},
-    view: { type: Number , default: 0},
+    view: { type: Array , default: []},
     slug: { type: String, slug: 'name',unique: true },
 }, {
     collection: 'songs',

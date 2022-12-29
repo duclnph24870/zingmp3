@@ -230,6 +230,62 @@ class SongController {
         }
     }
 
+    // [POST] /song/counter/:songId (json)
+    async counterSong (req,res) {
+        const songId = req.params.songId;
+        const timeCurr = new Date().toLocaleDateString();
+        let query = null;
+
+        if (!songId) {
+            return res.json({
+                errCode: 1,
+                message: "Không thể xác định bài hát"
+            });
+        }
+        try {
+            const check = await SongModule.findOne({
+                _id: songId,
+                "view.viewDate": timeCurr
+            });
+
+            if (!check) {
+                // nếu trong ngày chưa có view thì khởi tạo
+                query = SongModule.findOneAndUpdate({
+                    _id: songId,
+                },{
+                    $push: {
+                        view: { viewDate: timeCurr,counter: 1 }
+                    }
+                },{
+                    new: true,
+                });
+            }else {
+                const counter = Number(check.view.find(item => item.viewDate == timeCurr).counter) + 1;
+                // nếu đã có rồi thì tăng thêm
+                query = SongModule.findOneAndUpdate({
+                    _id: songId,
+                    "view.viewDate": timeCurr
+                }, {
+                    $set: { "view.$.counter": counter }
+                },{
+                    new: true,
+                });
+            }
+
+            const result = await Promise.all([query]);
+
+            return res.json({
+                errCode: 0,
+                result: result,
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                errCode: 1,
+                message: "Lỗi server",
+            });
+        }
+    }
 }
 
 module.exports = new SongController;

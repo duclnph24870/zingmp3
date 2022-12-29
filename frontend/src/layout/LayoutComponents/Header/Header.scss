@@ -7,6 +7,7 @@
     position: fixed;
     top: 0vh;
     right: 0vw;
+    z-index: 1;
 
     &.scroll {
         box-shadow: 0 3px 5px var(--sticky-header-box-shadow);

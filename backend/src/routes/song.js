@@ -17,5 +17,7 @@ routes.post('/edit',uploadImage.single('image'),uploadDriver.updateFile,SongCont
 routes.post('/delete',SongController.deleteSong);
 // thích bài hát
 routes.post('/like/:songId',checkAuth.checkSignIn,SongController.likeSong);
+// tính lượt nghe bài hát
+routes.post('/counter/:songId',SongController.counterSong);
 
 module.exports = routes;
