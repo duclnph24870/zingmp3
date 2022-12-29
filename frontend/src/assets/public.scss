@@ -66,3 +66,9 @@ button,input {
         background-color: var(--layout-bg);
     }
 }
+
+// tippy 
+#tippy-3 {
+    transition: transform ease 0.1s;
+    pointer-events: none;
+}

@@ -1,0 +1,173 @@
+.sectionContent {
+    margin-top: 48px;
+    .sectionContent-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .sectionContent-title {
+            margin-right: auto;
+            color: var(--text-primary);
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .sectionContent-showAll {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: color linear 0.3s;
+
+            &:hover {
+                color: var(--link-text-hover);
+            }
+
+            i {
+                font-size: 1.6rem;
+                margin-left: 6px;
+            }
+        }
+    }
+    
+    
+    .sectionContent-main {
+        display: flex;
+        align-items: center;
+        margin: 0 -14px;
+
+        .sectionContentItem {
+            width: var(--width);
+            padding: 0 var(--gap);
+
+            .sectionContentItem-img {
+                width: 100%;
+                height: 290px;
+                position: relative;
+                border-radius: 4px;
+                box-shadow:  inset 0 0 3px rgb(0 0 0 / 50%);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                overflow: hidden;
+                background-position: center;
+                transition: background linear 0.3s;
+
+                &:hover {
+                    background-size: 130% 130%;
+                    .sectionContentItem-overlay {
+                        display: flex;
+                    }
+                }
+
+                .sectionContentItem-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: var(--dark-alpha-50);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    display: none;
+                    animation: show ease-in-out 0.3s;
+
+                    button {
+                        width: 45px;
+                        height: 45px;
+                        border-radius: 50%;
+                        border: 1px solid #fff;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                    }
+
+                    i {
+                        font-size: 1.4rem;
+                        color: #fff;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .sectionContentItem-main {
+                margin-top: 12px;
+
+                .sectionContentItem-title {
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    color: var(--text-primary);
+                    transition: color linear 0.3s;
+                    cursor: pointer;
+                    margin: 8px 0 4px;
+
+                    &:hover {
+                        color: var(--link-text-hover);
+                    }
+                }
+
+                .sectionContentItem-author {
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    color: var(--text-secondary);
+                    font-size: 1.4rem;
+                    font-weight: 400;
+                    margin: 0 1px;
+                }
+            }
+        }
+    }
+}
+
+.sectionContentTitle-author {
+    display: flex;
+    align-items: center;
+
+    .sectionContentTitle-author-img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        cursor: pointer;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 4px;
+            }
+    }
+    
+    .sectionContentTitle-author-content {
+        .label {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            margin-top: 3px;
+            color: var(--text-secondary);
+        }
+
+        .authorName {
+            transition: color linear 0.3s;
+            font-size: 1.8rem;
+            color: #32323d;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--link-text-hover);
+            }
+        }
+    }
+}
+
+
+

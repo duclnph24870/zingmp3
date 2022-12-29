@@ -6,6 +6,13 @@ function SliderComponent ({
     className = '',
     data,
 }) {
+    const SlickButtonFix = ({ currentSlide, slideCount, children, ...props }) => (
+        <Button {...props} buttonIcon children={<i className='icon ic-go-right'></i>}></Button>
+    );
+
+    const SlickButtonFixPrev = ({ currentSlide, slideCount, children, ...props }) => (
+        <Button {...props} buttonIcon children={<i className='icon ic-go-left'></i>}></Button>
+    );
     const setting = {
         lazyLoad: 'ondemand',
         slidesToShow: 3,
@@ -13,8 +20,8 @@ function SliderComponent ({
         autoplay: true,
         autoplaySpeed: 7000,
         arrows: true,
-        nextArrow: <Button buttonIcon children={<i className='icon ic-go-right'></i>}></Button>,
-        prevArrow: <Button buttonIcon children={<i className='icon ic-go-left'></i>}></Button>,
+        nextArrow: <SlickButtonFix />,
+        prevArrow: <SlickButtonFixPrev />
     }
     return (  
         <Slider {...setting} className={`slider ${className}`}>
