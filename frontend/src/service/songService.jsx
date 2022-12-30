@@ -11,7 +11,10 @@ const getSongById = async (id) => {
         // lấy ra time cũ
         const timeSelectSongOld = time_distance_current(JSON.parse(sessionStorage.getItem('timeSelectSong')));
         if (timeSelectSongOld) {
+            // view bài hát
             await request.post('/song/counter/'+ id);
+            // tính view tổng
+            await request.post('/song/totalView');
             sessionStorage.setItem('timeSelectSong', JSON.stringify(new Date()));
         }
         

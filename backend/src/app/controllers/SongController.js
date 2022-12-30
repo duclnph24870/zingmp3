@@ -1,5 +1,7 @@
 const SongModule = require('../modules/SongModule');
 const PlayListModule = require('../modules/PlayListModule');
+const timeService = require('../../service/time');
+const TotalViewModule = require('../modules/TotalViewModule');
 
 const uploadDriver = require('../../service/uploadDriver');
 const UserModule = require('../modules/UserModule');
@@ -233,57 +235,107 @@ class SongController {
     // [POST] /song/counter/:songId (json)
     async counterSong (req,res) {
         const songId = req.params.songId;
-        const timeCurr = new Date().toLocaleDateString();
-        let query = null;
-
+        const dayNumber  = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        
         if (!songId) {
             return res.json({
                 errCode: 1,
-                message: "Không thể xác định bài hát"
-            });
+                message: "Không xác định được bài hát"
+            })
         }
+
         try {
-            const check = await SongModule.findOne({
+            const song = await SongModule.findOne({
                 _id: songId,
-                "view.viewDate": timeCurr
+                "view.year": year,
             });
 
-            if (!check) {
-                // nếu trong ngày chưa có view thì khởi tạo
-                query = SongModule.findOneAndUpdate({
-                    _id: songId,
-                },{
-                    $push: {
-                        view: { viewDate: timeCurr,counter: 1 }
-                    }
-                },{
-                    new: true,
-                });
-            }else {
-                const counter = Number(check.view.find(item => item.viewDate == timeCurr).counter) + 1;
-                // nếu đã có rồi thì tăng thêm
-                query = SongModule.findOneAndUpdate({
-                    _id: songId,
-                    "view.viewDate": timeCurr
-                }, {
-                    $set: { "view.$.counter": counter }
-                },{
-                    new: true,
-                });
+            // nếu bộ đếm bài hát chưa tồn tại thì tạo mới
+            if (!song) {
+                // tạo ra bộ đếm view cho bài hát của năm mới
+                const couterNew = timeService.createCouter(true);
+                const newSong = await SongModule.updateOne({ _id: songId },{
+                    $push: { view: { 
+                        year: year,
+                        viewDetail: couterNew
+                    } }
+                },{ new: true });
+
+                return res.json({
+                    message: 'Tạo mới'
+                })
             }
 
-            const result = await Promise.all([query]);
+            // có rồi thì tìm và cộng view
+            const viewUpdate = song.view.find(item => item.year == year).viewDetail[month-1][dayNumber - 1] + 1;
+            const newSong = await SongModule.updateOne({ _id: songId },{
+                $set: { [`view.$[e].viewDetail.${month-1}.${dayNumber - 1}`]:  viewUpdate},
+                totalView: song.totalView + 1,
+            },{ arrayFilters: [ { "e.year": year } ] });
+            return res.json({
+                message: 'đã tăng view'
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                errCode: 1,
+                message: error.message,
+            })
+        }
+    }
+
+    // [POST] /song/chart
+    async selectDataChart(req, res) {
+        // lấy ra tháng hiện tại
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        const numberDay = timeService.getDayOfMonth(month,year);
+        const dayArr = [];
+        for (let i = 1; i <= numberDay; i++) {
+            dayArr.push(i);
+        }
+
+        try {
+            // lấy ra view tổng của tháng
+            const totalView = await TotalViewModule.findOne({
+                year: year,
+            });
+            const totalMothView = totalView.totalView[month-1];
+
+            // tìm ra 3 bài hát có view cao nhất
+            const top3Song = await SongModule.find({}).sort({
+                viewMonth: 'desc'
+            }).limit(3);
+
+            // điều chỉnh dữ liệu trả lại tránh việc dư thừa dữ liệu
+            const filterSong = top3Song.map(item => {
+                let persentDay = item.view.find(item => item.year === year).viewDetail[month-1].map((item,index) => {
+                    let persent = item / totalMothView[index];
+                    return persent >= 1 ? Math.round(persent) : +persent.toFixed(2);
+                });
+                let monthPersent = item.viewMonth / totalMothView.reduce((init,curr)=> init+curr,0);
+                return {
+                    _id: item._id,
+                    image: item.image,
+                    name: item.name,
+                    author: item.idAuthor[0].name,
+                    monthPersent:  monthPersent >= 1 ? Math.round(monthPersent) : +monthPersent.toFixed(2),
+                    persentDay: persentDay,
+                }
+            });
 
             return res.json({
-                errCode: 0,
-                result: result,
-            });
+                labels: dayArr,
+                datasets: filterSong,
+            });            
         } catch (error) {
             console.log(error);
             return res.status(500).json({
                 errCode: 1,
                 message: "Lỗi server",
-            });
+            })
         }
     }
 }
