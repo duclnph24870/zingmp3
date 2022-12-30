@@ -3,13 +3,24 @@ import './ZingChart.scss';
 import Button from '../Button';
 import ZingChartSong from './ZingChartSong';
 import ChartLine from '../ChartLine';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import request from '../../utils/axios';
 
 function ZingChart({
     classNames = '',
 
 }) {
-    const [rankActive,setRankActive] = useState(undefined);
+    const [rankActive,setRankActive] = useState(0);
+    const [data,setData] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const dataChart = await request.post('/song/chart');
+
+            setData(dataChart);
+        })();
+    },[]);
+
     const handleHover = e => {
         const songEl = e.target.closest('.zingChartSong');
         if (songEl && !songEl.matches('.active')) {
@@ -28,13 +39,21 @@ function ZingChart({
                     </div>
 
                     <div className={'zingChart-leftContent'} onMouseOver={handleHover}>
-                        <ZingChartSong rank={1} className={rankActive === 1 ? 'active': ''} color="#4a90e2"/>
-                        <ZingChartSong rank={2} className={rankActive === 2 ? 'active': ''} color="#50e3c2"/>
-                        <ZingChartSong rank={3} className={rankActive === 3 ? 'active': ''}  color={'#e35050'}/>
+                        { 
+                            data.datasets
+                            &&
+                            data.datasets.map((item,index) => {
+                                let color = '';
+                                if (index === 0) {color = '#4a90e2'}
+                                if (index === 1) {color = '#50e3c2'}
+                                if (index === 2) {color = '#e35050'}
+                                return (<ZingChartSong persent={item.monthPersent} name={item.name} author={item.author} image={item.image} key={item._id} rank={index + 1} className={rankActive === index ? 'active': ''} color={color}/>);
+                            })
+                        }
                     </div>
                 </div>
                 <div className={'zingChart-chart'}>
-                    <ChartLine rankActive={rankActive} setRankActive={setRankActive}/>
+                    <ChartLine rankActive={rankActive} dataChart={data} setRankActive={setRankActive}/>
                 </div>
             </div>
         </div>

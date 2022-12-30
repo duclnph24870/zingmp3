@@ -3,7 +3,7 @@ import './ChartLine.scss';
 
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js/auto';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import Crosshair from "chartjs-plugin-crosshair";
 import { isEqual } from 'lodash';
 import Tippy from '@tippyjs/react/headless';
@@ -11,30 +11,47 @@ import ZingChartSong from '../ZingChart/ZingChartSong';
 
 function ChartLine({
     className = '',
-    rankActive = undefined,
+    rankActive = 0,
     setRankActive,
+    dataChart,
 }) {
+    if (!dataChart.labels) return (<></>);
+    const chartRef = useRef();
+    const [tooltip,setTooltip] = useState({
+        opacity: 0,
+        top: 0,
+        left: 0,
+        dateActive: 1,
+        color: 'transparent'
+    });
+    let dataItems = dataChart.datasets; 
+    let songactive = dataItems[rankActive];
     useEffect(() => {
         Chart.register(Crosshair);
         return () => {
             Chart.unregister(Crosshair);
         };
     }, []);
-    const chartRef = useRef();
-    const [tooltip,setTooltip] = useState({
-        opacity: 0,
-        top: 0,
-        left: 0,
-        color: 'transparent'
-    });
     const data = {
-        labels: ['01', '02', '03','04','05','06','07','08','09','10','11','12'],
+        labels: dataChart.labels,
         datasets: [
             {
-                id: 1,
+                id: 0,
                 label: 'February',
-                data: [5, 6, 7,12,3,4,5,4,65,12,88,33],
+                data: dataItems[0].persentDay,
                 borderColor: 'rgb(74,144,226)',
+                tension: 0.2,
+                borderWidth: 2,
+                pointBackgroundColor: 'white',
+                pointHoverRadius: 5,
+                pointRadius: rankActive === 0 ? 5 : 0,
+                pointHoverBorderWidth: 2,
+            },
+            {
+                id: 1,
+                label: 'January',
+                data: dataItems[1].persentDay,
+                borderColor: 'rgb(39,189,156)',
                 tension: 0.2,
                 borderWidth: 2,
                 pointBackgroundColor: 'white',
@@ -44,26 +61,14 @@ function ChartLine({
             },
             {
                 id: 2,
-                label: 'January',
-                data: [3, 2, 1,3,100,3,134,45,13,8,6,78],
+                label: 'March',
+                data: dataItems[2].persentDay,
                 borderColor: 'rgb(227,80,80)',
                 tension: 0.2,
                 borderWidth: 2,
                 pointBackgroundColor: 'white',
                 pointHoverRadius: 5,
                 pointRadius: rankActive === 2 ? 5 : 0,
-                pointHoverBorderWidth: 2,
-            },
-            {
-                id: 3,
-                label: 'March',
-                data: [5, 6, 17,1,4,2,4,45,56,7,8,76],
-                borderColor: 'rgb(39,189,156)',
-                tension: 0.2,
-                borderWidth: 2,
-                pointBackgroundColor: 'white',
-                pointHoverRadius: 5,
-                pointRadius: rankActive === 3 ? 5 : 0,
                 pointHoverBorderWidth: 2,
             },
         ]
@@ -73,7 +78,9 @@ function ChartLine({
         responsive: true,
         pointRadius: 0,
         maintainAspectRatio: false,
-        animations: false,
+        animation: {
+            duration: 300,
+        },
         scales: {
             y: {
                 ticks: { display: false },
@@ -104,6 +111,7 @@ function ChartLine({
                         left: tooltopModel.caretX,
                         top: tooltopModel.caretY,
                         color: tooltopModel.labelColors[0].borderColor,
+                        dateActive: +tooltopModel.title[0],
                     }
 
                     setRankActive(id);
@@ -135,8 +143,10 @@ function ChartLine({
         <div style={{position: 'relative',width: '100%',height: '100%'}}>
             {data && <Line ref={chartRef} className='chartLine' data={data} plugins={[Crosshair]} options={options}/>}
             <Tippy
+                className='hello'
                 visible={(tooltip.top !== 0 && tooltip.left !== 0)}
                 interactive={true}
+                arrow={true}
                 popperOptions={{
                     modifiers: [{
                         name: 'computeStyles',
@@ -145,14 +155,15 @@ function ChartLine({
                         },
                     }]
                 }}
-                render={() => (
-                    <div>
+                render={(attrs) => (
+                    <div {...attrs}>
                         <ZingChartSong
                             color={tooltip.color}
                             itemChart={true}
                             style={{
                                 backgroundColor: '#333',
                             }}
+                            persent={songactive.persentDay[tooltip.dateActive - 1]} name={songactive.name} author={songactive.author} image={songactive.image}
                         />
                     </div>
                 )}
@@ -175,4 +186,4 @@ ChartLine.propTypes = {
     setRankActive: PropTypes.func
 }
 
-export default ChartLine;
+export default memo(ChartLine);

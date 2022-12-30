@@ -305,9 +305,9 @@ class SongController {
             const totalMothView = totalView.totalView[month-1];
 
             // tìm ra 3 bài hát có view cao nhất
-            const top3Song = await SongModule.find({}).sort({
-                viewMonth: 'desc'
-            }).limit(3);
+            const top3Song = await SongModule.find({});
+
+            top3Song.sort((a,b) => b.viewMonth - a.viewMonth).splice(3);
 
             // điều chỉnh dữ liệu trả lại tránh việc dư thừa dữ liệu
             const filterSong = top3Song.map(item => {

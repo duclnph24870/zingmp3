@@ -6,6 +6,10 @@ function ZingChartSong({
     color,
     rank,
     style,
+    persent,
+    name,
+    author,
+    image,
     itemChart = false
 }) {
     return (  
@@ -15,19 +19,19 @@ function ZingChartSong({
             {
                 !itemChart
                 &&
-                <div className={'zingChartSong-rank'} data-rank={rank} style={{...style,'--color':color}}>{rank}</div>
+                <div className={'zingChartSong-rank'} data-rank={rank - 1} style={{...style,'--color':color}}>{rank}</div>
             }
             <div className={'zingChartSong-image'}>
-                <img src="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/2/0/3/f/203f50940ab726d125ea73d5c1baac94.jpg" alt="" />
+                <img src={image} alt="" />
                 <div className={'zingChartSong-overlay'}></div>
             </div>
             <div className={'zingChartSong-song'}>
-                <h1 className={'zingChartSong-songName'}>Có anh ở đây rồi</h1>
-                <span className={'zingChartSong-author'}>Anh Tú</span>
+                <h1 className={'zingChartSong-songName'}>{name}</h1>
+                <span className={'zingChartSong-author'}>{author}</span>
             </div>
 
-            <div className="zingChartSong-percent">
-                15%
+            <div className="zingChartSong-percent" title='view hàng tháng'>
+                {persent} %
             </div>
         </div>
     );
