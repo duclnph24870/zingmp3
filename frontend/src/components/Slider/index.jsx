@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 import Slider from 'react-slick';
 import Button from '../Button';
 
@@ -44,4 +45,4 @@ Slider.propTypes = {
     data: PropTypes.array,
 }
 
-export default SliderComponent;
+export default memo(SliderComponent);

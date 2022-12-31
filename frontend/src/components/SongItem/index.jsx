@@ -27,7 +27,8 @@ function SongItem ({
     name,
     checkLike = false,
     setSongCurr,
-    mainController = false
+    mainController = false,
+    createAt = false,
 }) {
     let Component = NavLink;
     if (controller) {
@@ -107,6 +108,7 @@ function SongItem ({
                     <i title={userUpload} className='songItem-userUpload icon ic-global'></i>
                 </h1>
                 <span className='songItem-author'>{author}</span>
+                { createAt && <span className='songItem-createAt'>{createAt}</span> }
             </div>
 
             <div className='songItem-option'>

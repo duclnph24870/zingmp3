@@ -26,6 +26,8 @@ function ThemeModal ({
         "--border-secondary":"hsla(0,0%,100%,0.05)",
         "--border-primary":"hsla(0,0%,100%,0.1)",
         "--sticky-header-box-shadow":"rgba(0,0,0,0.2)",
+        "--border-player":"hsla(0,0%,100%,0.1)",
+        "--song-item-action":"hsla(0,0%,100%,0.5)",
     }
 
     const lightBasic = {
@@ -48,6 +50,8 @@ function ThemeModal ({
         "--border-secondary":"rgba(0,0,0,0.05)",
         "--border-primary":"rgba(0,0,0,0.1)",
         "--sticky-header-box-shadow":"rgba(0,0,0,0.08)",
+        "--border-player":"rgba(0,0,0,0.05)",
+        "--song-item-action":"rgba(50,50,61,0.5)",
     }
 
     const dataSection = [

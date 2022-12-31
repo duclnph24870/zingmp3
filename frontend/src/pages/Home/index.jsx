@@ -3,6 +3,7 @@ import SectionContent from "../../components/SectionContent";
 import SectionContentItem from "../../components/SectionContent/SectionContentItem";
 import SliderComponent from "../../components/Slider";
 import ZingChart from "../../components/ZingChart";
+import SongItem from "../../components/SongItem";
 import './Home.scss';
 
 function Home() {
@@ -108,6 +109,49 @@ function Home() {
             }/>
 
             <ZingChart />
+
+            <SectionContent title={'Top 100'} children={    
+                fakeData.map((item,index) => (
+                    <SectionContentItem key={index}
+                        style={{
+                            "--width":`calc(100% / ${dataLength})`,
+                            "--gap":"14px"
+                        }}
+                        data={item}
+                    />
+                ))
+            }/>
+
+            <SectionContent all={true} title={
+                <div className="newSongContentTitle">
+                    <span>Mới phát hành</span>
+                    <div className="newSongContentTitle-content">
+                        <button className="newSongContentTitle-button active">Tất cả</button>
+                        <button className="newSongContentTitle-button">Việt Nam</button>
+                        <button className="newSongContentTitle-button">Quốc tế</button>
+                    </div>
+                </div>
+            } >
+                <div className="newSongContent-content">
+                    {
+                        [1,2,3,4,5,6,7,8,9,0,1,2].map((item,index) => (
+                            <div className="newSongContentItemblock">
+                                <SongItem 
+                                    key={index}
+                                    title="Yêu mấy cũng đừng quay lại"
+                                    id="12345"
+                                    author={'Mr.Siro'}
+                                    userUpload="Ngọc Đức"
+                                    image="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/5/6/4/0/56402e6e4f61bff944922d456df6c5d9.jpg"
+                                    timeLength={"04:26"}
+                                    name={'Yêu mấy cũng đừng quay lại'}
+                                    createAt="2 ngày trước"
+                                />
+                            </div>
+                        ))
+                    }
+                </div>
+            </SectionContent>
         </div>
     );
 }

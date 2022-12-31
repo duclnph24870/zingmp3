@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 import './SectionContent.scss';
 
 function SectionContent ({
@@ -37,4 +38,4 @@ SectionContent.propTypes = {
     children: PropTypes.node,
 }
 
-export default SectionContent ;
+export default memo(SectionContent);

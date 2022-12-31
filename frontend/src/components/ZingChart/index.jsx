@@ -3,7 +3,7 @@ import './ZingChart.scss';
 import Button from '../Button';
 import ZingChartSong from './ZingChartSong';
 import ChartLine from '../ChartLine';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import request from '../../utils/axios';
 
 function ZingChart({
@@ -64,4 +64,4 @@ ZingChart.propTypes = {
     classNames: PropTypes.string
 }
 
-export default ZingChart;
+export default memo(ZingChart);
