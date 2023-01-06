@@ -312,7 +312,12 @@ class SongController {
             // điều chỉnh dữ liệu trả lại tránh việc dư thừa dữ liệu
             const filterSong = top3Song.map(item => {
                 let persentDay = item.view.find(item => item.year === year).viewDetail[month-1].map((item,index) => {
-                    let persent = item / totalMothView[index];
+                    let persent = null;
+                    if (totalMothView[index] === 0) {
+                        persent = 0;
+                    }else {
+                        persent = item / totalMothView[index];
+                    }
                     return persent >= 1 ? Math.round(persent) : +persent.toFixed(2);
                 });
                 let monthPersent = item.viewMonth / totalMothView.reduce((init,curr)=> init+curr,0);
