@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const CommentController = require('../app/controllers/CommentController');
+const CommentController = require('../app/controllers/commentController');
 const checkAuth = require('../app/middlewares/auth');
 
 routes.get('/:idSong',CommentController.selectComment);
