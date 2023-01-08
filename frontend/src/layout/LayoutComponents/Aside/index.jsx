@@ -3,14 +3,19 @@ import './Aside.scss';
 import images from '../../../assets/images';
 import path from '../../../config/path';
 import { Button,MenuWrapper,Section } from '../../../components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { memo } from 'react';
 import ADScontainer from '../../../components/ADScontainer';
+import { changeModal } from '../../../store/actions/appActions';
+import CreatePlaylist from '../../../components/CreatePlaylist';
+import ModalWrapper from '../../../components/ModalWrapper';
+import { toast } from 'react-toastify';
 
 function Aside ({
     className = ''
 }) {
     const theme = useSelector(state => state.appReducer.theme);
+    const dispatch = useDispatch();
     const dataMenu = [
         { path: path.myMusic,title: "Cá Nhân", icon: <i className="icon ic-24-LibraryTab"></i>, iconHover: <i className="icon ic-20-Play-Outline"></i>},
         { path: path.home,title: "Khám Phá", icon: <i className="icon  ic-24-HomeTab"></i>, iconHover: <i className="icon ic-20-Play-Outline"></i>},
@@ -31,6 +36,17 @@ function Aside ({
         { path: path.newMusic,title: "Playlist", icon: <img src={images.playListIcon} alt=''/>, iconHover: <i className="icon ic-20-Play-Outline"></i>},
         { path: path.newMusic,title: "Gần Đây", icon: <img src={images.historyIcon} alt=''/>, iconHover: <i className="icon ic-20-Play-Outline"></i>},
     ]
+
+    const handleCreatePlaylist = () => {
+        if (localStorage.getItem('idUser')) {
+            dispatch(changeModal({
+                isActive: true,
+                Component: <CreatePlaylist />
+            }));
+        }else {
+            toast.warn('Bạn cần đăng nhập để sử dụng chức năng này')
+        }
+    }
 
     return (  
         <div className={`aside ${className}`}>
@@ -66,7 +82,7 @@ function Aside ({
                 <Section className='aside__menu' data={dataMenu3}/>
             </MenuWrapper>
 
-            <Button className='addNewPlaylistBtn' iconLeft={<i className="icon ic-add"></i>}>Tạo Playlist Mới</Button>
+            <Button onClick={handleCreatePlaylist} className='addNewPlaylistBtn' iconLeft={<i className="icon ic-add"></i>}>Tạo Playlist Mới</Button>
         </div>
     );
 }

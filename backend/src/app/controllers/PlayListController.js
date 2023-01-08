@@ -5,13 +5,15 @@ class PlayListController {
     // [GET] /playlist/:id (Lấy ra 1 playlist)
     async selectPlayList (req,res) {
         const id = req.params.id;
-        let optionFind = { _id: id };
+        const idUser = req.query.idUser;
+
+        let optionFind = { _id: id, idUser: idUser };
         if (!id) return res.status(500).json({
             errCode: 1,
             message: 'Playlist không xác định',
         }); 
         if (id === 'all') {
-            optionFind = {};
+            optionFind = { idUser: idUser };
         }
         try {
             const playlist = await PlayListModule.find(optionFind);
@@ -31,10 +33,8 @@ class PlayListController {
         }
     }
 
-    // [POST] /playlist/create (form data)
+    // [POST] /playlist/create
     async createPlaylist (req,res) {
-        console.log(req.body)
-        const file = req.file;
         const { idUser,name } = req.body;
 
         if (!idUser || !name) {
@@ -45,10 +45,8 @@ class PlayListController {
         }
 
         try {
-            const image = await uploadDriver.uploadFile(file);
             const newPlaylist = new PlayListModule({
                 idUser,
-                image,
                 name
             });
             const result = await newPlaylist.save();
@@ -66,33 +64,29 @@ class PlayListController {
         }
     }
 
-    // [POST] /playlist/edit (form data)
+    // [POST] /playlist/edit/:idPlaylist
     async editPlaylist (req,res) {
-        const image = req.fileUpdate;
-        const dataEdit = { ... req.body };
-        if (!dataEdit.idEdit) {
+        const idPlaylist = req.params.idPlaylist;
+        const { name } = req.body;
+        if (!idPlaylist) {
             return res.status(500).json({
                 errCode: 1,
                 message: 'Không xác định được playlist'
             });
         }
 
-        if (image) {
-            dataEdit.image = image.id;
-        }else {
-            if (Object.keys(req.body).length === 0) {
-                return res.status(204).json({
-                    errCode: 0,
-                    message: 'Không có sự thay đổi cho playlist'
-                });
-            }
+        if (!name) {
+            return res.status(204).json({
+                errCode: 0,
+                message: 'Không có sự thay đổi cho playlist'
+            });
         }
 
         try {
             await PlayListModule.updateOne({
-                _id: dataEdit.idEdit,
+                _id: idPlaylist,
             }, {
-                ... dataEdit
+                name
             });
 
             return res.status(200).json({
@@ -108,9 +102,9 @@ class PlayListController {
         }
     }
 
-    // [POST] /playlist/delete (json)
+    // [POST] /playlist/delete/:idPlaylist
     async deletePlaylist (req,res) {
-        const { playlistId } = req.body;
+        const playlistId = req.params.idPlaylist;
         if (!playlistId) {
             return res.status(500).json({
                 errCode: 1,
