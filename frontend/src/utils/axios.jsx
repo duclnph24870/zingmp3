@@ -2,7 +2,7 @@ import axios from "axios";
 import { createRefreshToken } from "../service/auth";
 
 const request = axios.create({
-    baseURL: 'http://localhost:3131',
+    baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
 // xử lý dữ liệu trước khi gửi request lên server
