@@ -119,7 +119,7 @@ function ControllerPlayerCenter ({
     // xử lý sự kiện next song
     const handleNextSong = async () => {
         audioRef.current.pause();
-        const data = await request.get('http://localhost:3131/song/songPlayList');
+        const data = await request.get('/song/songPlayList');
         const result = actionSong(songSetting.randomPlay,data,'next',songSetting.idSong);
         dispatch(changeSongSetting({
             ... songSetting,
@@ -130,7 +130,7 @@ function ControllerPlayerCenter ({
     // xử lý pre song
     const handlePreSong = async () => {
         audioRef.current.pause();
-        const data = await request.get('http://localhost:3131/song/songPlayList');
+        const data = await request.get('/song/songPlayList');
         const result = actionSong(songSetting.randomPlay,data,'prev',songSetting.idSong);
         dispatch(changeSongSetting({
             ... songSetting,

@@ -32,7 +32,7 @@ function PlayControllerRight({
     useEffect(() => {
         (async () => {
             try {
-                const data = await request.get('http://localhost:3131/song/songPlayList');
+                const data = await request.get('/song/songPlayList');
                 setPlayListData(data);
             } catch (error) {
                 console.log(error);
