@@ -35,7 +35,8 @@ class PlayListController {
 
     // [POST] /playlist/create
     async createPlaylist (req,res) {
-        const { idUser,name } = req.body;
+        const { name } = req.body;
+        const idUser = req.user.id;
 
         if (!idUser || !name) {
             return res.status(500).json({
@@ -125,6 +126,59 @@ class PlayListController {
                 errCode: 1,
                 message: 'Lỗi server, Thao tác xóa không thành công',
                 error,
+            });
+        }
+    }
+
+    // [POST] /playlist/action/:idPlaylist 
+    async actionSongPlaylist (req,res) {
+        const idPlaylist = req.params.idPlaylist;
+        const { action,idSong } = req.body;
+        let option = null;
+        if (!action || !idSong || !idPlaylist) {
+            return res.json({
+                errCode: 1,
+                message: 'Chưa nhập đầy đủ thông tin'
+            });
+        }
+        
+        if (action === 'add') {
+            option = {
+                $push: { idSong: idSong }
+            }
+        }else if (action === 'remove') {
+            option = {
+                $pull: { idSong: idSong }
+            }
+        }
+        try {
+            let checkPlaylistQuery = PlayListModule.findOne({ _id: idPlaylist });
+            let checkSongQuery = PlayListModule.findOne({ _id: idPlaylist, idSong: idSong });
+            const [checkPlaylist,checkSong] = await Promise.all([checkPlaylistQuery,checkSongQuery]);
+            
+            if (!checkPlaylist) {
+                return res.json({
+                    errCode: 1,
+                    message: 'PLaylist không tồn tại',
+                });
+            }
+
+            if (checkSong ) {
+                return res.json({
+                    errCode: 1,
+                    message: 'Bài hát đã tồn tại trong playlist',
+                });
+            }
+            const newPLaylist = await PlayListModule.findOneAndUpdate({ _id: idPlaylist },option,{ new: true });
+
+            return res.status(200).json({
+                errCode: 0,
+                newPLaylist
+            })
+        } catch (error) {
+            return res.status(500).json({
+                errCode: 1,
+                message: error.message,
             });
         }
     }

@@ -4,7 +4,8 @@ import '../SectionContent.scss';
 function SectionContentItem ({
     style,
     className = '',
-    data
+    data,
+    playlist = false,
 }) {
     return (  
         <div style={style} className={`sectionContentItem ${className}`}>
@@ -29,7 +30,8 @@ function SectionContentItem ({
 SectionContentItem.propTypes = {
     data: PropTypes.object,
     className: PropTypes.string,
-    style: PropTypes.object    
+    style: PropTypes.object,
+    playlist: PropTypes.bool,  
 }
 
 export default SectionContentItem ;

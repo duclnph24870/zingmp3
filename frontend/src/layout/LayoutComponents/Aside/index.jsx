@@ -8,7 +8,6 @@ import { memo } from 'react';
 import ADScontainer from '../../../components/ADScontainer';
 import { changeModal } from '../../../store/actions/appActions';
 import CreatePlaylist from '../../../components/CreatePlaylist';
-import ModalWrapper from '../../../components/ModalWrapper';
 import { toast } from 'react-toastify';
 
 function Aside ({
