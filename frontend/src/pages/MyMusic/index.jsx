@@ -19,6 +19,9 @@ function MyMusic () {
     useEffect(() => {
         ( async () => {
             const result = await selectPlaylist('/playlist/all?idUser='+ localStorage.getItem('idUser') );
+            if (result.message) {
+                return;
+            }
             setDataPlaylist(result);
         } )();
     },[songPlaying]);
@@ -28,6 +31,7 @@ function MyMusic () {
             const result = await  request.post('/playlist/delete/'+id);
 
             setDataPlaylist(dataPlaylist.filter(item => item._id !== result.id));
+            toast.success(result.message);
         } catch (error) {
             console.log(error);
         }
