@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { countryService } from '../../../service';
 import { toast } from 'react-toastify';
 import request from '../../../utils/axios';
+import { changeLoading } from '../../../store/actions/appActions';
 
 const cx = classnames.bind(styles);
 
@@ -28,14 +29,17 @@ function SignUp ({
     },[]);
     
     const onSubmit = data => {
+        dispatch(changeLoading(true));
         request.post('user/signUp',{
             ... data
         })
             .then(res => {
                 formEl.current.reset();
+            dispatch(changeLoading(false));
                 toast.success(res.data.message);
             })
             .catch(err => {
+                dispatch(changeLoading(false));
                 toast.error(err.response.data.message)
             })
     };

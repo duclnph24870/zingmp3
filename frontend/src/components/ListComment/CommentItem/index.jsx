@@ -31,7 +31,6 @@ function CommentItem ({
             return toast.error('Lỗi server')
         }
     }
-    console.log(1);
 
     const actionLikeComment = async () => {
         let result = null;

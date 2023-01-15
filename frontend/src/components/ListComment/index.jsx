@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { time_distance_current } from '../../service/timeService';
 import request from '../../utils/axios';
 import './Comment.scss';
 import CommentItem from './CommentItem';
+import { changeLoading } from '../../store/actions/appActions'
 
 function ListComment ({
     className = '',
@@ -17,6 +18,7 @@ function ListComment ({
     const [commentValue,setCommentValue] = useState('');
     const {userReducer,appReducer} = useSelector(state => state);
     const user = userReducer.user;
+    const dispath = useDispatch();
 
     if (mainController) {
         idSong = appReducer.songSetting.idSong;
@@ -43,6 +45,7 @@ function ListComment ({
 
         if (timeCommentOld) {
             try {
+                dispath(changeLoading(true))
                 const result = await request.post('/comment/create',{
                     content: commentValue,
                     idSong: idSong,
@@ -54,10 +57,12 @@ function ListComment ({
                     return curr;
                 });
 
+                dispath(changeLoading(false))
                 toast.success(result.message);
                 sessionStorage.setItem('timeCommentOld', JSON.stringify(new Date()));
                 setCommentValue('');
             } catch (error) {
+                dispath(changeLoading(false))
                 console.log(error);
                 toast.error('Lỗi server');
             }

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import request from '../../utils/axios';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { changeModal } from '../../store/actions/appActions';
+import { changeLoading, changeModal } from '../../store/actions/appActions';
 
 const cx = classNames.bind(styles);
 
@@ -18,6 +18,7 @@ function CreatePlaylist({
     const dispatch = useDispatch();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        dispatch(changeLoading(true));
         try {
             let playlist = null;
 
@@ -32,11 +33,13 @@ function CreatePlaylist({
             }
 
             toast.success(playlist.message);
+            dispatch(changeLoading(false));
             dispatch(changeModal({
                 isActive: false,
                 Component: null,
             }));
         } catch (error) {
+            dispatch(changeLoading(false));
             toast.error(error.message);
         }
     }

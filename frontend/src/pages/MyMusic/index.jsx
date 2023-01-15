@@ -7,7 +7,7 @@ import { Button, SectionContent } from '../../components';
 import CreatePlaylist from '../../components/CreatePlaylist';
 import SectionContentItem from '../../components/SectionContent/SectionContentItem';
 import { selectPlaylist } from '../../service/playlist';
-import { changeModal } from '../../store/actions/appActions';
+import { changeLoading, changeModal } from '../../store/actions/appActions';
 import request from '../../utils/axios';
 import './MyMusic.scss';
 
@@ -27,12 +27,15 @@ function MyMusic () {
     },[songPlaying]);
 
     const handleDeletePlaylist = async (id) => {
+        dispatch(changeLoading(true))
         try {
             const result = await  request.post('/playlist/delete/'+id);
 
+            dispatch(changeLoading(false));
             setDataPlaylist(dataPlaylist.filter(item => item._id !== result.id));
             toast.success(result.message);
         } catch (error) {
+            dispatch(changeLoading(false));
             console.log(error);
         }
     }

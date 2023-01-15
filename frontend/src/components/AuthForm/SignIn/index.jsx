@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { changeModal } from '../../../store/actions/appActions';
+import { changeLoading, changeModal } from '../../../store/actions/appActions';
 import { signIn } from '../../../service/auth';
 
 const cx = classnames.bind(styles);
@@ -18,6 +18,7 @@ function SignIn ({
     const { register, handleSubmit,formState: {errors} } = useForm();
     const dispatch = useDispatch();
     const onSubmit = data => {
+        dispatch(changeLoading(true));
         (async () => {
             const result = await signIn(data);
             if (result.errCode === 0) {
@@ -26,9 +27,11 @@ function SignIn ({
                 dispatch(changeModal({
                     isActive: false,
                     Component: null,
-                }))
+                }));
+                dispatch(changeLoading(false));
                 toast.success(result.message);
             }else {
+                dispatch(changeLoading(false));
                 toast.error(result.message);
             }
         })();
