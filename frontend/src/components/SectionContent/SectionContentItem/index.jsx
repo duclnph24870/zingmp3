@@ -5,6 +5,8 @@ function SectionContentItem ({
     style,
     className = '',
     data,
+    option,
+    onClick = () => {},
     playlist = false,
 }) {
     return (  
@@ -13,9 +15,15 @@ function SectionContentItem ({
                 backgroundImage: `url(${data.image})`
             }}>
                 <div className="sectionContentItem-overlay">
-                    <button>
-                        <i className='icon action-play ic-svg-play-circle'></i>
-                    </button>
+                    {
+                        !option
+                        ?
+                        <button onClick={onClick}>
+                            <i className='icon action-play ic-svg-play-circle'></i>
+                        </button>
+                        :
+                        option
+                    }
                 </div>
             </div>
 
@@ -32,6 +40,7 @@ SectionContentItem.propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
     playlist: PropTypes.bool,  
+    onClick: PropTypes.func,
 }
 
 export default SectionContentItem ;

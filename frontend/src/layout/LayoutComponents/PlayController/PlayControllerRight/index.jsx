@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useDebounce from '../../../../hooks/useDebounce';
 import { changeSongSetting } from '../../../../store/actions/appActions';
-import { Drawer } from 'antd';
+import { Drawer, Skeleton } from 'antd';
 import SongItem from '../../../../components/SongItem';
 import request from '../../../../utils/axios';
 import { toast } from 'react-toastify';
@@ -96,11 +96,10 @@ function PlayControllerRight({
             >
                 <div className={cx("playListSong")}>
                     {
-                        playListData 
-                            &&
+                        playListData.length !== 0
+                            ?
                             playListData.map((item, index) => {
                                 return (
-
                                     <SongItem 
                                         key={item._id}
                                         name={'songItem'}
@@ -116,6 +115,30 @@ function PlayControllerRight({
                                         setSongCurr={handleSetSongCurr}
                                 />
                             )})
+                            :
+                            <div className="playlistSkeleton">
+                                <Skeleton
+                                    active
+                                    avatar
+                                    paragraph={{
+                                        rows: 1
+                                    }}
+                                />
+                                <Skeleton
+                                    active
+                                    avatar
+                                    paragraph={{
+                                        rows: 1
+                                    }}
+                                />
+                                <Skeleton
+                                    active
+                                    avatar
+                                    paragraph={{
+                                        rows: 1
+                                    }}
+                                />
+                            </div>
                     }
                 
                 </div>

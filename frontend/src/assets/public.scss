@@ -70,6 +70,22 @@ button,input {
     }
 }
 
+.ant-skeleton {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+
+    .ant-skeleton-content {
+        ul {
+            margin-block-start: 10px;
+        }
+    }
+}
+
+.ant-skeleton  + .ant-skeleton {
+    margin-top: 10px;
+}
+
 // tippy 
 #tippy-4 {
     transition: transform ease 0.1s;

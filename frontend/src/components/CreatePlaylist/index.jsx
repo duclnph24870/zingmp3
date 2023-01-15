@@ -11,15 +11,25 @@ const cx = classNames.bind(styles);
 
 function CreatePlaylist({
     className,
+    edit = '',
+    id,
 }) {
-    const [name,setName] = useState('');
+    const [name,setName] = useState(edit);
     const dispatch = useDispatch();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const playlist = await request.post('/playlist/create',{
-                name: name,
-            });
+            let playlist = null;
+
+            if (edit.length > 0) {
+                playlist = await request.post('/playlist/edit/'+ id,{
+                    name: name,
+                });
+            }else {
+                playlist = await request.post('/playlist/create',{
+                    name: name,
+                });
+            }
 
             toast.success(playlist.message);
             dispatch(changeModal({
@@ -36,13 +46,15 @@ function CreatePlaylist({
             <h1 className={cx('title')}>Tạo mới playlist</h1>
             <input type="text" value={name} onChange={e => setName(e.target.value)} className={cx('input')} placeholder="Nhập tên playlist"/>
 
-            <button disabled={name.length === 0 ? true : false} type='submit'>Tạo mới</button>
+            <button disabled={name.length === 0 ? true : false} type='submit'>{edit.length > 0 ? 'Hoàn thành' : 'Tạo mới'}</button>
         </form>
     );
 }
 
 CreatePlaylist.propTypes = {
     className: PropTypes.string,
+    edit: PropTypes.string,
+    id: PropTypes.string,
 }
 
 export default CreatePlaylist;

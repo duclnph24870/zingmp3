@@ -69,6 +69,7 @@ class PlayListController {
     async editPlaylist (req,res) {
         const idPlaylist = req.params.idPlaylist;
         const { name } = req.body;
+        const idUser = req.user.id;
         if (!idPlaylist) {
             return res.status(500).json({
                 errCode: 1,
@@ -86,6 +87,7 @@ class PlayListController {
         try {
             await PlayListModule.updateOne({
                 _id: idPlaylist,
+                idUser
             }, {
                 name
             });
@@ -97,7 +99,7 @@ class PlayListController {
         } catch (error) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Lỗi server, Sửa playlist không thành công',
+                message: 'Sửa playlist không thành công',
                 error,
             });
         }
@@ -106,20 +108,24 @@ class PlayListController {
     // [POST] /playlist/delete/:idPlaylist
     async deletePlaylist (req,res) {
         const playlistId = req.params.idPlaylist;
+        const idUser = req.user.id;
+
         if (!playlistId) {
             return res.status(500).json({
                 errCode: 1,
-                message: 'Xóa không thành công, mục cần xóa không tồn tại'
+                message: 'Không xác định được playlist cần xóa'
             });
         }
         try {
-            const playlistDelete = await PlayListModule.findByIdAndDelete({
+            const playlistDelete = await PlayListModule.findOneAndDelete({
                 _id: playlistId,
+                idUser: idUser,
             });
-            await uploadDriver.deleteFile(playlistDelete.image);
+
             return res.status(200).json({
                 errCode: 0,
                 message: 'Xóa thành công',
+                id: playlistDelete._id,
             });
         } catch (error) {   
             return res.status(500).json({
