@@ -20,6 +20,13 @@ function AddSongPlaylist ({
         let songSetting = useSelector(state => state.appReducer.songSetting);
         idSong = songSetting.idSong;
     }
+    if (!localStorage.getItem('idUser')) {
+        dispatch(changeModal({
+            isActive: false,
+            Component: null,
+        }));
+        toast.warn('Bạn cần đăng nhập để sử dụng chức năng này');
+    }
     useEffect(() => {
         ( async () => {
             const result = await selectPlaylist('/playlist/all?idUser='+ localStorage.getItem('idUser'));
