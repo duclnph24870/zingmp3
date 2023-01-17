@@ -1,0 +1,65 @@
+.addSongPlaylist {
+    border-radius: 8px;
+    padding: 10px 20px;
+    background-color: var(--primary-bg);
+
+    .addSongPlaylist-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0px;
+        color: var(--navigation-text);
+        transition: color 0.2s ease;
+
+        &:hover {
+            cursor: pointer;
+            color: var(--text-item-hover);
+        }
+
+        &.createPlaylist {
+            .addSongPlaylist-icon {
+                margin-right: 14px;
+                height: 29px;
+            }
+            i {
+                zoom: 1.8;
+            }
+
+            span {
+                font-size: 2rem;
+            }
+        }
+
+        .addSongPlaylist-icon {
+            margin-right: 15px;
+            height: 20px;
+                i {
+                    font-size: 2rem;
+                }
+        }
+
+        span {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            font-size: 1.7rem;
+        }
+
+        .addSongPlaylist-spin {
+            margin-left: auto;
+        }
+    }
+}
+
+.skeletonAddSongPlaylist {
+    display: flex;
+    flex-direction: column;
+
+    .skeletonButton {
+        padding: 0 !important;
+        span {
+            width: 36px !important;
+            min-width: unset !important;
+        }
+    }
+}

@@ -10,11 +10,9 @@ import request from '../../../../utils/axios';
 import './ControllerPlayerCenter.scss';
 
 function ControllerPlayerCenter ({
-    className = null,
     songSetting,
     songCurrData,
     idSong
-
 }) {
     // các el cần sử dụng
     const audioRef = useRef();
@@ -93,7 +91,7 @@ function ControllerPlayerCenter ({
     const handleTimeUpdate = e => {
         let el = e.target;
         let timeCurr = convertTime(el.currentTime);
-        let rangeValue = null;
+        let rangeValue = 0;
         if (el.duration) {
             rangeValue = Math.floor( Number(el.currentTime) / Number(el.duration) * 100 );
             renderRange(rangeValue);

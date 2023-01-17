@@ -5,6 +5,7 @@ import ZingChartSong from './ZingChartSong';
 import ChartLine from '../ChartLine';
 import { memo, useEffect, useState } from 'react';
 import request from '../../utils/axios';
+import { Skeleton, Space } from 'antd';
 
 function ZingChart({
     classNames = '',
@@ -30,33 +31,41 @@ function ZingChart({
     }
 
     return (
-        <div className="zingChart-bg">
-            <div className={'zingChart-wrapper'}>
-                <div className={'zingChart-left'}>
-                    <div className={'zingChart-title'}>
-                        <h1 className={'zingChart-titleText'}>#zingChart</h1>
-                        <Button buttonIcon children={<i className='icon ic-play'></i>}/>
-                    </div>
+        <>
+            {
+                data.length === 0
+                ?
+                    <Skeleton.Button className='skeletonChart' active={true} shape="square" block={true}/>
+                :
+                <div className="zingChart-bg">
+                    <div className={'zingChart-wrapper'}>
+                        <div className={'zingChart-left'}>
+                            <div className={'zingChart-title'}>
+                                <h1 className={'zingChart-titleText'}>#zingChart</h1>
+                                <Button buttonIcon children={<i className='icon ic-play'></i>}/>
+                            </div>
 
-                    <div className={'zingChart-leftContent'} onMouseOver={handleHover}>
-                        { 
-                            data.datasets
-                            &&
-                            data.datasets.map((item,index) => {
-                                let color = '';
-                                if (index === 0) {color = '#4a90e2'}
-                                if (index === 1) {color = '#50e3c2'}
-                                if (index === 2) {color = '#e35050'}
-                                return (<ZingChartSong persent={item.monthPersent} name={item.name} author={item.author} image={item.image} key={item._id} rank={index + 1} className={rankActive === index ? 'active': ''} color={color}/>);
-                            })
-                        }
+                            <div className={'zingChart-leftContent'} onMouseOver={handleHover}>
+                                { 
+                                    data.datasets
+                                    &&
+                                    data.datasets.map((item,index) => {
+                                        let color = '';
+                                        if (index === 0) {color = '#4a90e2'}
+                                        if (index === 1) {color = '#50e3c2'}
+                                        if (index === 2) {color = '#e35050'}
+                                        return (<ZingChartSong persent={item.monthPersent} name={item.name} author={item.author} image={item.image} key={item._id} rank={index + 1} className={rankActive === index ? 'active': ''} color={color}/>);
+                                    })
+                                }
+                            </div>
+                        </div>
+                        <div className={'zingChart-chart'}>
+                            <ChartLine rankActive={rankActive} dataChart={data} setRankActive={setRankActive}/>
+                        </div>
                     </div>
                 </div>
-                <div className={'zingChart-chart'}>
-                    <ChartLine rankActive={rankActive} dataChart={data} setRankActive={setRankActive}/>
-                </div>
-            </div>
-        </div>
+            }
+        </>
     );
 }
 

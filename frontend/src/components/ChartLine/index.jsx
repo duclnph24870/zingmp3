@@ -15,7 +15,6 @@ function ChartLine({
     setRankActive,
     dataChart,
 }) {
-    if (!dataChart.labels) return (<></>);
     const chartRef = useRef();
     const [tooltip,setTooltip] = useState({
         opacity: 0,
@@ -143,7 +142,6 @@ function ChartLine({
         <div style={{position: 'relative',width: '100%',height: '100%'}}>
             {data && <Line ref={chartRef} className='chartLine' data={data} plugins={[Crosshair]} options={options}/>}
             <Tippy
-                className='hello'
                 visible={(tooltip.top !== 0 && tooltip.left !== 0)}
                 interactive={true}
                 arrow={true}
@@ -155,8 +153,8 @@ function ChartLine({
                         },
                     }]
                 }}
-                render={(attrs) => (
-                    <div {...attrs}>
+                render={() => (
+                    <div>
                         <ZingChartSong
                             color={tooltip.color}
                             itemChart={true}

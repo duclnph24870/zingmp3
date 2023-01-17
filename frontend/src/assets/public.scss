@@ -82,12 +82,18 @@ button,input {
     }
 }
 
+.ant-spin-spinning {
+    i {
+        background-color: var(--purple-primary) !important;
+    }
+}
+
 .ant-skeleton  + .ant-skeleton {
     margin-top: 10px;
 }
 
 // tippy 
-#tippy-4 {
+.zingChart-wrapper div[id^="tippy"] {
     transition: transform ease 0.1s;
     pointer-events: none;
 }

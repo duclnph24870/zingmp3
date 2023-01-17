@@ -2,16 +2,18 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './SongItem.scss';
 import Tippy from '@tippyjs/react/headless';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Section } from '..';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeModal, changeSongSetting } from '../../store/actions/appActions';
+import { useDispatch } from 'react-redux';
+import { changeModal } from '../../store/actions/appActions';
 import ListComment from '../ListComment';
 import images from '../../assets/images';
 import { toast } from 'react-toastify';
 import request from '../../utils/axios';
 import { getUser } from '../../service/user';
 import { changeUserSignIn } from '../../store/actions/userActions';
+import { Spin } from 'antd';
+import AddSongPlaylist from '../AddSongPlaylist';
 
 function SongItem ({
     className = '',
@@ -35,11 +37,20 @@ function SongItem ({
         Component = 'div';
     }
     const [isActiveOpt,setActiveOpt] = useState(false);
+    const [likeLoading,setLikeLoading] = useState(false);
     const dispatch = useDispatch();
     const userSignIn = localStorage.getItem('idUser');
 
     let dataOption = [
-        { title: "Thêm vào playlist",icon: <i className='icon ic-16-Add'></i> },
+        { title: "Thêm vào playlist",icon: <i className='icon ic-16-Add'></i>, events: {
+            onClick: () => {
+                dispatch(changeModal({
+                    isActive: true,
+                    Component: <AddSongPlaylist idSong={id} mainController={mainController}/>
+                }));
+                setActiveOpt(false)
+            }
+        } },
         { 
             title: "Bình luận",
             icon: <i className='icon ic-comment'></i>,
@@ -66,6 +77,7 @@ function SongItem ({
     }
 
     const handleClickBtnLike = async e => {
+        setLikeLoading(true);
         if (userSignIn && userSignIn.length > 0) {
             if (checkLike) {
                 const result = await request.post(`/song/like/${id}?type=unlike`);
@@ -74,8 +86,10 @@ function SongItem ({
             }
 
             const newUser = await getUser();
+            setLikeLoading(false);
             dispatch(changeUserSignIn(newUser.user));
         }else {
+            setLikeLoading(false);
             toast.warn("Bạn cần đăng nhập để sử dụng chức năng này");
         }
     }
@@ -116,13 +130,28 @@ function SongItem ({
                     <span className='songItem-timeLength'>{timeLength}</span>
                 </div>
                 <div className='songItem-hover'>
-                    <span className={`songItem-likeBtn ${checkLike ? "active" : ''}`} onClick={handleClickBtnLike}>
-                        <i className={`${checkLike ? 'icon ic-like-full' : 'icon ic-like'}`}></i>
-                    </span>
+                    {
+                        likeLoading
+                        ? 
+                            <Spin className='songSpin'/>
+                        :
+                            <span className={`songItem-likeBtn ${checkLike ? "active" : ''}`} onClick={handleClickBtnLike}>
+                                <i className={`${checkLike ? 'icon ic-like-full' : 'icon ic-like'}`}></i>
+                            </span>
+
+                    }
                     <Tippy
                         visible={isActiveOpt}
                         onClickOutside={() => setActiveOpt(false)}
                         interactive
+                        popperOptions={{
+                            modifiers: [{
+                                name: 'computeStyles',
+                                options: {
+                                    adaptive: false,
+                                },
+                            }]
+                        }}
                         render={() => (
                             <Section 
                                 className='section-controller barNone'

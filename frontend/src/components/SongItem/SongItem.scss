@@ -143,6 +143,7 @@
 
         .songItem-hover {
             display: flex;
+            align-items: center;
         }
 
         .songItem-defaultOp {
@@ -157,11 +158,16 @@
 
         .songItem-hover {
             display: flex;
+            align-items: center;
         }
 
         &:hover {
             background: none;
         }
+    }
+
+    .songSpin {
+        font-size: 1.6rem;
     }
 }
 

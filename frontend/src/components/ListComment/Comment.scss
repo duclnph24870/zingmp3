@@ -34,6 +34,7 @@
         align-items: flex-start;
         flex-wrap: wrap;
         overflow-y: scroll;
+        overflow-x: hidden;
 
         &::-webkit-scrollbar {
             width: 4px;
@@ -45,6 +46,11 @@
             flex-wrap: wrap;
             width: 100%;
             padding: 10px 0;
+
+            .commentSpin {
+                font-size: 1.1rem;
+                margin-left: auto;
+            }
             
             .commentItem-avt {
                 margin-right: 10px;
@@ -98,6 +104,10 @@
                 align-items: center;
                 color: var(--text-secondary);
                 margin: 5px 0 10px 60px;
+
+                .commentSpin {
+                    font-size: 1rem;
+                }
 
                 .commentItem-optBtn {
                     display: flex;

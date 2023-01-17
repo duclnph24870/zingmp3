@@ -16,7 +16,7 @@ class PlayListController {
             optionFind = { idUser: idUser };
         }
         try {
-            const playlist = await PlayListModule.find(optionFind);
+            const playlist = await PlayListModule.find(optionFind).sort({createdAt: 'desc'});
             if (playlist.length === 0) {
                 return res.status(404).json({
                     errCode: 1,
@@ -124,7 +124,7 @@ class PlayListController {
 
             return res.status(200).json({
                 errCode: 0,
-                message: 'Xóa thành công',
+                message: 'Xóa playlist thành công',
                 id: playlistDelete._id,
             });
         } catch (error) {   
@@ -179,7 +179,7 @@ class PlayListController {
 
             return res.status(200).json({
                 errCode: 0,
-                newPLaylist
+                message: "Thêm bài hát vào playlist thành công",
             })
         } catch (error) {
             return res.status(500).json({
