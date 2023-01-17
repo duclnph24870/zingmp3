@@ -1,5 +1,4 @@
 .myMusicPage {
-    height: 1000px;
     padding-top: 70px !important;
     span.title {
         font-size: 4rem;
@@ -49,12 +48,46 @@
         width: 100%;
         justify-content: space-around;
 
-        button {
-        }
-
         i {
             font-size: 2rem;
             color: #fff;
+        }
+    }
+
+    .myMusicPage-likedSong {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .songItem {
+            width: 48%;
+
+            .songItem-img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        .myMusicPage-emtySong {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .myMusicPage-emtySongIcon {
+                background-image: var(--empty-album-icon);
+                width: 120px;
+                height: 120px;
+            }
+
+            span {
+                font-size: 16px;
+                margin-top: 16px;
+                color: var(--text-secondary);
+                font-weight: 500;
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ function ThemeModal ({
         "--sticky-header-box-shadow":"rgba(0,0,0,0.2)",
         "--border-player":"hsla(0,0%,100%,0.1)",
         "--song-item-action":"hsla(0,0%,100%,0.5)",
+        "--empty-album-icon":"url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/empty-upload-dark.png')",
     }
 
     const lightBasic = {
@@ -52,6 +53,7 @@ function ThemeModal ({
         "--sticky-header-box-shadow":"rgba(0,0,0,0.08)",
         "--border-player":"rgba(0,0,0,0.05)",
         "--song-item-action":"rgba(50,50,61,0.5)",
+        "--empty-album-icon":"url('https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/empty-album.png')",
     }
 
     const dataSection = [

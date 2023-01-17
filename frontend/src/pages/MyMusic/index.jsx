@@ -6,7 +6,9 @@ import { toast } from 'react-toastify';
 import { Button, SectionContent } from '../../components';
 import CreatePlaylist from '../../components/CreatePlaylist';
 import SectionContentItem from '../../components/SectionContent/SectionContentItem';
+import SongItem from '../../components/SongItem';
 import { selectPlaylist } from '../../service/playlist';
+import { time_distance_current2 } from '../../service/timeService';
 import { changeLoading, changeModal } from '../../store/actions/appActions';
 import request from '../../utils/axios';
 import './MyMusic.scss';
@@ -14,14 +16,20 @@ import './MyMusic.scss';
 function MyMusic () {
     const dispatch = useDispatch();
     const songPlaying = useSelector(state => state.appReducer);
+    const songSetting = songPlaying.songSetting;
+    console.log(songSetting);
 
     const [dataPlaylist,setDataPlaylist] = useState([]);
+    const [likedData,setLikedData] = useState([]);
     useEffect(() => {
         ( async () => {
-            const result = await selectPlaylist('/playlist/all?idUser='+ localStorage.getItem('idUser') );
+            const result = await selectPlaylist('/playlist/all?idUser='+ localStorage.getItem('idUser'));
             if (result.message) {
                 return;
             }
+
+            const likeList = await request.get('/playlist/likedList'); 
+            setLikedData(likeList.likedList);
             setDataPlaylist(result);
         } )();
     },[songPlaying]);
@@ -112,6 +120,36 @@ function MyMusic () {
                         }
                     </SectionContent>
                 }
+
+                <SectionContent title="Bài hát yêu thích">
+                    <div className="myMusicPage-likedSong">
+                        {
+                            likedData.length === 0
+                            ?
+                                <div className="myMusicPage-emtySong">
+                                    <div className="myMusicPage-emtySongIcon"></div>
+                                    <span>Chưa có bài hát yêu thích nào</span>
+                                </div>
+                            :
+                                likedData.map((item) => (
+                                    <SongItem 
+                                        key={item._id}
+                                        title={item.name}
+                                        id={item._id}
+                                        author={item.idAuthor[0].name}
+                                        userUpload={item.idUser}
+                                        image={item.image}
+                                        timeLength={"04:26"}
+                                        name={item.name}
+                                        createAt={time_distance_current2(item.createdAt)}
+                                        checkLike={true}
+                                        playing={songSetting.idSong === item._id}
+                                        pause={!songSetting.isPlaying}
+                                    />
+                                ))
+                        }
+                    </div>
+                </SectionContent>
             </div>
         </div>
     );

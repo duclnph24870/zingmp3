@@ -1,0 +1,40 @@
+.songSkeleton {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+    .ant-skeleton {
+        margin-top: 0 !important;
+    }
+
+    .songSkeleton-image {
+        width: 50px;
+        height: 50px;
+        padding: 0;
+        margin-right: 5px;
+
+        span {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 3px !important;
+        }
+    }
+
+    .ant-skeleton-title {
+        width: 90% !important;
+    }
+
+    ul {
+        margin-block-start: 5px !important;
+
+        li{
+            height: 12px !important;
+            max-width: 200px;
+            margin-block-start: 5px !important;
+
+            &:nth-child(2) {
+                max-width: 100px;
+            }
+        }
+    }
+}

@@ -1,5 +1,7 @@
 const PlayListModule = require('../modules/PlayListModule');
 const uploadDriver = require('../../service/uploadDriver');
+const UserModule = require('../modules/UserModule');
+const SongModule = require('../modules/SongModule');
 
 class PlayListController {
     // [GET] /playlist/:id (Lấy ra 1 playlist)
@@ -188,6 +190,40 @@ class PlayListController {
             });
         }
     }
+
+    // [GET] /playlist/likedList 
+    async selectLikedList (req,res) {
+        const idUser = req.user.id;
+        try {
+            const resultUser = await UserModule.findOne({
+                _id: idUser
+            });
+
+            if (!resultUser) {
+                return res.json({
+                    errCode: 1,
+                    message: "Người dùng không tồn tại hoặc đã bị xóa"
+                });
+            }
+            const likedIds = resultUser.liked;
+
+            const likedList = await SongModule.find({
+                _id: { $in: likedIds }
+            });
+
+            return res.json({
+                errCode: 0,
+                likedList
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                errCode: 1,
+                message: error.message,
+            })
+        }
+    }
+
 }
 
 module.exports = new PlayListController;
