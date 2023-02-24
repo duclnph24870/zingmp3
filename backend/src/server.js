@@ -18,8 +18,10 @@ app.use(morgan('combined'));
 routes(app);
 
 app.get('/', (req,res) => {
-    return res.send('server on');
-});
+    return res.status(200).json({
+        message: 'Success',
+        status: 200 })
+})
 
 
 app.listen(port, () => {
