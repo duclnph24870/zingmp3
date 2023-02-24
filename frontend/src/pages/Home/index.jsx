@@ -5,6 +5,8 @@ import SliderComponent from "../../components/Slider";
 import ZingChart from "../../components/ZingChart";
 import SongItem from "../../components/SongItem";
 import './Home.scss';
+import { useDispatch } from "react-redux";
+import { changeLoading } from "../../store/actions/appActions";
 
 function Home() {
     const dataSlider = [
@@ -61,6 +63,7 @@ function Home() {
             author: 'Hoàng Thùy Linh, AMEE,MONO,Karik'
         }
     ];
+    const dispatch = useDispatch();
     let dataLength = fakeData.length;
     return (
         <div className="pageContainer">

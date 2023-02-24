@@ -4,8 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-const routes = require('./src/routes');
-const db = require('./src/config/db');
+const routes = require('./routes');
+const db = require('./config/db');
 const path  = require('path');
 
 db.connect();
