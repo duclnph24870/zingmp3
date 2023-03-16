@@ -113,6 +113,7 @@ function PlayControllerRight({
                                         image={item.image}
                                         checkLike={checkLiked(item._id,likedList)}
                                         setSongCurr={handleSetSongCurr}
+                                        dispatch={dispatch}
                                 />
                             )})
                             :

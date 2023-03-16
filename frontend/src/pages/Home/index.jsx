@@ -149,6 +149,7 @@ function Home() {
                                     timeLength={"04:26"}
                                     name={'Yêu mấy cũng đừng quay lại'}
                                     createAt="2 ngày trước"
+                                    dispatch={dispatch}
                                 />
                             </div>
                         ))

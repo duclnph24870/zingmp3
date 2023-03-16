@@ -25,7 +25,7 @@ const initStateApp = {
         },
     },
     songSetting: {
-        idSong: null,
+        idSong: '63988993ae700a8d6e6f0a09',
         volume: 1,
         replay: false,
         randomPlay: false,

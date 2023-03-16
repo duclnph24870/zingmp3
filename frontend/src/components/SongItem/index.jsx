@@ -31,6 +31,8 @@ function SongItem ({
     setSongCurr,
     mainController = false,
     createAt = false,
+    dispatch
+    
 }) {
     let Component = NavLink;
     if (controller) {
@@ -38,7 +40,6 @@ function SongItem ({
     }
     const [isActiveOpt,setActiveOpt] = useState(false);
     const [likeLoading,setLikeLoading] = useState(false);
-    const dispatch = useDispatch();
     const userSignIn = localStorage.getItem('idUser');
 
     let dataOption = [

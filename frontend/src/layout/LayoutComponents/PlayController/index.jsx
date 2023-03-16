@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useEffect,memo, useState } from 'react';
+import { useEffect,memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SongItem from '../../../components/SongItem';
 import { checkLiked, getSongById } from '../../../service/songService';
-import { changeLoading, changeSongPlaying } from '../../../store/actions/appActions';
+import { changeSongPlaying } from '../../../store/actions/appActions';
 import ControllerPlayerCenter from './ControllerPlayerCenter';
 import './PlayController.scss';
 import PlayControllerRight from './PlayControllerRight';
@@ -17,11 +17,9 @@ function PlayController({
     const { songSetting,songPlaying } = useSelector(state => state.appReducer);
     const idSong = songSetting.idSong;
     useEffect(() => {
-        dispatch(changeLoading(true));
         (async () => {
             if (idSong) {
                 const { song } = await getSongById(idSong);
-                dispatch(changeLoading(false));
                 dispatch(changeSongPlaying(song[0]));
             }
         })();
@@ -40,6 +38,7 @@ function PlayController({
                     controller
                     checkLike={checkLiked(songPlaying._id,likedList)}
                     mainController
+                    dispatch={dispatch}
                 />
             </div>
             <div className='playController-center'>

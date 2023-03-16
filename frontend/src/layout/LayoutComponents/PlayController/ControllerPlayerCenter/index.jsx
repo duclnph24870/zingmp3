@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '../../../../components';
 import { convertImage } from '../../../../service/app';
 import { actionSong } from '../../../../service/songService';
 import { convertTime } from '../../../../service/timeService';
-import { changeSongSetting } from '../../../../store/actions/appActions';
+import { changeLoading, changeSongSetting } from '../../../../store/actions/appActions';
 import request from '../../../../utils/axios';
 import './ControllerPlayerCenter.scss';
 
@@ -17,6 +17,7 @@ function ControllerPlayerCenter ({
     // các el cần sử dụng
     const audioRef = useRef();
     const rangeRef = useRef();
+    const dispatch = useDispatch();
 
     // tạo 1 state để lưu dữ liệu render
     const [audioInformation, setAudioInformation] = useState({
@@ -27,8 +28,6 @@ function ControllerPlayerCenter ({
         rePlay: songSetting.replay,
         randomPlay: songSetting.randomPlay,
     });
-
-    const dispatch = useDispatch();
 
     // cập nhập tình trạng phát nhạc vào local
     useEffect(() => {
@@ -46,37 +45,37 @@ function ControllerPlayerCenter ({
     },[songSetting.volume])
 
     // xử lý giao diện input
-    const renderRange = (value) => {
+    const renderRange = useCallback((value) => {
         rangeRef.current.style.backgroundSize = value + '% 100%';
-    }
+    },[])
  
     // xử lý click nút play
-    const handlePlayBtn = e => {
+    const handlePlayBtn = useCallback(e => {
         audioInformation.isPlaying ? audioRef.current.pause() : audioRef.current.play();
         setAudioInformation({
             ... audioInformation,
             timeDuration: convertTime(audioRef.current.duration)
         })
-    }
+    },[])
 
     // xử lý sự kiện play
-    const handleAudioPlay = e => {
+    const handleAudioPlay = useCallback(e => {
         setAudioInformation({
             ... audioInformation,
             isPlaying: true,
         })
-    }
+    },[])
 
     // sự kiện pause
-    const handleAudioPause = e => {
+    const handleAudioPause = useCallback(e => {
         setAudioInformation({
             ... audioInformation,
             isPlaying: false,
         })
-    }
+    },[])
 
     // xử lý tua
-    const handleChangeRange = e => {
+    const handleChangeRange = useCallback(e => {
         audioRef.current.pause();
         let timeCurr = audioRef.current.duration / 100 * e.target.value;
         audioRef.current.currentTime = timeCurr;
@@ -85,10 +84,10 @@ function ControllerPlayerCenter ({
             ... audioInformation,
             rangeValue: e.target.value
         });
-    }
+    },[])
 
     // tiến độ bài hát
-    const handleTimeUpdate = e => {
+    const handleTimeUpdate = useCallback(e => {
         let el = e.target;
         let timeCurr = convertTime(el.currentTime);
         let rangeValue = 0;
@@ -103,19 +102,19 @@ function ControllerPlayerCenter ({
             rangeValue,
             timeDuration: convertTime(el.duration),
         })
-    }
+    },[])
 
     // kết thúc bài hát
-    const handleEndedAudio = e => {
+    const handleEndedAudio = useCallback(e => {
         if (audioInformation.rePlay) {
             audioRef.current.currentTime = 0;
         }else {
             handleNextSong();
         }
-    }
+    },[])
     
     // xử lý sự kiện next song
-    const handleNextSong = async () => {
+    const handleNextSong = useCallback(async () => {
         audioRef.current.pause();
         const data = await request.get('/song/songPlayList');
         const result = actionSong(songSetting.randomPlay,data,'next',songSetting.idSong);
@@ -123,10 +122,10 @@ function ControllerPlayerCenter ({
             ... songSetting,
             idSong: result._id
         }));
-    }
+    },[])
 
     // xử lý pre song
-    const handlePreSong = async () => {
+    const handlePreSong = useCallback(async () => {
         audioRef.current.pause();
         const data = await request.get('/song/songPlayList');
         const result = actionSong(songSetting.randomPlay,data,'prev',songSetting.idSong);
@@ -134,7 +133,7 @@ function ControllerPlayerCenter ({
             ... songSetting,
             idSong: result._id
         }));
-    }
+    },[])
 
     return (  
         <div className='controllerPayerCenter'>
@@ -145,8 +144,10 @@ function ControllerPlayerCenter ({
                 onEnded={handleEndedAudio}
                 ref={audioRef} 
                 src={songCurrData.audio && convertImage(songCurrData.audio)}
-                onCanPlay={e => {
-                    e.target.play();
+                onLoadStart={() => dispatch(changeLoading(true))}
+                onLoadedMetadata={e => {
+                    handleTimeUpdate(e);
+                    dispatch(changeLoading(false))
                 }}
             ></audio>
             <div className='controllerPayerCenter-item controllerPayerCenter-btnBlock'>

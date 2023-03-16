@@ -11,8 +11,9 @@ import 'tippy.js/dist/tippy.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ModalWrapper from './components/ModalWrapper';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { changeLogin } from './store/actions/userActions';
+import Loading from './components/Loading';
 
 function App() {
   const { loading,modal,theme } = useSelector( state => state.appReducer );
@@ -42,7 +43,7 @@ function App() {
               let Layout = item.layout;
               let Page = item.page;
               return (
-                <Route key={index} path={item.path} element={<Layout><Page/></Layout>}></Route>
+                <Route key={index} path={item.path} element={<Suspense fallback={''}><Layout><Page/></Layout></Suspense>}></Route>
               );
             })
           }

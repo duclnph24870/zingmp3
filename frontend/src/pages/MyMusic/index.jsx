@@ -17,7 +17,6 @@ function MyMusic () {
     const dispatch = useDispatch();
     const songPlaying = useSelector(state => state.appReducer);
     const songSetting = songPlaying.songSetting;
-    console.log(songSetting);
 
     const [dataPlaylist,setDataPlaylist] = useState([]);
     const [likedData,setLikedData] = useState([]);
@@ -145,6 +144,7 @@ function MyMusic () {
                                         checkLike={true}
                                         playing={songSetting.idSong === item._id}
                                         pause={!songSetting.isPlaying}
+                                        dispatch={dispatch}
                                     />
                                 ))
                         }
