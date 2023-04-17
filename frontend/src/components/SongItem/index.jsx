@@ -4,7 +4,6 @@ import './SongItem.scss';
 import Tippy from '@tippyjs/react/headless';
 import { useState } from 'react';
 import { Section } from '..';
-import { useDispatch } from 'react-redux';
 import { changeModal } from '../../store/actions/appActions';
 import ListComment from '../ListComment';
 import images from '../../assets/images';

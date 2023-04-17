@@ -1,6 +1,7 @@
 import path from '../config/path';
-import { MainLayout } from '../layout';
 import { lazy } from 'react';
+
+const MainLayout = lazy(() => import('../layout/MainLayout'))
 
 const routes = [
     { path: path.home,page: lazy(() => import('../pages/Home')),layout: MainLayout },

@@ -13,7 +13,6 @@ import "slick-carousel/slick/slick-theme.css";
 import ModalWrapper from './components/ModalWrapper';
 import { Suspense, useEffect } from 'react';
 import { changeLogin } from './store/actions/userActions';
-import Loading from './components/Loading';
 
 function App() {
   const { loading,modal,theme } = useSelector( state => state.appReducer );

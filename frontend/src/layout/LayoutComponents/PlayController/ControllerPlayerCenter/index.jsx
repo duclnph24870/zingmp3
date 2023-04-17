@@ -29,6 +29,8 @@ function ControllerPlayerCenter ({
         randomPlay: songSetting.randomPlay,
     });
 
+    const [isLoading,setIsLoading] = useState(true)
+
     // cập nhập tình trạng phát nhạc vào local
     useEffect(() => {
         dispatch(changeSongSetting({
@@ -50,28 +52,25 @@ function ControllerPlayerCenter ({
     },[])
  
     // xử lý click nút play
-    const handlePlayBtn = useCallback(e => {
-        audioInformation.isPlaying ? audioRef.current.pause() : audioRef.current.play();
-        setAudioInformation({
-            ... audioInformation,
-            timeDuration: convertTime(audioRef.current.duration)
-        })
+    const handlePlayBtn = useCallback( (isPlaying) => {
+        if (isPlaying) {
+            audioRef.current.pause()
+        }else {
+            audioRef.current.play()
+        }
     },[])
 
     // xử lý sự kiện play
     const handleAudioPlay = useCallback(e => {
-        setAudioInformation({
-            ... audioInformation,
-            isPlaying: true,
-        })
+        setAudioInformation(curr => ({...curr, isPlaying: true}))
     },[])
 
     // sự kiện pause
     const handleAudioPause = useCallback(e => {
-        setAudioInformation({
-            ... audioInformation,
+        setAudioInformation(curr => ({
+            ... curr,
             isPlaying: false,
-        })
+        }))
     },[])
 
     // xử lý tua
@@ -80,10 +79,10 @@ function ControllerPlayerCenter ({
         let timeCurr = audioRef.current.duration / 100 * e.target.value;
         audioRef.current.currentTime = timeCurr;
         // let rangeValue = Math.floor( Number(el.currentTime) / Number(el.duration) * 100 );
-        setAudioInformation({
-            ... audioInformation,
+        setAudioInformation(curr => ({
+            ... curr,
             rangeValue: e.target.value
-        });
+        }));
     },[])
 
     // tiến độ bài hát
@@ -96,12 +95,12 @@ function ControllerPlayerCenter ({
             renderRange(rangeValue);
         }
 
-        setAudioInformation({
-            ... audioInformation,
+        setAudioInformation(curr =>({
+            ... curr,
             timeCurr,
             rangeValue,
             timeDuration: convertTime(el.duration),
-        })
+        }))
     },[])
 
     // kết thúc bài hát
@@ -144,10 +143,14 @@ function ControllerPlayerCenter ({
                 onEnded={handleEndedAudio}
                 ref={audioRef} 
                 src={songCurrData.audio && convertImage(songCurrData.audio)}
-                onLoadStart={() => dispatch(changeLoading(true))}
+                onLoadStart={() => {
+                    dispatch(changeLoading(true))
+                    setIsLoading(true)
+                }}
                 onLoadedMetadata={e => {
                     handleTimeUpdate(e);
                     dispatch(changeLoading(false))
+                    setIsLoading(false)
                 }}
             ></audio>
             <div className='controllerPayerCenter-item controllerPayerCenter-btnBlock'>
@@ -175,13 +178,13 @@ function ControllerPlayerCenter ({
                 </Button>
 
                 <Button 
-                    disabled={idSong ? false : true}
+                    disabled={isLoading}
                     className='controllerPlayerCenter-button playerBtn' 
                     buttonIcon 
                     iconLeft={
                         !audioInformation.isPlaying ? <i className='icon ic-play-circle-outline'></i> : <i className="icon ic-pause-circle-outline"></i>
                     }
-                    onClick={handlePlayBtn}
+                    onClick={e => handlePlayBtn(audioInformation.isPlaying)}
                 ></Button>
 
                 <Button 
