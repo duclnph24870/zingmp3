@@ -9,7 +9,8 @@ const db = require('./config/db');
 const path  = require('path');
 
 db.connect();
-app.use(express.static(path.join(__dirname,'src/asset')));
+app.use(express.static(path.join(__dirname,'asset')));
+console.log(path.join(__dirname,'asset'));
 
 app.use(cors({ origin: true }),express.json());
 app.use(express.urlencoded({ extended: true }));

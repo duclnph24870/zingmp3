@@ -8,6 +8,8 @@ const categoryGroupRouter = require('./categoryGroup');
 const categoryRouter = require('./category');
 const commentRouter = require('./comment');
 const authorRouter = require('./author');
+const path  = require('path');
+
 
 function routes (app) {
     app.use('/user',userRoutes);
