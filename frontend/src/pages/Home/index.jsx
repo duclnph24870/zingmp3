@@ -6,8 +6,10 @@ import ZingChart from "../../components/ZingChart";
 import SongItem from "../../components/SongItem";
 import './Home.scss';
 import { useDispatch } from "react-redux";
+// import pptLink from '../../assets/CV_LE_NGOC_DUC_FRONT_END_DEV.docx'
 import { changeLoading } from "../../store/actions/appActions";
 
+// console.log(pptLink);
 function Home() {
     const dataSlider = [
         {
